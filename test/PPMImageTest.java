@@ -23,7 +23,7 @@ public class PPMImageTest {
 
   @Test
   public void testGetRedComponent() {
-    Image redscale = i1.getRedComponentImage();
+    Image redscale = i1.getRedscaleImage();
     for(int i=0; i < i1.getWidth();i++) {
       for(int j=0; j < i1.getHeight();j++) {
         assertEquals(redscale.getBlueAtIndex(i,j),redscale.getRedAtIndex(i,j));
@@ -34,10 +34,24 @@ public class PPMImageTest {
 
   @Test
   public void testGetGreenComponent() {
+    Image greenscale = i1.getRedscaleImage();
+    for(int i=0; i < i1.getWidth();i++) {
+      for(int j=0; j < i1.getHeight();j++) {
+        assertEquals(greenscale.getBlueAtIndex(i,j),greenscale.getGreenAtIndex(i,j));
+        assertEquals(greenscale.getRedAtIndex(i,j),greenscale.getGreenAtIndex(i,j));
+      }
+    }
   }
 
   @Test
   public void testGetBlueComponent() {
+    Image bluescale = i1.getRedscaleImage();
+    for(int i=0; i < i1.getWidth();i++) {
+      for(int j=0; j < i1.getHeight();j++) {
+        assertEquals(bluescale.getGreenAtIndex(i,j),bluescale.getBlueAtIndex(i,j));
+        assertEquals(bluescale.getRedAtIndex(i,j),bluescale.getBlueAtIndex(i,j));
+      }
+    }
   }
 
   public int [][] generateRandomArray(int width, int height) {

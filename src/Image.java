@@ -3,21 +3,23 @@
  */
 public interface Image {
 
-  public Image getRedComponentImage();
+  Image getRedscaleImage();
 
-  public Image getGreenComponentImage();
+  Image getGreenscaleImage();
 
-  public Image getBlueComponentImage();
+  Image getBluescaleImage();
 
-  public int getHeight();
+  int getHeight();
 
-  public int getWidth();
-
-
-  public int getRedAtIndex(int i, int j);
+  int getWidth();
 
 
-  public int getBlueAtIndex(int i, int j);
+  int getRedAtIndex(int i, int j);
 
-  public int getGreenAtIndex(int i, int j);
+  int getBlueAtIndex(int i, int j);
+
+  int getGreenAtIndex(int i, int j);
+
+
+
 }
