@@ -1,12 +1,13 @@
+import java.awt.image.BufferedImage;
+
 /**
  * Class for manipulating a .ppm image file.
  */
-abstract class AbstractPPMImage implements Image {
+abstract class AbstractPPMImage implements PPMImage {
 
-  private final String name;
-  private final int height;
-  private final int width;
-
+  protected final String name;
+  protected final int height;
+  protected final int width;
 
 
   public AbstractPPMImage(String name, int width, int height) {
@@ -15,26 +16,16 @@ abstract class AbstractPPMImage implements Image {
     this.height = height;
   }
 
-  public boolean isCompositePPMImage(){
-    return false;
-  }
-
-  public boolean isSimplePPMImage(){
-    return false;
-  }
+  public abstract boolean isCompositePPMImage();
 
   @Override
-  public Image getRedscaleImage() {return null;}
+  public abstract PPMImage getRedscaleImage();
 
   @Override
-  public Image getGreenscaleImage() {return null;}
+  public abstract PPMImage getGreenscaleImage();
 
   @Override
-  public Image getBluescaleImage() {return null;}
-
-//  public int getAtIndex(component, int i, int j){
-//    return component.
-//  }
+  public abstract PPMImage getBluescaleImage();
 
   public int getHeight() {
     return height;
@@ -44,27 +35,24 @@ abstract class AbstractPPMImage implements Image {
     return width;
   }
 
+  public abstract PPMImage flipHorizontal();
+
+  public abstract PPMImage flipVertical();
+
+  public abstract PPMImage getValueImage();
+
+  public abstract PPMImage getIntensityImage();
+
+  public abstract PPMImage getLumaImage();
+
+  public abstract PPMImage greyscale();
+
+  public abstract PPMImage brighten();
+
+  public abstract BufferedImage writePPM();
 
   @Override
-  public boolean equals(Object o){
-    if(o == this){
-      return true;
-    }
-
-    if(!(o instanceof AbstractPPMImage)){
-      return false;
-    }
-
-    AbstractPPMImage c = (AbstractPPMImage) o;
-
-    if(c.height == this.height && c.width == this.width){
-      return true;
-    }
-
-    return false;
-  }
-  @Override
-  public int hashCode(){
+  public int hashCode() {
     return 67499 * this.getWidth() * this.getHeight();
   }
 }

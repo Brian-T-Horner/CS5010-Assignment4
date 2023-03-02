@@ -11,7 +11,7 @@ public class CompositePPMImageTest {
   int [][] g;
   int [][] b;
 
-  Image i1;
+  PPMImage i1;
 
   @Before
   public void setUp() {
@@ -26,10 +26,10 @@ public class CompositePPMImageTest {
 
   @Test
   public void testGetRedComponent() {
-    Image redscale = i1.getRedscaleImage();
+    PPMImage redscale = i1.getRedscaleImage();
     for(int i=0; i < i1.getWidth();i++) {
       for(int j=0; j < i1.getHeight();j++) {
-        assertEquals(redscale.getBlueAtIndex(i,j),redscale.getRedAtIndex(i,j));
+        assertEquals(redscale.getIndex(i,j),i1.getGreenscaleImage().getIndex(i,j));
         assertEquals(redscale.getGreenAtIndex(i,j),redscale.getRedAtIndex(i,j));
       }
     }

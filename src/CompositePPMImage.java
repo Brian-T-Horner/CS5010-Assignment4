@@ -1,14 +1,16 @@
+import java.awt.image.BufferedImage;
+
 public class CompositePPMImage extends AbstractPPMImage{
 
-    private final SimplePPMImage redComponent;
+    private final PPMImage redComponent;
 
-    private final SimplePPMImage greenComponent;
+    private final PPMImage greenComponent;
 
-    private final SimplePPMImage blueComponent;
+    private final PPMImage blueComponent;
 
 
-    public CompositePPMImage(String name, int width, int height, SimplePPMImage red,
-                             SimplePPMImage blue, SimplePPMImage green){
+    public CompositePPMImage(String name, int width, int height, PPMImage red,
+                             PPMImage blue, PPMImage green){
         super(name, width, height);
         this.redComponent = red;
         this.greenComponent = green;
@@ -22,32 +24,63 @@ public class CompositePPMImage extends AbstractPPMImage{
     }
 
     @Override
-    public Image getRedscaleImage() {
+    public PPMImage getRedscaleImage() {
         return this.redComponent;
     }
 
     @Override
-    public Image getGreenscaleImage(){
+    public PPMImage getGreenscaleImage(){
       return this.greenComponent;
     }
 
-
     @Override
-    public Image getBluescaleImage() {
+    public PPMImage getBluescaleImage() {
         return this.blueComponent;
     }
 
-
-    public int getRedAtIndex(int i, int j) {
-        return redComponent.getIndex(i, j);
+    @Override
+    public PPMImage flipHorizontal() {
+        return null;
     }
 
-    public int getBlueAtIndex(int i, int j) {
-        return blueComponent.getIndex(i, j);
+    @Override
+    public PPMImage flipVertical() {
+        return null;
     }
 
-    public int getGreenAtIndex(int i, int j) {
-        return greenComponent.getIndex(i, j);
+    @Override
+    public PPMImage getValueImage() {
+        return null;
+    }
+
+    @Override
+    public PPMImage getIntensityImage() {
+        return null;
+    }
+
+    @Override
+    public PPMImage getLumaImage() {
+        return null;
+    }
+
+    @Override
+    public PPMImage greyscale() {
+        return null;
+    }
+
+    @Override
+    public PPMImage brighten() {
+        return null;
+    }
+
+    @Override
+    public BufferedImage writePPM() {
+        return null;
+    }
+
+    @Override
+    public int getIndex(int i, int j) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("composite image has no individual indices");
     }
 
 
