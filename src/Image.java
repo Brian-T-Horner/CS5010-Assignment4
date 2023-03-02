@@ -14,11 +14,6 @@ public interface Image {
   int getWidth();
 
 
-  int getRedAtIndex(int i, int j);
-
-  int getBlueAtIndex(int i, int j);
-
-  int getGreenAtIndex(int i, int j);
 
 
 

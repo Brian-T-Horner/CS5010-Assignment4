@@ -18,7 +18,7 @@ public class PPMImageTest {
     r = generateRandomArray(300,300);
     g = generateRandomArray(300,300);
     b = generateRandomArray(300,300);
-    i1 = new PPMImage("image",300,300,r,g,b);
+    i1 = new AbstractPPMImage("image",300,300,r,g,b);
   }
 
   @Test
