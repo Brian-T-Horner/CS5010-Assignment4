@@ -25,7 +25,7 @@ public class PPMImage implements Image {
   }
 
   @Override
-  public Image getRedComponentImage() {
+  public Image getRedscaleImage() {
     int [][] b = new int[width][height];
     int [][] g = new int[width][height];
     for(int i=0; i < getWidth();i++) {
@@ -40,13 +40,33 @@ public class PPMImage implements Image {
   }
 
   @Override
-  public Image getGreenComponentImage() {
-    return null;
+  public Image getGreenscaleImage() {
+    int [][] r = new int[width][height];
+    int [][] b = new int[width][height];
+    for(int i=0; i < getWidth();i++) {
+      for(int j=0; j < getHeight();j++) {
+        int val = greenComponent[i][j];
+        r[i][j] = val;
+        b[i][j] = val;
+      }
+    }
+
+    return new PPMImage(name,width,height,r,greenComponent,b);
   }
 
   @Override
-  public Image getBlueComponentImage() {
-    return null;
+  public Image getBluescaleImage() {
+    int [][] r = new int[width][height];
+    int [][] g = new int[width][height];
+    for(int i=0; i < getWidth();i++) {
+      for(int j=0; j < getHeight();j++) {
+        int val = blueComponent[i][j];
+        r[i][j] = val;
+        g[i][j] = val;
+      }
+    }
+
+    return new PPMImage(name,width,height,r,g,blueComponent);
   }
 
 
