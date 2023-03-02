@@ -43,4 +43,28 @@ abstract class AbstractPPMImage implements Image {
   public int getWidth() {
     return width;
   }
+
+
+  @Override
+  public boolean equals(Object o){
+    if(o == this){
+      return true;
+    }
+
+    if(!(o instanceof AbstractPPMImage)){
+      return false;
+    }
+
+    AbstractPPMImage c = (AbstractPPMImage) o;
+
+    if(c.height == this.height && c.width == this.width){
+      return true;
+    }
+
+    return false;
+  }
+  @Override
+  public int hashCode(){
+    return 67499 * this.getWidth() * this.getHeight();
+  }
 }

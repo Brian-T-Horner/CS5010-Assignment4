@@ -5,7 +5,7 @@ import java.util.Random;
 
 import static org.junit.Assert.*;
 
-public class PPMImageTest {
+public class CompositePPMImageTest {
 
   int [][] r;
   int [][] g;
@@ -16,9 +16,12 @@ public class PPMImageTest {
   @Before
   public void setUp() {
     r = generateRandomArray(300,300);
+    SimplePPMImage rSimple = new SimplePPMImage("rSimple", 300, 300, r);
     g = generateRandomArray(300,300);
+    SimplePPMImage gSimple = new SimplePPMImage("gSimple", 300, 300, g);
     b = generateRandomArray(300,300);
-    i1 = new AbstractPPMImage("image",300,300,r,g,b);
+    SimplePPMImage bSimple = new SimplePPMImage("bSimple", 300, 300, b);
+    i1 = new CompositePPMImage("image",300,300,rSimple, bSimple, gSimple);
   }
 
   @Test
