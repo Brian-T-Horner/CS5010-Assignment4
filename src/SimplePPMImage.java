@@ -20,6 +20,7 @@ public class SimplePPMImage extends AbstractPPMImage{
         this.component[i][j] = value;
     }
 
+
     @Override
     public boolean isSimplePPMImage(){
         return true;

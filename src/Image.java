@@ -13,7 +13,7 @@ public interface Image {
 
   int getWidth();
 
-
+  int getIndex(int i, int j);
 
 
 

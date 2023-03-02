@@ -32,9 +32,9 @@ abstract class AbstractPPMImage implements Image {
   @Override
   public Image getBluescaleImage() {return null;}
 
-//  public int getAtIndex(component, int i, int j){
-//    return component.
-//  }
+  public int getIndex(int i, int j){
+    throw new IllegalArgumentException("Can't use get index for CompositePPMImages");
+  }
 
   public int getHeight() {
     return height;

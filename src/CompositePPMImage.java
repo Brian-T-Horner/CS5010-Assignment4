@@ -7,12 +7,18 @@ public class CompositePPMImage extends AbstractPPMImage{
     private final SimplePPMImage blueComponent;
 
 
-    public CompositePPMImage(String name, int width, int height, SimplePPMImage red,
-                             SimplePPMImage blue, SimplePPMImage green){
+    public CompositePPMImage(String name, int width, int height, Image red,
+                             Image blue, Image green){
         super(name, width, height);
-        this.redComponent = red;
-        this.greenComponent = green;
-        this.blueComponent = blue;
+        if(!(red instanceof SimplePPMImage) || !(blue instanceof SimplePPMImage) || !(green instanceof SimplePPMImage)){
+            throw new IllegalArgumentException("Must pass SimplePPMImage ");
+
+        }
+
+        redComponent = (SimplePPMImage) red;
+        greenComponent = (SimplePPMImage) green;
+        blueComponent = (SimplePPMImage) blue;
+
     }
 
 
