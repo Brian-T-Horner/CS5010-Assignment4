@@ -7,11 +7,11 @@ public interface PPMImage {
 
   boolean isCompositePPMImage();
 
-  PPMImage getRedscaleImage();
+  PPMImage getRedscaleImage(String name);
 
-  PPMImage getGreenscaleImage();
+  PPMImage getGreenscaleImage(String name);
 
-  PPMImage getBluescaleImage();
+  PPMImage getBluescaleImage(String name);
 
   int getIndex(int i, int j);
 
@@ -19,21 +19,21 @@ public interface PPMImage {
 
   int getWidth();
 
-  PPMImage flipHorizontal();
+  String getName();
 
-  PPMImage flipVertical();
+  PPMImage flipHorizontal(String name);
 
-  PPMImage getValueImage();
+  PPMImage flipVertical(String name);
 
-  PPMImage getIntensityImage();
+  PPMImage getValueImage(String name);
 
-  PPMImage getLumaImage();
+  PPMImage getIntensityImage(String name);
 
-  PPMImage greyscale();
+  PPMImage getLumaImage(String name);
 
-  PPMImage brighten();
+  PPMImage brighten(String name,int scale);
 
-  BufferedImage writePPM();
+  BufferedImage writeBufferedImage();
 
 
 }

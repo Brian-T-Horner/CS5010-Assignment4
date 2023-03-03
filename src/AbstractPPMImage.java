@@ -19,13 +19,13 @@ abstract class AbstractPPMImage implements PPMImage {
   public abstract boolean isCompositePPMImage();
 
   @Override
-  public abstract PPMImage getRedscaleImage();
+  public abstract PPMImage getRedscaleImage(String name);
 
   @Override
-  public abstract PPMImage getGreenscaleImage();
+  public abstract PPMImage getGreenscaleImage(String name);
 
   @Override
-  public abstract PPMImage getBluescaleImage();
+  public abstract PPMImage getBluescaleImage(String name);
 
   public int getHeight() {
     return height;
@@ -35,21 +35,23 @@ abstract class AbstractPPMImage implements PPMImage {
     return width;
   }
 
-  public abstract PPMImage flipHorizontal();
+  public String getName() {
+    return name;
+  }
 
-  public abstract PPMImage flipVertical();
+  public abstract PPMImage flipHorizontal(String name);
 
-  public abstract PPMImage getValueImage();
+  public abstract PPMImage flipVertical(String name);
 
-  public abstract PPMImage getIntensityImage();
+  public abstract PPMImage getValueImage(String name);
 
-  public abstract PPMImage getLumaImage();
+  public abstract PPMImage getIntensityImage(String name);
 
-  public abstract PPMImage greyscale();
+  public abstract PPMImage getLumaImage(String name);
 
-  public abstract PPMImage brighten();
+  public abstract PPMImage brighten(String name,int scale);
 
-  public abstract BufferedImage writePPM();
+  public abstract BufferedImage writeBufferedImage();
 
   @Override
   public int hashCode() {

@@ -23,59 +23,78 @@ public class SimplePPMImage extends AbstractPPMImage {
   }
 
   @Override
-  public PPMImage getRedscaleImage() throws UnsupportedOperationException {
+  public PPMImage getRedscaleImage(String name) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("cannot get redscale of simple image");
   }
 
   @Override
-  public PPMImage getGreenscaleImage() throws UnsupportedOperationException {
+  public PPMImage getGreenscaleImage(String name) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("cannot get greenscale of simple image");
   }
 
   @Override
-  public PPMImage getBluescaleImage() throws UnsupportedOperationException {
+  public PPMImage getBluescaleImage(String name) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("cannot get bluescale of simple image");
   }
 
   @Override
-  public PPMImage flipHorizontal() {
+  public PPMImage flipHorizontal(String name) {
     return null;
   }
 
   @Override
-  public PPMImage flipVertical() {
+  public PPMImage flipVertical(String name) {
     return null;
   }
 
   @Override
-  public PPMImage getValueImage() throws UnsupportedOperationException {
+  public PPMImage getValueImage(String name) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("simple image has no value component");
   }
 
   @Override
-  public PPMImage getIntensityImage() throws UnsupportedOperationException {
+  public PPMImage getIntensityImage(String name) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("simple image has no intensity component");
   }
 
   @Override
-  public PPMImage getLumaImage() throws UnsupportedOperationException {
+  public PPMImage getLumaImage(String name) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("simple image has no luma component");
   }
 
+
+
   @Override
-  public PPMImage greyscale() {
-    return null;
+  public PPMImage brighten(String name,int scale) {
+    int[][] brightened = new int[width][height];
+    for(int i=0; i < width;i++) {
+      for(int j=0; j < height;j++) {
+        int val = component[i][j] + scale;
+        if(val > 255) {
+          val = 255;
+        } else if(val < 0) {
+          val = 0;
+        }
+        brightened[i][j] = val;
+      }
+    }
+    return new SimplePPMImage(name,width,height,brightened);
   }
 
   @Override
-  public PPMImage brighten() {
-    return null;
+  public BufferedImage writeBufferedImage() {
+    BufferedImage image=new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
+    int p,pixel;
+    for(int i=0; i < getWidth();i++) {
+      for(int j=0; j < getHeight();j++) {
+        p = getIndex(i,j);
+        pixel=0xFF000000+(p<<16)+(p<<8)+p;
+        image.setRGB(i,j,pixel);
+      }
+    }
+    return image;
   }
 
-  @Override
-  public BufferedImage writePPM() {
-    return null;
-  }
 
   @Override
   public boolean equals(Object o) {
