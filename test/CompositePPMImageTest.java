@@ -41,10 +41,12 @@ public class CompositePPMImageTest {
   }
 
   @Test
-  public void testExample() throws IOException {
-    PPMImage i2 = ImageUtil.readIntoPPMImage("images/Koala.ppm");
-    i2 = i2.brighten("",50);
-    File f = new File("MyFile2.png");
+  public void testIOExample() throws IOException {
+    PPMImage i2 = ImageUtil.readIntoPPMImage("newfile.ppm");
+
+//    i2 = i2.getLumaImage("");
+//    ImageUtil.writeToPPMFile(i2,"newfile");
+    File f = new File("MyFile4.png");
     ImageIO.write(i2.writeBufferedImage(), "PNG", f);
   }
 

@@ -1,7 +1,7 @@
 import java.awt.image.BufferedImage;
 
 /**
- * Interface for manipulating an image file.
+ * Interface for manipulating a .ppm image file.
  */
 public interface PPMImage {
 

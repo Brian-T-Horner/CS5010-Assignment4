@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
@@ -106,14 +109,37 @@ public class ImageUtil {
         blue[j][i] = b;
       }
     }
-    PPMImage redComp = new SimplePPMImage("name",width,height,red);
-    PPMImage greenComp = new SimplePPMImage("name",width,height,green);
-    PPMImage blueComp = new SimplePPMImage("name",width,height,blue);
-    if(Arrays.equals(red,green) && Arrays.equals(red,blue)) {
+    PPMImage redComp = new SimplePPMImage(filename, width, height, red);
+    PPMImage greenComp = new SimplePPMImage(filename, width, height, green);
+    PPMImage blueComp = new SimplePPMImage(filename, width, height, blue);
+    if (Arrays.equals(red, green) && Arrays.equals(red, blue)) {
       return redComp;
     } else {
-      return new CompositePPMImage("name",width,height,redComp,blueComp,greenComp);
+      return new CompositePPMImage(filename, width, height, redComp, blueComp, greenComp);
     }
+  }
+
+  public static void writeToPPMFile(PPMImage image, String fileName) throws IOException {
+    String fullFileName = String.format("%s.ppm", fileName);
+    File ppmFile = new File(fullFileName);
+    FileWriter ppmWriter = new FileWriter(fullFileName);
+    ppmWriter.write("P3\n");
+    ppmWriter.write(String.format("%s %s\n",image.getWidth(),image.getHeight()));
+    ppmWriter.write("255\n");
+    for (int i = 0; i < image.getHeight(); i++) {
+      for (int j = 0; j < image.getWidth(); j++) {
+        if(image.isCompositePPMImage()) {
+          ppmWriter.write(String.format("%d\n",image.getRedscaleImage(image.getName()).getIndex(j,i)));
+          ppmWriter.write(String.format("%d\n",image.getGreenscaleImage(image.getName()).getIndex(j,i)));
+          ppmWriter.write(String.format("%d\n",image.getBluescaleImage(image.getName()).getIndex(j,i)));
+        } else {
+          ppmWriter.write(String.format("%d\n",image.getIndex(j,i)));
+          ppmWriter.write(String.format("%d\n",image.getIndex(j,i)));
+          ppmWriter.write(String.format("%d\n",image.getIndex(j,i)));
+        }
+      }
+    }
+    ppmWriter.close();
   }
 
   //demo main

@@ -39,12 +39,32 @@ public class SimplePPMImage extends AbstractPPMImage {
 
   @Override
   public PPMImage flipHorizontal(String name) {
-    return null;
+    int temp;
+    int[][] flippedH = new int[width][height];
+    for (int i = 0; i < getHeight(); i++) {
+      for (int j = 0; j <  getWidth() / 2; j++) {
+        temp = getIndex(getWidth() - j -1 , i);
+        flippedH[getWidth() - j -1][i] = getIndex(j,i);
+        flippedH[j][i] = temp;
+      }
+    }
+
+    return new SimplePPMImage(name, width, height, flippedH);
   }
 
   @Override
   public PPMImage flipVertical(String name) {
-    return null;
+    int temp;
+    int[][] flippedV = new int[width][height];
+    for (int i = 0; i < getWidth(); i++) {
+      for (int j = 0; j < getHeight() / 2; j++) {
+        temp = getIndex(i, j);
+        flippedV[i][j] = getIndex(i, getHeight() - 1 - j);
+        flippedV[i][getHeight() - 1 - j] = temp;
+      }
+    }
+
+    return new SimplePPMImage(name, width, height, flippedV);
   }
 
   @Override
@@ -63,33 +83,32 @@ public class SimplePPMImage extends AbstractPPMImage {
   }
 
 
-
   @Override
-  public PPMImage brighten(String name,int scale) {
+  public PPMImage brighten(String name, int scale) {
     int[][] brightened = new int[width][height];
-    for(int i=0; i < width;i++) {
-      for(int j=0; j < height;j++) {
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
         int val = component[i][j] + scale;
-        if(val > 255) {
+        if (val > 255) {
           val = 255;
-        } else if(val < 0) {
+        } else if (val < 0) {
           val = 0;
         }
         brightened[i][j] = val;
       }
     }
-    return new SimplePPMImage(name,width,height,brightened);
+    return new SimplePPMImage(name, width, height, brightened);
   }
 
   @Override
   public BufferedImage writeBufferedImage() {
-    BufferedImage image=new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
-    int p,pixel;
-    for(int i=0; i < getWidth();i++) {
-      for(int j=0; j < getHeight();j++) {
-        p = getIndex(i,j);
-        pixel=0xFF000000+(p<<16)+(p<<8)+p;
-        image.setRGB(i,j,pixel);
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    int p, pixel;
+    for (int i = 0; i < getWidth(); i++) {
+      for (int j = 0; j < getHeight(); j++) {
+        p = getIndex(i, j);
+        pixel = 0xFF000000 + (p << 16) + (p << 8) + p;
+        image.setRGB(i, j, pixel);
       }
     }
     return image;

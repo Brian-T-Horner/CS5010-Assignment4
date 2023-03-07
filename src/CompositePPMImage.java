@@ -59,32 +59,62 @@ public class CompositePPMImage extends AbstractPPMImage {
     int[][] value = new int[width][height];
     for (int i = 0; i < width; i++) {
       for (int j = 0; j < height; j++) {
-        int redValue = redComponent.getIndex(i,j);
-        int greenValue = redComponent.getIndex(i,j);
-        int blueValue = redComponent.getIndex(i,j);
-        int max = Math.max(redValue,greenValue);
-        max = Math.max(max,blueValue);
+        int redValue = redComponent.getIndex(i, j);
+        int greenValue = greenComponent.getIndex(i, j);
+        int blueValue = blueComponent.getIndex(i, j);
+        int max = Math.max(redValue, greenValue);
+        max = Math.max(max, blueValue);
         value[i][j] = max;
       }
     }
-    return new SimplePPMImage(name,width,height,value);
+    return new SimplePPMImage(name, width, height, value);
   }
 
   @Override
   public PPMImage getIntensityImage(String name) {
-    return null;
+    int[][] intensity = new int[width][height];
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        int redValue = redComponent.getIndex(i, j);
+        int greenValue = greenComponent.getIndex(i, j);
+        int blueValue = blueComponent.getIndex(i, j);
+        int intensityValue = (int) Math.ceil((double) (redValue + greenValue + blueValue) / 3);
+        if(intensityValue > 255) {
+          intensityValue = 255;
+        } else if(intensityValue < 0) {
+          intensityValue = 0;
+        }
+        intensity[i][j] = intensityValue;
+      }
+    }
+    return new SimplePPMImage(name, width, height, intensity);
   }
 
   @Override
   public PPMImage getLumaImage(String name) {
-    return null;
+    int[][] luma = new int[width][height];
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        int redValue = redComponent.getIndex(i, j);
+        int greenValue = greenComponent.getIndex(i, j);
+        int blueValue = blueComponent.getIndex(i, j);
+        int lumaValue = (int) Math.ceil((double) 0.2126 * redValue + 0.7152 * greenValue + 0.0722 * blueValue);
+        if(lumaValue > 255) {
+          lumaValue = 255;
+        } else if(lumaValue < 0) {
+          lumaValue = 0;
+        }
+        luma[i][j] = lumaValue;
+      }
+    }
+    return new SimplePPMImage(name, width, height, luma);
   }
 
   @Override
-  public PPMImage brighten(String name,int scale) {
-    PPMImage red = getRedscaleImage(name).brighten(name,scale);
-    PPMImage green = getGreenscaleImage(name).brighten(name,scale);
-    PPMImage blue = getBluescaleImage(name).brighten(name,scale);
+  public PPMImage brighten(String name, int scale) {
+    PPMImage red = getRedscaleImage(name).brighten(name, scale);
+    PPMImage green = getGreenscaleImage(name).brighten(name, scale);
+    PPMImage blue = getBluescaleImage(name).brighten(name, scale);
     return new CompositePPMImage(name, width, height, red, blue, green);
   }
 
