@@ -63,7 +63,7 @@ public class ImageUtil {
     }
   }
 
-  public static PPMImage readIntoPPMImage(String filename) {
+  public static PPMImage readIntoPPMImage(String filename, String newName) {
     Scanner sc;
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -115,7 +115,7 @@ public class ImageUtil {
     if (Arrays.equals(red, green) && Arrays.equals(red, blue)) {
       return redComp;
     } else {
-      return new CompositePPMImage(filename, width, height, redComp, blueComp, greenComp);
+      return new CompositePPMImage(newName, width, height, redComp, blueComp, greenComp);
     }
   }
 

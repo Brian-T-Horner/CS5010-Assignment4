@@ -127,12 +127,8 @@ public class SimplePPMImage extends AbstractPPMImage {
 
     SimplePPMImage c = (SimplePPMImage) o;
 
-    if (c.getHeight() == this.getHeight() && c.getWidth() == this.getWidth() &&
-            Arrays.equals(c.component, this.component)) {
-      return true;
-    }
-
-    return false;
+    return c.getHeight() == this.getHeight() && c.getWidth() == this.getWidth() &&
+        Arrays.deepEquals(c.component, this.component);
   }
 
 

@@ -153,13 +153,9 @@ public class CompositePPMImage extends AbstractPPMImage {
 
     CompositePPMImage c = (CompositePPMImage) o;
 
-    if (c.getWidth() == this.getWidth() && c.getHeight() == this.getHeight() &&
-            c.blueComponent.equals(blueComponent) && c.greenComponent.equals(greenComponent) &&
-            c.redComponent.equals(redComponent)) {
-      return true;
-    }
-
-    return false;
+    return c.getWidth() == this.getWidth() && c.getHeight() == this.getHeight() &&
+        c.blueComponent.equals(blueComponent) && c.greenComponent.equals(greenComponent) &&
+        c.redComponent.equals(redComponent);
 
   }
 

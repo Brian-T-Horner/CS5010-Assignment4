@@ -39,6 +39,9 @@ abstract class AbstractPPMImage implements PPMImage {
     return name;
   }
 
+  // Needed for controller arguments?
+  public String setName(String name) {return null;}
+
   public abstract PPMImage flipHorizontal(String name);
 
   public abstract PPMImage flipVertical(String name);
