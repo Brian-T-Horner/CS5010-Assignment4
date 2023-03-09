@@ -1,3 +1,4 @@
+import java.util.Set;
 
 public interface Model {
 
@@ -23,6 +24,7 @@ public interface Model {
 
   int brighten(String currentImageName, String newImageName, int scale);
 
-    int rgbSplit(String currentImageName, String newImageName, String redImageName, String greenImageName, String blueImageName);
+  int rgbSplit(String currentImageName, String newImageName, String redImageName, String greenImageName, String blueImageName);
 
+  Set<String> getCommands();
 }

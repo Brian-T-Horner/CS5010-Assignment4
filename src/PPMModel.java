@@ -1,13 +1,19 @@
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PPMModel implements Model{
 
   Map<String, Image> images = new HashMap<>();
 
+  Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip", "greyscale", "brighten",
+          "rgb-split", "rgb-combine", "value", "intensity", "luma"));
+
   public PPMModel() {
     //only one default field
+  }
+
+  public Set<String> getCommands() {
+    return commands;
   }
 
   @Override

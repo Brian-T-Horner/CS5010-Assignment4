@@ -1,7 +1,15 @@
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class MockModel implements Model {
 
     private StringBuilder log;
     private final int uniqueCode;
+
+    Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip", "greyscale", "brighten",
+            "rgb-split", "rgb-combine", "value", "intensity", "luma"));
+
 
     public MockModel(StringBuilder log, int uniqueCode) {
         this.log = log;
@@ -9,6 +17,8 @@ public class MockModel implements Model {
 
     }
 
+    @Override
+    public Set<String> getCommands(){return commands;}
 
     @Override
     public int loadPPMImage(String imagePath, String newImageName) {

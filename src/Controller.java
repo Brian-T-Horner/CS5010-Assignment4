@@ -10,11 +10,14 @@ public class Controller implements ControllerImp {
   final Readable in;
   final Appendable out;
 
-  Model currentModel;
+
+
+
 
   Controller(Readable in, Appendable out){
     this.in = in;
     this.out = out;
+
 
 
   }
@@ -26,20 +29,30 @@ public class Controller implements ControllerImp {
    * @throws IllegalArgumentException
    */
   public static void main(String[] args) {
-    System.out.println("$: ");
-    try {
-      new Controller(new InputStreamReader(System.in), System.out).run(new PPMModel());
-    } catch (Exception e) {
-      if (e instanceof IllegalArgumentException) {
-      e.printStackTrace();
-      System.out.println(e);
-
+    boolean status = true;
+    Model newModel = new PPMModel();
+    while (status) {
+      System.out.print("$: ");
+      try {
+        new Controller(new InputStreamReader(System.in), System.out).run(newModel);
+      } catch (Exception e) {
+        if (e instanceof IllegalArgumentException) {
+          e.printStackTrace();
+          System.out.println(e);
+          break;
+        } else {
+          e.printStackTrace();
+          System.out.println(e);
+          status = false;
+          break;
+        }
+      }
     }
   }
 
 
   @Override
-  public void run(Model currentModel) throws IOException, IllegalArgumentException {
+  public void run(Model currentModel) throws IllegalArgumentException {
     String[] currentCommands = new String[5];
     int valueCommand = 0;
     Scanner scan = new Scanner(this.in);
@@ -84,7 +97,19 @@ public class Controller implements ControllerImp {
 
 
   //TODO: implementation
-  private boolean checkCommands(String[] commands, int commandVal, Model currentModel) {
+  private boolean checkCommands(String[] commands, int commandVal, Model currentModel) throws IllegalArgumentException {
+    if (!(currentModel.getCommands().contains(commands[0]))) {
+      throw new IllegalArgumentException("Invalid command for this current model");
+    }
+
+    if (commands[0] == "brighten") {
+      if (commandVal < 0 ) {
+        commandVal == 0;
+        commandVal > 255
+      }) {
+
+      }
+    }
       return false;
   }
 
@@ -93,13 +118,10 @@ public class Controller implements ControllerImp {
     String imageName = commands[1];
     String newImageName = commands[2];
 
-    // Check if there was a provided new name for the resulting image/images
+
     if (commands.length < 3) {
       throw new IllegalArgumentException("Must have a name for the new image");
     }
-
-    // Will it be a problem that the image names are the same when going through the loop?
-    // aka two vFlippedImage objects in the map. How can we avoid this
       switch(commands[0]){
         case "redscale":
           return currentModel.getRedComponent(imageName, newImageName);
@@ -131,8 +153,6 @@ public class Controller implements ControllerImp {
           String gImageName = commands[3];
           String bImageName = commands[4];
           return currentModel.rgbSplit(imageName, newImageName, rImageName, gImageName, bImageName);
-        case "buffer-image":
-          break; //TODO:
         default:
 
           break;
