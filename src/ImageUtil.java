@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,9 +19,8 @@ public class ImageUtil {
    *
    * @param filename the path of the file.
    */
-  public static void readPPM(String filename) {
+  public static void printPPM(String filename) {
     Scanner sc;
-
 
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -109,14 +109,7 @@ public class ImageUtil {
         blue[j][i] = b;
       }
     }
-    PPMImage redComp = new SimplePPMImage(filename, width, height, red);
-    PPMImage greenComp = new SimplePPMImage(filename, width, height, green);
-    PPMImage blueComp = new SimplePPMImage(filename, width, height, blue);
-    if (Arrays.equals(red, green) && Arrays.equals(red, blue)) {
-      return redComp;
-    } else {
-      return new CompositePPMImage(newName, width, height, redComp, blueComp, greenComp);
-    }
+      return new CompositePPMImage(newName, width, height, red, blue, green);
   }
 
   public static void writeToPPMFile(PPMImage image, String fileName) throws IOException {
@@ -128,31 +121,27 @@ public class ImageUtil {
     ppmWriter.write("255\n");
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
-        if(image.isCompositePPMImage()) {
-          ppmWriter.write(String.format("%d\n",image.getRedscaleImage(image.getName()).getIndex(j,i)));
-          ppmWriter.write(String.format("%d\n",image.getGreenscaleImage(image.getName()).getIndex(j,i)));
-          ppmWriter.write(String.format("%d\n",image.getBluescaleImage(image.getName()).getIndex(j,i)));
-        } else {
-          ppmWriter.write(String.format("%d\n",image.getIndex(j,i)));
-          ppmWriter.write(String.format("%d\n",image.getIndex(j,i)));
-          ppmWriter.write(String.format("%d\n",image.getIndex(j,i)));
-        }
+          ppmWriter.write(String.format("%d\n",image.getRedComponent()[j][i]));
+          ppmWriter.write(String.format("%d\n",image.getGreenComponent()[j][i]));
+          ppmWriter.write(String.format("%d\n",image.getBlueComponent()[j][i]));
       }
     }
     ppmWriter.close();
   }
-
-  //demo main
-  public static void main(String[] args) {
-    String filename;
-
-    if (args.length > 0) {
-      filename = args[0];
-    } else {
-      filename = "images/Koala.ppm";
+  public static BufferedImage writeBufferedImage(PPMImage image, String name) {
+    BufferedImage buffImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+    int r, g, b, pixel;
+    for (int i = 0; i < image.getWidth(); i++) {
+      for (int j = 0; j < image.getHeight(); j++) {
+        r = image.getRedComponent()[i][j];
+        g = image.getGreenComponent()[i][j];
+        b = image.getBlueComponent()[i][j];
+        pixel = 0xFF000000 + (r << 16) + (g << 8) + b;
+        buffImage.setRGB(i, j, pixel);
+      }
     }
-
-    ImageUtil.readPPM(filename);
+    return buffImage;
   }
+
 }
 

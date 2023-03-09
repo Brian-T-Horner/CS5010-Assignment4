@@ -5,23 +5,18 @@ import java.awt.image.BufferedImage;
  */
 public interface PPMImage {
 
-  boolean isCompositePPMImage();
+  boolean isSingleChannel();
 
-  PPMImage getRedscaleImage(String name);
+  int [][] getRedComponent();
 
-  PPMImage getGreenscaleImage(String name);
+  int [][] getGreenComponent();
 
-  PPMImage getBluescaleImage(String name);
+  int [][] getBlueComponent();
 
-  int getIndex(int i, int j);
 
   int getHeight();
 
   int getWidth();
-
-  String getName();
-
-  void setName(String name);
 
   PPMImage flipHorizontal(String name);
 
@@ -34,8 +29,5 @@ public interface PPMImage {
   PPMImage getLumaImage(String name);
 
   PPMImage brighten(String name,int scale);
-
-  BufferedImage writeBufferedImage();
-
 
 }
