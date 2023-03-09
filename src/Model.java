@@ -23,4 +23,6 @@ public interface Model {
 
     int brighten(String currentImageName, String newImageName, int scale);
 
+    int rgbSplit(String currentImageName, String newImageName, String redImageName, String greenImageName, String blueImageName);
+
 }

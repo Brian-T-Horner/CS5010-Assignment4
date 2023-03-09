@@ -2,7 +2,7 @@ import java.io.IOException;
 
 public interface ControllerImp {
 
-   void run() throws IOException, IllegalArgumentException;
-   void executeCommands(String[] commands, int commandVal, PPMImage currentImage);
+   void run(Model currentModel) throws IOException, IllegalArgumentException;
+   int executeCommands(String[] commands, int commandVal, Model currentModel);
 
 }

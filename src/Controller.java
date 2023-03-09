@@ -10,18 +10,13 @@ public class Controller implements ControllerImp {
   final Readable in;
   final Appendable out;
 
-  //TODO: Make this a set? How to combat multiple objects with the same name for access
-  // Not their field but actual memory access name
-  Map<String, PPMImage> currentImages;
-
-
-
-
+  Model currentModel;
 
   Controller(Readable in, Appendable out){
     this.in = in;
     this.out = out;
-    currentImages = new HashMap<>();
+    currentModel = new PPMModel();
+
   }
 
 
@@ -41,12 +36,13 @@ public class Controller implements ControllerImp {
 
 
   @Override
-  public void run() throws IOException, IllegalArgumentException {
+  public void run(Model currentModel) throws IOException, IllegalArgumentException {
     String[] currentCommands = new String[5];
     int valueCommand = 0;
     Scanner scan = new Scanner(this.in);
     String firstCommand;
-    while(true) {
+    int status = 0;
+    while(status == 0) {
       try {
         firstCommand = scan.next();
       } catch (Exception e){
@@ -58,17 +54,14 @@ public class Controller implements ControllerImp {
             currentCommands[1] = scan.next();
             currentCommands[2] = scan.next();
             currentCommands[3] = null;
-            currentImages.put(currentCommands[2], ImageUtil.readIntoPPMImage(currentCommands[1], currentCommands[2]));
+            status = currentModel.loadPPMImage(currentCommands[1], currentCommands[2]);
           break;
         case "save":
           currentCommands[0] = "save";
           currentCommands[1] = scan.next();
           currentCommands[2] = scan.next();
           currentCommands[3] = null;
-          if (currentImages.get(currentCommands[2]) == null) {
-            throw new IllegalArgumentException("There does not exist a PPMImage of that name");
-          }
-          ImageUtil.writeToPPMFile(currentImages.get(currentCommands[2]), currentCommands[1]);
+          status = currentModel.savePPMImage(currentCommands[1], currentCommands[2]);
           break;
         default:
           // Default for all other commands other than load and save
@@ -84,7 +77,7 @@ public class Controller implements ControllerImp {
             currentCommands[i] = scan.next();
             i++;
           }
-          executeCommands(currentCommands, valueCommand, currentImages.get(currentCommands[1]));
+          status = executeCommands(currentCommands, valueCommand, currentModel);
           break;
       }
     }
@@ -92,21 +85,15 @@ public class Controller implements ControllerImp {
 
 
   //TODO: implementation
-  private boolean checkCommands(String[] commands, int commandVal) {
+  private boolean checkCommands(String[] commands, int commandVal, Model currentModel) {
       return false;
   }
 
   @Override
-  public void executeCommands(String[] commands, int commandVal, PPMImage currentImage) {
+  public int executeCommands(String[] commands, int commandVal, Model currentModel) {
     String commandLower = commands[0].toLowerCase();
-//    String imageName = commands[1];
+    String imageName = commands[1];
     String newImageName = commands[2];
-
-
-    // Check that we have the image saved in our hashmap buffer to operate on
-    if (currentImage == null) {
-      throw new IllegalArgumentException("There does not exist a PPMImage of that name");
-    }
 
     // Check if there was a provided new name for the resulting image/images
     if (commands.length < 3) {
@@ -117,47 +104,45 @@ public class Controller implements ControllerImp {
     // aka two vFlippedImage objects in the map. How can we avoid this
       switch(commandLower){
         case "redscale":
-          currentImages.put(newImageName, currentImage.getRedscaleImage(newImageName));
+          return currentModel.getRedscaleImage(imageName, newImageName);
           break;
         case "greenscale":
-          currentImages.put(newImageName, currentImage.getGreenscaleImage(newImageName));
+          return currentModel.getGreenscaleImage(imageName, newImageName);
           break;
         case "bluescale":
-          currentImages.put(newImageName, currentImage.getBluescaleImage(newImageName));
+          return currentModel.getBluescaleImage(imageName, newImageName);
           break;
         case "vertical-flip":
 
-          currentImages.put(newImageName, currentImage.flipVertical(newImageName));
+          return currentModel.flipVertical(imageName, newImageName);
           break;
         case "horizontal-flip":
-          currentImages.put(newImageName, currentImage.flipHorizontal(newImageName));
+          return currentModel.flipHorizontal(imageName, newImageName);
           break;
         case "value":
-          currentImages.put(newImageName, currentImage.getValueImage(newImageName));
+          return currentModel.getValueImage(imageName, newImageName);
           break;
         case "intensity":
-          currentImages.put(newImageName, currentImage.getIntensityImage(newImageName));
+          return currentModel.getIntensityImage(imageName, newImageName);
           break;
         case "luma":
-          currentImages.put(newImageName, currentImage.getLumaImage(newImageName));
+          return currentModel.getLumaImage(imageName, newImageName);
           break;
         case "greyscale":
           break; //TODO:
         case "brighten":
-          currentImages.put(newImageName, currentImage.brighten(newImageName, commandVal));
+          return currentModel.brighten(imageName, newImageName, commandVal);
           break;
         case "rgb-split":
           if (commands.length < 5) {
             throw new IllegalArgumentException("Needs 3 names for the new red, green and blue images");
           }
 
+
           String rImageName = commands[2];
           String gImageName = commands[3];
           String bImageName = commands[4];
-
-          currentImages.put(rImageName, currentImage.getRedscaleImage(rImageName));
-          currentImages.put(gImageName, currentImage.getGreenscaleImage(gImageName));
-          currentImages.put(bImageName, currentImage.getBluescaleImage(bImageName));
+          currentModel.rgbSplit(imageName, newImageName, rImageName, gImageName, bImageName);
           break;
         case "buffer-image":
           break; //TODO:
