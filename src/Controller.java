@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,6 +10,8 @@ public class Controller implements ControllerImp {
   final Readable in;
   final Appendable out;
 
+  //TODO: Make this a set? How to combat multiple objects with the same name for access
+  // Not their field but actual memory access name
   Map<String, PPMImage> currentImages;
 
 
@@ -22,12 +25,27 @@ public class Controller implements ControllerImp {
   }
 
 
+  /**
+   * New main method
+   * @param model
+   * @throws IOException
+   * @throws IllegalArgumentException
+   */
+//  public static void main(String[] args) {
+//    try {
+//      new Controller(new InputStreamReader(System.in), System.out).run(new ImageUtil());
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//      throw new RuntimeException(e);
+//    }
+//  }
+
 
   @Override
   public void run(ImageUtil model) throws IOException, IllegalArgumentException {
     Objects.requireNonNull(model);
     String[] currentCommands = new String[5];
-    int valueCommand;
+    int valueCommand = 0;
     Scanner scan = new Scanner(this.in);
     String firstCommand;
     while(true) {
@@ -58,8 +76,14 @@ public class Controller implements ControllerImp {
           model.writeToPPMFile(copyImage, currentCommands[1]);
           break;
         default:
+          // Default for all other commands other than load and save
           currentCommands[0] = firstCommand;
-          valueCommand = scan.nextInt();
+
+          // Check if an int would be passed for the command
+          if(currentCommands[0].toLowerCase().equals("brighten")) {
+            valueCommand = scan.nextInt();
+          }
+          // Get the rest of the commands in the currentCommands array
           int i = 1;
           while(scan.hasNext()){
             currentCommands[i] = scan.next();
@@ -82,8 +106,15 @@ public class Controller implements ControllerImp {
   public void executeCommands(ImageUtil model, String[] commands, int commandVal) {
     String commandLower = commands[0].toLowerCase();
     String imageName = commands[1];
+
+    // Check that we have the image saved in our hashmap buffer to operate on
     if (currentImages.get(imageName) == null) {
       throw new IllegalArgumentException("There does not exist a PPMImage of that name");
+    }
+
+    // Check if there was a provided new name for the resulting image/images
+    if (commands.length < 3) {
+      throw new IllegalArgumentException("Must have a name for the new image");
     }
 
     // Will it be a problem that the image names are the same when going through the loop?
@@ -122,7 +153,7 @@ public class Controller implements ControllerImp {
           currentImages.put(commands[2], lumaImage);
           break;
         case "greyscale":
-          break;
+          break; //TODO:
         case "brighten":
           PPMImage brightenImage = currentImages.get(imageName).brighten(commands[2], commandVal);
           currentImages.put(commands[2], brightenImage);
@@ -134,9 +165,12 @@ public class Controller implements ControllerImp {
           PPMImage rImage = currentImages.get(imageName).getRedscaleImage(commands[2]);
           PPMImage gImage = currentImages.get(imageName).getGreenscaleImage(commands[3]);
           PPMImage bImage = currentImages.get(imageName).getBluescaleImage(commands[4]);
+          currentImages.put(commands[2], rImage);
+          currentImages.put(commands[3], gImage);
+          currentImages.put(commands[4], bImage);
           break;
         case "buffer-image":
-          break;
+          break; //TODO:
         default:
           break;
       }

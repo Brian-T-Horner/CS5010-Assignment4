@@ -42,7 +42,7 @@ public class CompositePPMImageTest {
 
   @Test
   public void testIOExample() throws IOException {
-    PPMImage i2 = ImageUtil.readIntoPPMImage("newfile.ppm");
+    PPMImage i2 = ImageUtil.readIntoPPMImage("newfile.ppm", "newFile");
 
 //    i2 = i2.getLumaImage("");
 //    ImageUtil.writeToPPMFile(i2,"newfile");
