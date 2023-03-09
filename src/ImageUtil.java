@@ -2,7 +2,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
@@ -63,7 +62,7 @@ public class ImageUtil {
     }
   }
 
-  public static PPMImage readIntoPPMImage(String filename, String newName) {
+  public static Image readIntoPPMImage(String filename) {
     Scanner sc;
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -109,10 +108,10 @@ public class ImageUtil {
         blue[j][i] = b;
       }
     }
-      return new CompositePPMImage(newName, width, height, red, blue, green);
+      return new PPMImage(width, height, red, blue, green);
   }
 
-  public static void writeToPPMFile(PPMImage image, String fileName) throws IOException {
+  public static void writeToPPMFile(Image image, String fileName) throws IOException {
     String fullFileName = String.format("%s.ppm", fileName);
     File ppmFile = new File(fullFileName);
     FileWriter ppmWriter = new FileWriter(fullFileName);
@@ -128,7 +127,7 @@ public class ImageUtil {
     }
     ppmWriter.close();
   }
-  public static BufferedImage writeBufferedImage(PPMImage image, String name) {
+  public static BufferedImage writeBufferedImage(Image image) {
     BufferedImage buffImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
     int r, g, b, pixel;
     for (int i = 0; i < image.getWidth(); i++) {
