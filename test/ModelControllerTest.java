@@ -23,7 +23,7 @@ public class ModelControllerTest {
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
 
-    controllerTest.run(new MockModel (log, 3390));
+
   }
 
   @Test

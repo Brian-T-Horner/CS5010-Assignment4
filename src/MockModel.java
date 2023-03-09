@@ -3,12 +3,27 @@ public class MockModel implements Model {
     private StringBuilder log;
     private final int uniqueCode;
 
-
     public MockModel(StringBuilder log, int uniqueCode) {
         this.log = log;
         this.uniqueCode = uniqueCode;
 
     }
+
+
+    @Override
+    public int loadPPMImage(String imagePath, String newImageName) {
+        log.append("loadPPMImage: imagePath = " + imagePath +
+                " newImageName = " + newImageName + "\n");
+        return uniqueCode;
+    }
+
+    @Override
+    public int savePPMImage(String imagePath, String imageName) {
+        log.append("savePPMImage: imagePath = " + imagePath +
+                " imageName = " + imageName + "\n");
+        return uniqueCode;
+    }
+
     @Override
     public int getRedscaleImage(String currentImageName, String newImageName) {
         log.append("getRedScaleImage: currentImageName = " + currentImageName + " newImageName = "

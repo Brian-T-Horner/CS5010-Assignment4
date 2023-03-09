@@ -1,6 +1,10 @@
 
 public interface Model {
 
+    int loadPPMImage(String imagePath, String newImageName);
+
+    int savePPMImage(String imagePath, String imageName);
+
      int getRedscaleImage(String currentImageName, String newImageName);
 
     int getGreenscaleImage(String currentImageName, String newImageName);
