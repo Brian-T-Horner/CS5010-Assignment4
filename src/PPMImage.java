@@ -21,6 +21,8 @@ public interface PPMImage {
 
   String getName();
 
+  void setName(String name);
+
   PPMImage flipHorizontal(String name);
 
   PPMImage flipVertical(String name);

@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -7,6 +9,8 @@ public class Controller implements ControllerImp {
   final Readable in;
   final Appendable out;
 
+  Map<String, PPMImage> currentImages;
+
 
 
 
@@ -14,6 +18,7 @@ public class Controller implements ControllerImp {
   Controller(Readable in, Appendable out){
     this.in = in;
     this.out = out;
+    currentImages = new HashMap<>();
   }
 
 
@@ -38,23 +43,19 @@ public class Controller implements ControllerImp {
             currentCommands[2] = scan.next();
             currentCommands[3] = null;
             PPMImage newImage =  model.readIntoPPMImage(currentCommands[1], currentCommands[2]);
+            newImage.setName(currentCommands[2]);
+            currentImages.put(currentCommands[2], newImage);
           break;
         case "save":
           currentCommands[0] = "save";
           currentCommands[1] = scan.next();
           currentCommands[2] = scan.next();
           currentCommands[3] = null;
-          try {
-              Class checkClass = Class.forName(currentCommands[2]);
-              if(checkClass.isInstance(PPMImage)){
-
-                model.writeToPPMFile(checkClass, currentCommands[1]);
-              }
-          } catch (Exception e) {
-            throw Invalid
+          PPMImage copyImage = currentImages.get(currentCommands[2]);
+          if (copyImage == null) {
+            throw new IllegalArgumentException("There does not exist a PPMImage of that name");
           }
-          PPMImage image = currentCommands[2];
-          model.writeToPPMFile(image, currentCommands[1]);
+          model.writeToPPMFile(copyImage, currentCommands[1]);
           break;
         default:
           currentCommands[0] = firstCommand;
@@ -63,8 +64,8 @@ public class Controller implements ControllerImp {
           while(scan.hasNext()){
             currentCommands[i] = scan.next();
             i++;
-            executeCommands(model, currentCommands, valueCommand);
           }
+          executeCommands(model, currentCommands, valueCommand);
           break;
       }
     }
@@ -79,6 +80,65 @@ public class Controller implements ControllerImp {
 
   @Override
   public void executeCommands(ImageUtil model, String[] commands, int commandVal) {
+    String commandLower = commands[0].toLowerCase();
+    String imageName = commands[1];
+    if (currentImages.get(imageName) == null) {
+      throw new IllegalArgumentException("There does not exist a PPMImage of that name");
+    }
 
+    // Will it be a problem that the image names are the same when going through the loop?
+    // aka two vFlippedImage objects in the map. How can we avoid this
+      switch(commandLower){
+        case "redscale":
+          PPMImage redScaleImage = currentImages.get(imageName).getRedscaleImage(commands[2]);
+          currentImages.put(commands[2], redScaleImage);
+          break;
+        case "greenscale":
+          PPMImage greenScaleImage = currentImages.get(imageName).getGreenscaleImage(commands[2]);
+          currentImages.put(commands[2], greenScaleImage);
+          break;
+        case "bluescale":
+          PPMImage blueScaleImage = currentImages.get(imageName).getBluescaleImage(commands[2]);
+          currentImages.put(commands[2], blueScaleImage);
+          break;
+        case "vertical-flip":
+          PPMImage vFlippedImage = currentImages.get(imageName).flipVertical(commands[2]);
+          currentImages.put(commands[2], vFlippedImage);
+          break;
+        case "horizontal-flip":
+          PPMImage hFlippedImage = currentImages.get(imageName).flipHorizontal(commands[2]);
+          currentImages.put(commands[2], hFlippedImage);
+          break;
+        case "value":
+          PPMImage valueImage = currentImages.get(imageName).getValueImage(commands[2]);
+          currentImages.put(commands[2], valueImage);
+          break;
+        case "intensity":
+          PPMImage intensityImage = currentImages.get(imageName).getIntensityImage(commands[2]);
+          currentImages.put(commands[2], intensityImage);
+          break;
+        case "luma":
+          PPMImage lumaImage = currentImages.get(imageName).getLumaImage(commands[2]);
+          currentImages.put(commands[2], lumaImage);
+          break;
+        case "greyscale":
+          break;
+        case "brighten":
+          PPMImage brightenImage = currentImages.get(imageName).brighten(commands[2], commandVal);
+          currentImages.put(commands[2], brightenImage);
+          break;
+        case "rgb-split":
+          if (commands.length < 5) {
+            throw new IllegalArgumentException("Needs 3 names for the new red, green and blue images");
+          }
+          PPMImage rImage = currentImages.get(imageName).getRedscaleImage(commands[2]);
+          PPMImage gImage = currentImages.get(imageName).getGreenscaleImage(commands[3]);
+          PPMImage bImage = currentImages.get(imageName).getBluescaleImage(commands[4]);
+          break;
+        case "buffer-image":
+          break;
+        default:
+          break;
+      }
   }
 }

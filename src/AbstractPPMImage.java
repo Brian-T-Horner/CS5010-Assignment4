@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
  */
 abstract class AbstractPPMImage implements PPMImage {
 
-  protected final String name;
+  protected String name;
   protected final int height;
   protected final int width;
 
@@ -40,7 +40,7 @@ abstract class AbstractPPMImage implements PPMImage {
   }
 
   // Needed for controller arguments?
-  public String setName(String name) {return null;}
+  public void setName(String name) {this.name = name;}
 
   public abstract PPMImage flipHorizontal(String name);
 
