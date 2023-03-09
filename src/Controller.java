@@ -82,6 +82,12 @@ public class Controller implements ControllerImp {
           // Check if an int would be passed for the command
           if(currentCommands[0].equals("brighten")) {
             valueCommand = scan.nextInt();
+            if (valueCommand < 0) {
+              valueCommand = 0;
+            }
+            if(valueCommand > 255) {
+              valueCommand = 255;
+            }
           }
           // Get the rest of the commands in the currentCommands array
           int i = 1;
@@ -100,15 +106,6 @@ public class Controller implements ControllerImp {
   private boolean checkCommands(String[] commands, int commandVal, Model currentModel) throws IllegalArgumentException {
     if (!(currentModel.getCommands().contains(commands[0]))) {
       throw new IllegalArgumentException("Invalid command for this current model");
-    }
-
-    if (commands[0] == "brighten") {
-      if (commandVal < 0 ) {
-        commandVal == 0;
-        commandVal > 255
-      }) {
-
-      }
     }
       return false;
   }
