@@ -24,10 +24,8 @@ public class PPMImage implements Image {
 
   @Override
   public boolean isSingleChannel() {
-    if (Arrays.equals(redComponent, greenComponent) && Arrays.equals(redComponent, blueComponent)) {
-      return true;
-    }
-    return false;
+    return Arrays.equals(redComponent, greenComponent)
+            && Arrays.equals(redComponent, blueComponent);
   }
 
   @Override
