@@ -25,21 +25,21 @@ public class MockModel implements Model {
     }
 
     @Override
-    public int getRedscaleImage(String currentImageName, String newImageName) {
+    public int getRedComponent(String currentImageName, String newImageName) {
         log.append("getRedScaleImage: currentImageName = " + currentImageName + " newImageName = "
                 + newImageName + "\n");
         return uniqueCode;
     }
 
     @Override
-    public int getGreenscaleImage(String currentImageName, String newImageName) {
+    public int getGreenComponent(String currentImageName, String newImageName) {
         log.append("getGreenScaleImage: currentImageName = " + currentImageName + " newImageName = "
                 + newImageName + "\n");
         return uniqueCode;
     }
 
     @Override
-    public int getBluescaleImage(String currentImageName, String newImageName) {
+    public int getBlueComponent(String currentImageName, String newImageName) {
         log.append("getBlueScaleImage: currentImageName = " + currentImageName + " newImageName = "
                 + newImageName + "\n");
         return uniqueCode;
@@ -84,6 +84,13 @@ public class MockModel implements Model {
     public int brighten(String currentImageName, String newImageName, int scale) {
         log.append("brighten: currentImageName = " + currentImageName + " newImageName = "
                 + newImageName + " scale = " + scale + "\n");
+        return uniqueCode;
+    }
+
+    @Override
+    public int rgbSplit(String currentImageName, String newImageName, String redImageName, String greenImageName, String blueImageName) {
+        log.append("rgbSplit: currentImageName = " + currentImageName + " redImageName = " + redImageName
+                + " greenImageName = " + greenImageName + " blueImageName = " + blueImageName + "\n");
         return uniqueCode;
     }
 }

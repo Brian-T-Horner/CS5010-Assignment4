@@ -15,7 +15,7 @@ public class Controller implements ControllerImp {
   Controller(Readable in, Appendable out){
     this.in = in;
     this.out = out;
-    currentModel = new PPMModel();
+
 
   }
 
@@ -25,14 +25,17 @@ public class Controller implements ControllerImp {
    * @throws IOException
    * @throws IllegalArgumentException
    */
-//  public static void main(String[] args) {
-//    try {
-//      new Controller(new InputStreamReader(System.in), System.out).run(new ImageUtil());
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//      throw new RuntimeException(e);
-//    }
-//  }
+  public static void main(String[] args) {
+    System.out.println("$: ");
+    try {
+      new Controller(new InputStreamReader(System.in), System.out).run(new PPMModel());
+    } catch (Exception e) {
+      if (e instanceof IllegalArgumentException) {
+      e.printStackTrace();
+      System.out.println(e);
+
+    }
+  }
 
 
   @Override
@@ -41,13 +44,9 @@ public class Controller implements ControllerImp {
     int valueCommand = 0;
     Scanner scan = new Scanner(this.in);
     String firstCommand;
-    int status = 0;
-    while(status == 0) {
-      try {
-        firstCommand = scan.next();
-      } catch (Exception e){
-        throw new IllegalArgumentException("Invalid first command");
-      }
+    int status = 1;
+    while(status == 1) {
+      firstCommand = scan.next().toLowerCase();
       switch (firstCommand) {
         case "load":
             currentCommands[0] = "load";
@@ -68,7 +67,7 @@ public class Controller implements ControllerImp {
           currentCommands[0] = firstCommand;
 
           // Check if an int would be passed for the command
-          if(currentCommands[0].toLowerCase().equals("brighten")) {
+          if(currentCommands[0].equals("brighten")) {
             valueCommand = scan.nextInt();
           }
           // Get the rest of the commands in the currentCommands array
@@ -91,7 +90,6 @@ public class Controller implements ControllerImp {
 
   @Override
   public int executeCommands(String[] commands, int commandVal, Model currentModel) {
-    String commandLower = commands[0].toLowerCase();
     String imageName = commands[1];
     String newImageName = commands[2];
 
@@ -102,37 +100,27 @@ public class Controller implements ControllerImp {
 
     // Will it be a problem that the image names are the same when going through the loop?
     // aka two vFlippedImage objects in the map. How can we avoid this
-      switch(commandLower){
+      switch(commands[0]){
         case "redscale":
-          return currentModel.getRedscaleImage(imageName, newImageName);
-          break;
+          return currentModel.getRedComponent(imageName, newImageName);
         case "greenscale":
-          return currentModel.getGreenscaleImage(imageName, newImageName);
-          break;
+          return currentModel.getGreenComponent(imageName, newImageName);
         case "bluescale":
-          return currentModel.getBluescaleImage(imageName, newImageName);
-          break;
+          return currentModel.getBlueComponent(imageName, newImageName);
         case "vertical-flip":
-
           return currentModel.flipVertical(imageName, newImageName);
-          break;
         case "horizontal-flip":
           return currentModel.flipHorizontal(imageName, newImageName);
-          break;
         case "value":
           return currentModel.getValueImage(imageName, newImageName);
-          break;
         case "intensity":
           return currentModel.getIntensityImage(imageName, newImageName);
-          break;
         case "luma":
           return currentModel.getLumaImage(imageName, newImageName);
-          break;
         case "greyscale":
           break; //TODO:
         case "brighten":
           return currentModel.brighten(imageName, newImageName, commandVal);
-          break;
         case "rgb-split":
           if (commands.length < 5) {
             throw new IllegalArgumentException("Needs 3 names for the new red, green and blue images");
@@ -142,12 +130,13 @@ public class Controller implements ControllerImp {
           String rImageName = commands[2];
           String gImageName = commands[3];
           String bImageName = commands[4];
-          currentModel.rgbSplit(imageName, newImageName, rImageName, gImageName, bImageName);
-          break;
+          return currentModel.rgbSplit(imageName, newImageName, rImageName, gImageName, bImageName);
         case "buffer-image":
           break; //TODO:
         default:
+
           break;
       }
+    return 1;
   }
 }

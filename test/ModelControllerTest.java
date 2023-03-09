@@ -15,8 +15,8 @@ public class ModelControllerTest {
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 3390));
-    assertEquals("loadPPMImage: image path = images/koala.ppm " +
-            "newImageName = koala", log.toString());
+    assertEquals("loadPPMImage: imagePath = images/koala.ppm " +
+            "newImageName = koala\n", log.toString());
     assertEquals("3390\n3390\n", out.toString());
 
   }
@@ -28,19 +28,10 @@ public class ModelControllerTest {
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 4537));
-    assertEquals("savePPMImage: image path = images/koala-brighter.ppm " +
-            "newImageName = koala-brighter", log.toString());
+    assertEquals("savePPMImage: imagePath = images/koala-brighter.ppm " +
+            "imageName = koala-brighter\n", log.toString());
     assertEquals("4537\n4537\n", out.toString());
   }
-
-  @Test
-  public void testRedScaleImage() throws IOException {}
-
-  @Test
-  public void testGreenScaleImage() throws IOException {}
-
-  @Test
-  public void testBlueScaleImage() throws IOException {}
 
   @Test
   public void testFlipHorizontal() throws IOException {
@@ -49,20 +40,23 @@ public class ModelControllerTest {
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 7362));
-    assertEquals("flipHorizontal: currentImageName = koala-vertical" +
-            "newImageName = koala-vertical-horizontal", log.toString());
+    assertEquals("flipHorizontal: currentImageName = koala-vertical " +
+            "newImageName = koala-vertical-horizontal\n", log.toString());
     assertEquals("7362\n7362\n", out.toString());
   }
+
+
+
 
   @Test
   public void testFlipVertical() throws IOException {
     StringBuffer out = new StringBuffer();
-    Reader in = new StringReader("flipVertical koala koala-vertical");
+    Reader in = new StringReader("vertical-flip koala koala-vertical");
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 999));
-    assertEquals("flipVertical: currentImageName = koala" +
-            "newImageName = koala-vertical", log.toString());
+    assertEquals("flipVertical: currentImageName = koala " +
+            "newImageName = koala-vertical\n", log.toString());
     assertEquals("999\n999\n", out.toString());
   }
 
@@ -73,8 +67,8 @@ public class ModelControllerTest {
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 1432));
-    assertEquals("getValueImage: currentImageName = koala" +
-            "newImageName = koala-value", log.toString());
+    assertEquals("getValueImage: currentImageName = koala " +
+            "newImageName = koala-value\n", log.toString());
     assertEquals("1432\n1432\n", out.toString());
   }
 
@@ -85,8 +79,8 @@ public class ModelControllerTest {
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 33332));
-    assertEquals("getIntensityImage: currentImageName = koala" +
-            "newImageName = koala-intensity", log.toString());
+    assertEquals("getIntensityImage: currentImageName = koala " +
+            "newImageName = koala-intensity\n", log.toString());
     assertEquals("33332\n33332\n", out.toString());
   }
 
@@ -98,8 +92,8 @@ public class ModelControllerTest {
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 9191));
-    assertEquals("getLumaImage: currentImageName = koala" +
-            "newImageName = koala-luma", log.toString());
+    assertEquals("getLumaImage: currentImageName = koala " +
+            "newImageName = koala-luma\n", log.toString());
     assertEquals("9191\n9191\n", out.toString());
   }
 
@@ -110,12 +104,21 @@ public class ModelControllerTest {
     ControllerImp controllerTest = new Controller(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 34342));
-    assertEquals("brighten: currentImageName = koala" +
-            "newImageName = koala-brighten scale = 50", log.toString());
+    assertEquals("brighten: currentImageName = koala " +
+            "newImageName = koala-brighten scale = 50\n", log.toString());
     assertEquals("34342\n34342\n", out.toString());
   }
 
   @Test
-  public void testWriteBufferedImage() throws IOException {}
+  public void testRGBSplit() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("rgb-split koala koala-red koala-green koala-blue");
+    ControllerImp controllerTest = new Controller(in, out);
+    StringBuilder log = new StringBuilder();
+    controllerTest.run(new MockModel(log, 6767));
+    assertEquals("rgbSplit: currentImageName = koala " +
+            "redImageName = koala-red greenImageName = koala-green blueImageName = koala-blue\n", log.toString());
+    assertEquals("6767\n6767\n", out.toString());
+  }
 
 }

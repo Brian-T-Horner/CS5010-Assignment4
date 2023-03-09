@@ -94,4 +94,11 @@ public class PPMModel implements Model{
     images.put(newImageName,i.brighten(scale));
     return 1;
   }
+
+
+  //TODO: Implement
+  @Override
+  public int rgbSplit(String currentImageName, String newImageName, String redImageName, String greenImageName, String blueImageName) {
+    return 1;
+  }
 }
