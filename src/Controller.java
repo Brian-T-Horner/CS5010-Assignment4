@@ -24,7 +24,6 @@ public class Controller implements ControllerImp {
 
   /**
    * New main method
-   * @throws IOException
    * @throws IllegalArgumentException
    */
   public static void main(String[] args) {
@@ -50,7 +49,7 @@ public class Controller implements ControllerImp {
 
 
   @Override
-  public int run(Model currentModel) throws IllegalArgumentException, IOException, NoSuchElementException {
+  public int run(Model currentModel) throws IllegalArgumentException, NoSuchElementException {
     Objects.requireNonNull(currentModel);
     String[] currentCommands = new String[5];
     int valueCommand = 0;
@@ -121,8 +120,7 @@ public class Controller implements ControllerImp {
   }
 
   @Override
-  public int executeCommands(String[] commands, int commandVal, Model currentModel)
-      throws IOException {
+  public int executeCommands(String[] commands, int commandVal, Model currentModel) {
     String imageName = commands[1];
     String newImageName = commands[2];
 
@@ -155,8 +153,6 @@ public class Controller implements ControllerImp {
           return currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
         case "brighten":
           return currentModel.brighten(imageName, newImageName, commandVal);
-//        case "darken":
-//          return currentModel.darken(imageName, newImageName, commandVal);
         case "rgb-split":
           String newRImageName = commands[2];
           String newGImageName = commands[3];

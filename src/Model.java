@@ -1,5 +1,6 @@
 import java.util.Set;
 
+
 public interface Model {
 
   int loadPPMImage(String imagePath, String newImageName);
