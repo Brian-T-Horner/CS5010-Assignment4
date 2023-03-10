@@ -79,58 +79,51 @@ public class Controller implements ControllerImp {
     String[] currentCommands = new String[5];
     int valueCommand = 0;
     Scanner scan = new Scanner(this.in);
-    currentCommands[0] = scan.next();
-    currentCommands[0] = currentCommands[0].toLowerCase();
-    if (!(currentModel.getCommands().contains(currentCommands[0]))) {
-      throw new IllegalArgumentException("Invalid command " + currentCommands[0] + " for this current model");
+    String commandString = scan.nextLine();
+    currentCommands = commandString.split(" ");
+    if(currentCommands.length < 3) {
+      throw new IllegalArgumentException("Need more than 3 parameters");
     }
     switch (currentCommands[0]) {
       case "load":
-        String loadImagePath = scan.next();
-        String loadImageName = scan.next();
+        if(currentCommands.length > 3) {
+          throw new IllegalArgumentException("Load command only takes 3 parameters");
+        }
+        String loadImagePath = currentCommands[1];
+        String loadImageName = currentCommands[2];
+
         currentModel.loadImage(loadImagePath, loadImageName);
         break;
       case "save":
-        String saveImagePath = scan.next();
-        String saveImageName = scan.next();
+        if(currentCommands.length > 3) {
+          throw new IllegalArgumentException("Save command only takes 3 parameters");
+        }
+        String saveImagePath = currentCommands[1];
+        String saveImageName = currentCommands[2];
         currentModel.saveImage(saveImagePath, saveImageName);
         break;
       case "quit":
         System.out.println("Exiting application...");
         System.exit(0);
         break;
+      case "rgb-split":
+      case "rgb-combine":
+        if(currentCommands.length < 5) {
+          throw new IllegalArgumentException("rgb-split and rgb-combine commands only take 5 parameters");
+        }
+        executeCommands(currentCommands, valueCommand,currentModel);
+        break;
+      case "brighten":
+        try {
+          valueCommand = Integer.parseInt(currentCommands[1]);
+        } catch (Exception e){
+          throw new IllegalArgumentException("Second command of brighten must be a valid integer");
+        }
+        executeCommands(currentCommands, valueCommand, currentModel);
+        break;
       default:
         // Default for all other commands other than load and save
-
-        // Check if an int would be passed for the command
-        if (currentCommands[0].equals("brighten")) {
-          // Try to get the int command for brighten
-          try {
-            valueCommand = scan.nextInt();
-          } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e);
-            break;
-          }
-        }
-
         // Get the rest of the commands in the currentCommands array
-        int i = 1;
-        while(i < 4){
-        if(!(scan.hasNext() && i < 4)){
-          throw new IllegalArgumentException("All commands take at minimum three parameters");
-        } else {
-          currentCommands[i] = scan.next();
-          i++;
-      }
-        }
-//        while (scan.hasNext()) {
-//          currentCommands[i] = scan.next();
-//          i++;
-//        }
-//        if(currentCommands. < 3) {
-//          throw new IllegalArgumentException("All commands take at minimum three parameters");
-//        }
         executeCommands(currentCommands, valueCommand, currentModel);
         break;
     }
