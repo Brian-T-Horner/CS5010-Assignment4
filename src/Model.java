@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -10,14 +13,14 @@ public interface Model {
    * @param imagePath The path of the image to load.
    * @param newImageName The name to assign to the loaded image.
    */
-  void loadImage(String imagePath, String newImageName);
+  void loadImage(String imagePath, String newImageName) throws FileNotFoundException;
 
   /**
    * Method to save an image - calls the image object method.
    * @param imagePath The path of where to save the image.
    * @param imageName The name of the image to save.
    */
-  void saveImage(String imagePath, String imageName);
+  void saveImage(String imagePath, String imageName) throws IOException, NoSuchElementException;
 
   /**
    * Method to get the red component of an image - calls the image object method.
@@ -45,35 +48,35 @@ public interface Model {
    * @param currentImageName The name of the image to flip horizontally.
    * @param newImageName The name to save the resulting image as.
    */
-  void flipHorizontal(String currentImageName, String newImageName);
+  void flipHorizontal(String currentImageName, String newImageName) throws NoSuchElementException;
 
   /**
    * Method to flip an image vertically - calls the image object method.
    * @param currentImageName The name of the image to flip vertically.
    * @param newImageName The name to save the resulting image as.
    */
-  void flipVertical(String currentImageName, String newImageName);
+  void flipVertical(String currentImageName, String newImageName) throws NoSuchElementException;
 
   /**
    * Method to get the value image of an image - calls the image object method.
    * @param currentImageName The name of the image to get the value image from.
    * @param newImageName The name to save the resulting image as.
    */
-  void getValueImage(String currentImageName, String newImageName);
+  void getValueImage(String currentImageName, String newImageName) throws NoSuchElementException;
 
   /**
    * Method to get the intensity image of an image - calls the image object method.
    * @param currentImageName The name of the image to get the intensity image from.
    * @param newImageName The name to save the resulting image as.
    */
-  void getIntensityImage(String currentImageName, String newImageName);
+  void getIntensityImage(String currentImageName, String newImageName) throws NoSuchElementException;
 
   /**
    * Method to get the luma image of an image - calls the image object method.
    * @param currentImageName The name of the image to get the luma image from.
    * @param newImageName The name to save the resulting image as.
    */
-  void getLumaImage(String currentImageName, String newImageName);
+  void getLumaImage(String currentImageName, String newImageName) throws NoSuchElementException;
 
   /**
    * Method to brighten or darken an image - calls the image object method.
@@ -81,7 +84,7 @@ public interface Model {
    * @param newImageName The name to save the resulting image as.
    * @param scale The scale to brighten or darken the image.
    */
-  void brighten(String currentImageName, String newImageName, int scale);
+  void brighten(String currentImageName, String newImageName, int scale) throws NoSuchElementException;
 
   /**
    * Method to split an image into its rgb components - calls the image object method.
@@ -90,7 +93,7 @@ public interface Model {
    * @param greenImageName The name to save the resulting green component image as.
    * @param blueImageName The name to save the resulting blue component image as.
    */
-  void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName);
+  void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) throws NoSuchElementException;
 
   /**
    * Method to combine rgb components into one image.
@@ -99,7 +102,7 @@ public interface Model {
    * @param gImageName The name of the green component image.
    * @param bImageName The name of the blue component image.
    */
-  void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName);
+  void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) throws NoSuchElementException;
 
   /**
    * Method to get the greyscale image of an image - calls the image object method.
@@ -107,7 +110,7 @@ public interface Model {
    * @param imageName The image to get the grey scale image from.
    * @param newImageName The name to save the resulting image as.
    */
-  void greyscale(String greyScaleComponent, String imageName, String newImageName);
+  void greyscale(String greyScaleComponent, String imageName, String newImageName) throws NoSuchElementException;
 
   /**
    * Method to get the commands that are available with the Model object.

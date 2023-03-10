@@ -70,7 +70,7 @@ public class Controller implements ControllerImp {
    * @param currentModel The model the controller object is instructing.
    */
   @Override
-  public void run(Model currentModel) {
+  public void run(Model currentModel) throws IOException {
     Objects.requireNonNull(currentModel);
     String[] currentCommands = new String[5];
     int valueCommand = 0;
