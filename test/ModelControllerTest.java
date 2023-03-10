@@ -102,6 +102,20 @@ public class ModelControllerTest {
   }
 
   @Test
+  public void testDarken() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("darken 50 koala koala-brighten");
+    ControllerImp controllerTest = new Controller(in, out);
+    StringBuilder log = new StringBuilder();
+    assertEquals(3754, controllerTest.run(new MockModel(log, 3754)));
+    assertEquals("darken: currentImageName = koala " +
+        "newImageName = koala-brighten scale = 50\n", log.toString());
+  }
+
+
+
+
+  @Test
   public void testRGBSplit() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("rgb-split koala koala-red koala-green koala-blue");

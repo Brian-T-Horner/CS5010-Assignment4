@@ -27,4 +27,6 @@ public interface Image {
 
   Image brighten(int scale);
 
+  Image darken(int scale);
+
 }

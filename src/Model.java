@@ -24,6 +24,8 @@ public interface Model {
 
   int brighten(String currentImageName, String newImageName, int scale);
 
+  int darken(String currentImageName, String newImageName, int scale);
+
   int rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName);
 
   int rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName);

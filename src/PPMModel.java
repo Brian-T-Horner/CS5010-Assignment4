@@ -6,7 +6,7 @@ public class PPMModel implements Model{
   Map<String, Image> images = new HashMap<>();
 
   Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip", "greyscale", "brighten",
-          "rgb-split", "rgb-combine", "value", "intensity", "luma"));
+          "rgb-split", "rgb-combine", "value", "intensity", "luma", "save", "load", "darken"));
 
   public PPMModel() {
     //only one default field
@@ -125,6 +125,17 @@ public class PPMModel implements Model{
     Image i = images.get(currentImageName);
     if (i != null) {
       images.put(newImageName, i.brighten(scale));
+      return 1;
+    }
+    return 0;
+  }
+
+
+  @Override
+  public int darken(String currentImageName, String newImageName, int scale) {
+    Image i = images.get(currentImageName);
+    if (i != null) {
+      images.put(newImageName, i.darken(scale));
       return 1;
     }
     return 0;

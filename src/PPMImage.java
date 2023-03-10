@@ -177,6 +177,28 @@ public class PPMImage implements Image {
     return brightened;
   }
 
+  @Override
+  public Image darken(int scale) {
+    int[][] red = darkenArray(redComponent, scale);
+    int[][] green = darkenArray(greenComponent, scale);
+    int[][] blue = darkenArray(blueComponent, scale);
+    return new PPMImage(width, height, red, blue, green);
+  }
+
+  private int[][] darkenArray(int[][] arr, int scale) {
+    int [][] darkened = new int[width][height];
+    for (int i = 0; i < width; i ++) {
+      for (int j = 0; j < height; j++) {
+        int val = arr[i][j] - scale;
+        if (val < 0) {
+          val = 0;
+        }
+        darkened[i][j] = val;
+      }
+    }
+    return darkened;
+  }
+
 
   @Override
   public boolean equals(Object o) {

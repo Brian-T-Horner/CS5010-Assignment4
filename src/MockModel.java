@@ -8,7 +8,7 @@ public class MockModel implements Model {
     private final int uniqueCode;
 
     Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip", "greyscale", "brighten",
-            "rgb-split", "rgb-combine", "value", "intensity", "luma", "load", "save"));
+            "rgb-split", "rgb-combine", "value", "intensity", "luma", "load", "save", "darken"));
 
 
     public MockModel(StringBuilder newLog, int newUniqueCode) {
@@ -123,6 +123,18 @@ public class MockModel implements Model {
     @Override
     public int brighten(String currentImageName, String newImageName, int scale) {
         log.append("brighten: currentImageName = ");
+        log.append(currentImageName);
+        log.append(" newImageName = ");
+        log.append(newImageName);
+        log.append(" scale = ");
+        log.append(scale);
+        log.append("\n");
+        return uniqueCode;
+    }
+
+    @Override
+    public int darken(String currentImageName, String newImageName, int scale) {
+        log.append("darken: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
