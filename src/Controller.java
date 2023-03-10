@@ -1,4 +1,8 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -25,9 +29,8 @@ public class Controller implements ControllerImp {
    * @param args Command line arguments to be passed to the program.
    */
   public static void main(String[] args) {
-    int status = 1;
     Model newModel = new PPMModel();
-    while (status != 0) {
+    while (true) {
       System.out.print("$: ");
       try {
         new Controller(new InputStreamReader(System.in), System.out).run(newModel);
@@ -35,11 +38,27 @@ public class Controller implements ControllerImp {
         if (e instanceof IllegalArgumentException) {
           e.printStackTrace();
           System.out.println(e);
-          break;
+          System.out.println("Please try again with appropriate arguments.");
+        } else if (e instanceof IOException) {
+          e.printStackTrace();
+          System.out.println(e);
+          System.out.println("Please try with a valid path.");
+        } else if (e instanceof FileNotFoundException) {
+          e.printStackTrace();
+          System.out.println(e);
+          System.out.println("Please try loading an image again with a valid file name.");
+        } else if (e instanceof NoSuchElementException) {
+          e.printStackTrace();
+          System.out.println(e);
+          System.out.println("Please again after loading the appropriate image or be sure to pass arguments in.");
+        } else if (e instanceof InputMismatchException) {
+            e.printStackTrace();
+            System.out.println(e);
+            System.out.println("The command you are trying to run needs an integer as an argument. Please try again.");
         } else {
           e.printStackTrace();
           System.out.println(e);
-          break;
+          System.exit(1);
         }
       }
     }
@@ -68,6 +87,10 @@ public class Controller implements ControllerImp {
           String saveImagePath = scan.next();
           String saveImageName = scan.next();
           currentModel.saveImage(saveImagePath, saveImageName);
+          break;
+        case "quit":
+          System.out.println("Exiting application...");
+          System.exit(0);
           break;
         default:
           // Default for all other commands other than load and save
@@ -104,23 +127,23 @@ public class Controller implements ControllerImp {
    */
   private boolean checkCommands(String[] commands, Model currentModel) throws IllegalArgumentException {
     if (!(currentModel.getCommands().contains(commands[0]))) {
-      throw new IllegalArgumentException("Invalid command for this current model");
+      throw new IllegalArgumentException("Invalid command " + commands[0] + " for this current model");
     }
     switch(commands[0]) {
       case ("rgb-split"):
       case ("rgb-combine"):
         if (commands.length < 5) {
-          return false;
+          throw new IllegalArgumentException("Invalid number of arguments for command " + commands[0] + ".");
         }
         break;
       case ("greyscale"):
         if (commands.length < 4) {
-          return false;
+          throw new IllegalArgumentException("Invalid number of arguments for command " + commands[0] + ".");
         }
         break;
       default:
         if (commands.length < 3) {
-          return false;
+          throw new IllegalArgumentException("Invalid number of arguments for command " + commands[0] + ".");
         }
         break;
     }
@@ -139,9 +162,8 @@ public class Controller implements ControllerImp {
     String newImageName = commands[2];
 
       // If commands do not pass checks.
-      if(!checkCommands(commands, currentModel)){
-        throw new IllegalArgumentException("Invalid arguments passed");
-      }
+      checkCommands(commands, currentModel);
+
 
       switch(commands[0]){
         case "redscale":
