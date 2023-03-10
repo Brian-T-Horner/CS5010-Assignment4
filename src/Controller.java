@@ -82,12 +82,16 @@ public class Controller implements ControllerImp {
     String commandString = scan.nextLine();
     currentCommands = commandString.split(" ");
     if(currentCommands.length < 3) {
-      throw new IllegalArgumentException("Need more than 3 parameters");
+      throw new IllegalArgumentException("Every command needs at least than 3 parameters.");
     }
+    if(currentCommands.length > 5) {
+      throw new IllegalArgumentException("No command needs more than 5 parameters.");
+    }
+
     switch (currentCommands[0]) {
       case "load":
         if(currentCommands.length > 3) {
-          throw new IllegalArgumentException("Load command only takes 3 parameters");
+          throw new IllegalArgumentException("Load command only takes 3 parameters.");
         }
         String loadImagePath = currentCommands[1];
         String loadImageName = currentCommands[2];
@@ -96,7 +100,7 @@ public class Controller implements ControllerImp {
         break;
       case "save":
         if(currentCommands.length > 3) {
-          throw new IllegalArgumentException("Save command only takes 3 parameters");
+          throw new IllegalArgumentException("Save command only takes 3 parameters.");
         }
         String saveImagePath = currentCommands[1];
         String saveImageName = currentCommands[2];
@@ -109,7 +113,7 @@ public class Controller implements ControllerImp {
       case "rgb-split":
       case "rgb-combine":
         if(currentCommands.length < 5) {
-          throw new IllegalArgumentException("rgb-split and rgb-combine commands only take 5 parameters");
+          throw new IllegalArgumentException("rgb-split and rgb-combine commands need to take 5 parameters.");
         }
         executeCommands(currentCommands, valueCommand,currentModel);
         break;
@@ -207,7 +211,9 @@ public class Controller implements ControllerImp {
         currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
         break;
       case "brighten":
-        currentModel.brighten(imageName, newImageName, commandVal);
+        String brightenImageName = commands[2];
+        String brightenNewImageName = commands[3];
+        currentModel.brighten(brightenImageName, brightenNewImageName, commandVal);
         break;
       case "rgb-split":
         String newRImageName = commands[2];
