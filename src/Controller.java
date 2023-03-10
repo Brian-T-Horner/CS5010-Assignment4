@@ -81,7 +81,6 @@ public class Controller implements ControllerImp {
     Scanner scan = new Scanner(this.in);
     currentCommands[0] = scan.next();
     currentCommands[0] = currentCommands[0].toLowerCase();
-    int i = 1;
     if (!(currentModel.getCommands().contains(currentCommands[0]))) {
       throw new IllegalArgumentException("Invalid command " + currentCommands[0] + " for this current model");
     }
@@ -100,48 +99,30 @@ public class Controller implements ControllerImp {
         System.out.println("Exiting application...");
         System.exit(0);
         break;
-      case "rgb-split", "rgb-combine":
-        i = 1;
-        while(i < 4) {
-          if (!(scan.hasNext())){
-            throw new IllegalArgumentException("rgb-combine and rgb-split take at minimum 5 parameters");
-          }else {
-            currentCommands[i] = scan.next();
-            i++;
-          }
-        }
-        executeCommands(currentCommands, valueCommand,currentModel);
-        break;
-      case "brighten":
-        try {
-          valueCommand = scan.nextInt();
-        } catch (Exception e) {
-          e.printStackTrace();
-          System.out.println(e);
-          break;
-        }
-        i = 1;
-        while(i < 2) {
-          if (!(scan.hasNext())){
-            throw new IllegalArgumentException("Brighten take at minimum three parameters");
-          }else {
-            currentCommands[i] = scan.next();
-            i++;
-          }
-        }
-        executeCommands(currentCommands, valueCommand, currentModel);
-        break;
       default:
         // Default for all other commands other than load and save
-        // Get the rest of the commands in the currentCommands array
-        i = 1;
-        while(i < 2) {
-          if (!(scan.hasNext())){
-          throw new IllegalArgumentException("All commands take at minimum three parameters");
-        }else {
-            currentCommands[i] = scan.next();
-            i++;
+
+        // Check if an int would be passed for the command
+        if (currentCommands[0].equals("brighten")) {
+          // Try to get the int command for brighten
+          try {
+            valueCommand = scan.nextInt();
+          } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+            break;
           }
+        }
+
+        // Get the rest of the commands in the currentCommands array
+        int i = 1;
+        while(i < 4){
+        if(!(scan.hasNext() && i < 4)){
+          throw new IllegalArgumentException("All commands take at minimum three parameters");
+        } else {
+          currentCommands[i] = scan.next();
+          i++;
+      }
         }
 //        while (scan.hasNext()) {
 //          currentCommands[i] = scan.next();
