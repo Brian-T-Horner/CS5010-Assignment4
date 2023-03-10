@@ -81,6 +81,12 @@ public class Controller implements ControllerImp {
     Scanner scan = new Scanner(this.in);
     String commandString = scan.nextLine();
     currentCommands = commandString.split(" ");
+
+    if(currentCommands[0].equals("quit")){
+      System.out.println("Exiting application...");
+      System.exit(0);
+    }
+
     if(currentCommands.length < 3) {
       throw new IllegalArgumentException("Every command needs at least than 3 parameters.");
     }
@@ -105,10 +111,6 @@ public class Controller implements ControllerImp {
         String saveImagePath = currentCommands[1];
         String saveImageName = currentCommands[2];
         currentModel.saveImage(saveImagePath, saveImageName);
-        break;
-      case "quit":
-        System.out.println("Exiting application...");
-        System.exit(0);
         break;
       case "rgb-split":
       case "rgb-combine":
