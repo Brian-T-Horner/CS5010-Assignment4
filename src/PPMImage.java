@@ -61,24 +61,36 @@ public class PPMImage implements Image {
   }
 
   /**
-   * Method to return the blue component of the
-   * @return
+   * Method to return the blue component of the PPMImage objects rgb.
+   * @return A matrix representing the blue component of the PPMImage.
    */
   @Override
   public int[][] getBlueComponent() {
     return blueComponent;
   }
 
+  /**
+   * Method to return the height of the PPMImage in pixels.
+   * @return An integer representing the height of the PPMImage in pixels.
+   */
   @Override
   public int getHeight() {
     return height;
   }
 
+  /**
+   * Method to return the width of the PPMImage in pixels.
+   * @return An integer representing the width of the PPMImage in pixels.
+   */
   @Override
   public int getWidth() {
     return width;
   }
 
+  /**
+   * A method to flip the PPMImage horizontally and return a resulting Image.
+   * @return The resulting image of the flip horizontal of the PPMImage.
+   */
   @Override
   public Image flipHorizontal() {
     int[][] red = flipArrayHorizontal(redComponent);
@@ -87,6 +99,11 @@ public class PPMImage implements Image {
     return new PPMImage(width, height, red, blue, green);
   }
 
+  /**
+   * A method flip horizontal the individual rgb components of an image. Supports flipHorizontal method.
+   * @param arr The array to flip horizontally.
+   * @return The result of flipping the arr array horizontally.
+   */
   private int[][] flipArrayHorizontal(int[][] arr) {
     int temp;
     int[][] flippedH = new int[width][height];
@@ -101,6 +118,10 @@ public class PPMImage implements Image {
     return flippedH;
   }
 
+  /**
+   * A method to flip the PPMImage vertically.
+   * @return The resulting image of the flip vertical of the PPMImage.
+   */
   @Override
   public Image flipVertical() {
     int[][] red = flipArrayVertical(redComponent);
@@ -109,6 +130,11 @@ public class PPMImage implements Image {
     return new PPMImage(width, height, red, blue, green);
   }
 
+  /**
+   * A method flip vertical the individual rgb components of an image. Supports flipVertical method.
+   * @param arr The array to flip vertical.
+   * @return The result of flipping the arr array vertical.
+   */
   private int[][] flipArrayVertical(int[][] arr) {
     int temp;
     int[][] flippedV = new int[width][height];
@@ -123,6 +149,10 @@ public class PPMImage implements Image {
   }
 
 
+  /**
+   * Method to get the value image from the PPMImage object.
+   * @return A new image that is the value image from the PPMImage.
+   */
   @Override
   public Image getValueImage() {
     int[][] value = new int[width][height];
@@ -139,6 +169,10 @@ public class PPMImage implements Image {
     return new PPMImage(width, height, value, value, value);
   }
 
+  /**
+   * A method to get the intensity image of a PPMImage.
+   * @return A new image that is the intensity image of the PPMImage.
+   */
   @Override
   public Image getIntensityImage() {
     int[][] intensity = new int[width][height];
@@ -159,6 +193,10 @@ public class PPMImage implements Image {
     return new PPMImage(width, height, intensity, intensity, intensity);
   }
 
+  /**
+   * Method to get the luma image of a PPMImage.
+   * @return A new image that is the luma image of the PPMImage.
+   */
   @Override
   public Image getLumaImage() {
     int[][] luma = new int[width][height];
@@ -179,6 +217,11 @@ public class PPMImage implements Image {
     return new PPMImage(width, height, luma, luma, luma);
   }
 
+  /**
+   * Method to brighten a PPMImage
+   * @param scale Scale to brighten (positive number) the image or darken (negative number) the image.
+   * @return An image that is the result of brightening the PPMImage.
+   */
   @Override
   public Image brighten(int scale) {
     int[][] red = brightenArray(redComponent, scale);
@@ -187,6 +230,12 @@ public class PPMImage implements Image {
     return new PPMImage(width, height, red, blue, green);
   }
 
+  /**
+   * A method to brighten a matrix array of the PPMImage.
+   * @param arr Array to brighten.
+   * @param scale The scale to brighten.
+   * @return A new matrix that is the result of the brighten operation.
+   */
   private int[][] brightenArray(int[][] arr, int scale) {
     int[][] brightened = new int[width][height];
     for (int i = 0; i < width; i++) {
@@ -203,6 +252,11 @@ public class PPMImage implements Image {
     return brightened;
   }
 
+  /**
+   * A method to darken a PPMImage.
+   * @param scale Scale to darken the image. Negative number.
+   * @return A new image that is the result of the darken operation on PPMImage.
+   */
   @Override
   public Image darken(int scale) {
     int[][] red = darkenArray(redComponent, scale);
@@ -211,6 +265,12 @@ public class PPMImage implements Image {
     return new PPMImage(width, height, red, blue, green);
   }
 
+  /**
+   * A helper method to darken a matrix for use with method darken.
+   * @param arr Matrix to darken.
+   * @param scale The scale to apply to darken.
+   * @return A new matrix that is the result of the darken.
+   */
   private int[][] darkenArray(int[][] arr, int scale) {
     int [][] darkened = new int[width][height];
     for (int i = 0; i < width; i ++) {
@@ -226,6 +286,11 @@ public class PPMImage implements Image {
   }
 
 
+  /**
+   * Method to determine if two PPMImage objects are equal.
+   * @param o An object to check if equal to {@code this} PPMImage.
+   * @return True if equal, false if otherwise.
+   */
   @Override
   public boolean equals(Object o) {
     if (o == this) {
@@ -242,6 +307,10 @@ public class PPMImage implements Image {
 
   }
 
+  /**
+   * Method to get a hashCode for a PPMImage.
+   * @return An integer hashcode for the object.
+   */
   @Override
   public int hashCode() {
     return 67499 * this.getWidth() * this.getHeight();

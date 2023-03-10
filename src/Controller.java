@@ -128,7 +128,7 @@ public class Controller implements ControllerImp {
    * @param commands Array of strings of commands to check.
    * @param currentModel Current model controller is communicating with.
    */
-  private boolean checkCommands(String[] commands, Model currentModel) throws IllegalArgumentException {
+  private void checkCommands(String[] commands, Model currentModel) throws IllegalArgumentException {
     switch(commands[0]) {
       case ("rgb-split"):
       case ("rgb-combine"):
@@ -147,7 +147,6 @@ public class Controller implements ControllerImp {
         }
         break;
     }
-      return true;
   }
 
   /**

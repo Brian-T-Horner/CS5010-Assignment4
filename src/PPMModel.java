@@ -216,7 +216,7 @@ public class PPMModel implements Model {
   public void brighten(String currentImageName, String newImageName, int scale) throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i != null) {
-      if (scale > 0) {
+      if (scale >= 0) {
         images.put(newImageName, i.brighten(scale));
       } else {
         images.put(newImageName, i.darken(-1 * scale));
