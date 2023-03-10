@@ -33,10 +33,9 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int loadImage(String imagePath, String newImageName) {
+  public void loadImage(String imagePath, String newImageName) {
     Image i = ImageUtil.readIntoPPMImage(imagePath);
     images.put(newImageName,i);
-    return 1;
   }
 
   /**
@@ -46,17 +45,15 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int saveImage(String imagePath, String imageName) {
+  public void saveImage(String imagePath, String imageName) {
     Image i = images.get(imageName);
     if(i != null) {
       try {
         ImageUtil.writeToPPMFile(i, imagePath);
       } catch (IOException e) {
         System.out.println(e.getMessage());
-        return 0;
       }
     }
-    return 1;
   }
 
   /**
@@ -66,14 +63,12 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int getRedComponent(String currentImageName, String newImageName) {
+  public void getRedComponent(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getRedComponent();
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -83,14 +78,12 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int getGreenComponent(String currentImageName, String newImageName) {
+  public void getGreenComponent(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getGreenComponent();
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -100,14 +93,12 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int getBlueComponent(String currentImageName, String newImageName) {
+  public void getBlueComponent(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getBlueComponent();
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -117,13 +108,11 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int flipHorizontal(String currentImageName, String newImageName) {
+  public void flipHorizontal(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i != null) {
       images.put(newImageName, i.flipHorizontal());
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -133,13 +122,11 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int flipVertical(String currentImageName, String newImageName) {
+  public void flipVertical(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i != null) {
       images.put(newImageName, i.flipHorizontal());
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -149,13 +136,11 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int getValueImage(String currentImageName, String newImageName) {
+  public void getValueImage(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i != null) {
       images.put(newImageName, i.getValueImage());
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -165,13 +150,11 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int getIntensityImage(String currentImageName, String newImageName) {
+  public void getIntensityImage(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i != null) {
       images.put(newImageName, i.getIntensityImage());
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -181,13 +164,11 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int getLumaImage(String currentImageName, String newImageName) {
+  public void getLumaImage(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i != null) {
       images.put(newImageName, i.getLumaImage());
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -198,7 +179,7 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int brighten(String currentImageName, String newImageName, int scale) {
+  public void brighten(String currentImageName, String newImageName, int scale) {
     Image i = images.get(currentImageName);
     if (i != null) {
       if (scale > 0) {
@@ -206,9 +187,7 @@ public class PPMModel implements Model{
       } else {
         images.put(newImageName, i.darken(-1 * scale));
       }
-      return 1;
     }
-    return 0;
   }
 
   /**
@@ -220,11 +199,19 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
-    getRedComponent(currentImageName, redImageName);
-    getGreenComponent(currentImageName, greenImageName);
-    getBlueComponent(currentImageName, blueImageName);
-    return 1;
+  public void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
+    Image i = images.get(currentImageName);
+    int [][] r = i.getRedComponent();
+    int [][] g = i.getGreenComponent();
+    int [][] b = i.getBlueComponent();
+    int height = i.getHeight();
+    int width = i.getWidth();
+    Image red = new PPMImage(width,height,r,r,r);
+    images.put(redImageName,red);
+    Image green = new PPMImage(width,height,g,g,g);
+    images.put(greenImageName,green);
+    Image blue = new PPMImage(width,height,b,b,b);
+    images.put(blueImageName,blue);
   }
 
   /**
@@ -236,7 +223,7 @@ public class PPMModel implements Model{
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public int rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) {
+  public void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) {
     Image redImage = images.get(rImageName);
     Image greenImage = images.get(gImageName);
     Image blueImage = images.get(bImageName);
@@ -246,10 +233,8 @@ public class PPMModel implements Model{
         images.put(newImageName, new PPMImage(redImage.getWidth(), redImage.getHeight(),
             redImage.getRedComponent(), blueImage.getBlueComponent(),
             greenImage.getGreenComponent()));
-        return 1;
       }
     }
-      return 0;
   }
 
   /**
@@ -261,8 +246,27 @@ public class PPMModel implements Model{
    */
   //TODO: Implement
   @Override
-  public int greyscale(String greyScaleComponent, String imageName, String newImageName) {
-    return 1;
+  public void greyscale(String greyScaleComponent, String imageName, String newImageName) {
+    switch (greyScaleComponent) {
+      case("value-component"):
+        getValueImage(imageName,newImageName);
+        break;
+      case("luma-component"):
+        getLumaImage(imageName,newImageName);
+        break;
+      case("intensity-component"):
+        getIntensityImage(imageName,newImageName);
+        break;
+      case("red-component"):
+        getRedComponent(imageName,newImageName);
+        break;
+      case("green-component"):
+        getGreenComponent(imageName,newImageName);
+        break;
+      case("blue-component"):
+        getBlueComponent(imageName,newImageName);
+        break;
+    }
   }
 
   /**
