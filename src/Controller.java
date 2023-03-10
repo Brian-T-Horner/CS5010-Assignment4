@@ -1,30 +1,28 @@
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Class that is the Controller of our MVC model.
+ */
 public class Controller implements ControllerImp {
 
   final Readable in;
   final Appendable out;
 
-
-
-
-
+  /**
+   * Contructor for the creation of a Controller object.
+   * @param in Input stream for the controller.
+   * @param out Output stream for the controller.
+   */
   Controller(Readable in, Appendable out){
     this.in = in;
     this.out = out;
-
-
-
   }
 
-
   /**
-   * New main method
-   * @throws IllegalArgumentException
+   * Main method of the program.
+   * @param args Command line arguments to be passed to the program.
    */
   public static void main(String[] args) {
     int status = 1;
@@ -48,8 +46,13 @@ public class Controller implements ControllerImp {
   }
 
 
+  /**
+   * Method to run the program, accept inputs and pass load, save images to Model.
+   * @param currentModel The model the controller object is instructing.
+   * @return Integer representing the status of the program. 0 for failure, all other numbers success.
+   */
   @Override
-  public int run(Model currentModel) throws IllegalArgumentException, NoSuchElementException {
+  public int run(Model currentModel) {
     Objects.requireNonNull(currentModel);
     String[] currentCommands = new String[5];
     int valueCommand = 0;
@@ -94,6 +97,12 @@ public class Controller implements ControllerImp {
   }
 
 
+  /**
+   * Private method to check all other commands but save and load.
+   * @param commands Array of strings of commands to check.
+   * @param currentModel Current model controller is communicating with.
+   * @return True if commands are valid, false if otherwise.
+   */
   private boolean checkCommands(String[] commands, Model currentModel) throws IllegalArgumentException {
     if (!(currentModel.getCommands().contains(commands[0]))) {
       throw new IllegalArgumentException("Invalid command for this current model");
@@ -119,6 +128,13 @@ public class Controller implements ControllerImp {
       return true;
   }
 
+  /**
+   * Method to execute all other commands but save and load.
+   * @param commands String array of current commands to be executed.
+   * @param commandVal Integer values for commands that take a value.
+   * @param currentModel Current model the controller is communicating with.
+   * @return 0 for failure, all other numbers for success.
+   */
   @Override
   public int executeCommands(String[] commands, int commandVal, Model currentModel) {
     String imageName = commands[1];
