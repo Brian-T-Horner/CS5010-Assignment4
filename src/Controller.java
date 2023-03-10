@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -29,12 +28,12 @@ public class Controller implements ControllerImp {
    * @throws IllegalArgumentException
    */
   public static void main(String[] args) {
-    boolean status = true;
+    int status = 1;
     Model newModel = new PPMModel();
-    while (status) {
+    while (status != 0) {
       System.out.print("$: ");
       try {
-        new Controller(new InputStreamReader(System.in), System.out).run(newModel);
+        status = new Controller(new InputStreamReader(System.in), System.out).run(newModel);
       } catch (Exception e) {
         if (e instanceof IllegalArgumentException) {
           e.printStackTrace();
@@ -43,7 +42,6 @@ public class Controller implements ControllerImp {
         } else {
           e.printStackTrace();
           System.out.println(e);
-          status = false;
           break;
         }
       }
@@ -52,32 +50,24 @@ public class Controller implements ControllerImp {
 
 
   @Override
-  public void run(Model currentModel) throws IllegalArgumentException {
+  public int run(Model currentModel) throws IllegalArgumentException, IOException, NoSuchElementException {
+    Objects.requireNonNull(currentModel);
     String[] currentCommands = new String[5];
     int valueCommand = 0;
     Scanner scan = new Scanner(this.in);
-    String firstCommand;
-    int status = 1;
-    while(status == 1) {
-      firstCommand = scan.next().toLowerCase();
-      switch (firstCommand) {
+      currentCommands[0] = scan.next();
+      currentCommands[0] = currentCommands[0].toLowerCase();
+      switch (currentCommands[0]) {
         case "load":
-            currentCommands[0] = "load";
-            currentCommands[1] = scan.next();
-            currentCommands[2] = scan.next();
-            currentCommands[3] = null;
-            status = currentModel.loadPPMImage(currentCommands[1], currentCommands[2]);
-          break;
+          String loadImagePath = scan.next();
+          String loadImageName = scan.next();
+          return currentModel.loadPPMImage(loadImagePath, loadImageName);
         case "save":
-          currentCommands[0] = "save";
-          currentCommands[1] = scan.next();
-          currentCommands[2] = scan.next();
-          currentCommands[3] = null;
-          status = currentModel.savePPMImage(currentCommands[1], currentCommands[2]);
-          break;
+          String saveImagePath = scan.next();
+          String saveImageName = scan.next();
+          return currentModel.savePPMImage(saveImagePath, saveImageName);
         default:
           // Default for all other commands other than load and save
-          currentCommands[0] = firstCommand;
 
           // Check if an int would be passed for the command
           if(currentCommands[0].equals("brighten")) {
@@ -87,7 +77,6 @@ public class Controller implements ControllerImp {
             } catch(Exception e) {
               e.printStackTrace();
               System.out.println(e);
-              status = 0;
               break;
             }
 
@@ -105,29 +94,25 @@ public class Controller implements ControllerImp {
             currentCommands[i] = scan.next();
             i++;
           }
-          status = executeCommands(currentCommands, valueCommand, currentModel);
-          break;
+          return executeCommands(currentCommands, valueCommand, currentModel);
+
       }
-    }
+      return 1;
+
   }
 
 
-  //TODO: implementation
   private boolean checkCommands(String[] commands, Model currentModel) throws IllegalArgumentException {
     if (!(currentModel.getCommands().contains(commands[0]))) {
       throw new IllegalArgumentException("Invalid command for this current model");
     }
-
     switch(commands[0]) {
       case ("rgb-split"):
       case ("rgb-combine"):
         if (commands.length < 5) {
-
-//          throw new IllegalArgumentException("Invalid number of arguments for rgb-split command.");
           return false;
         }
         break;
-      //          throw new IllegalArgumentException("Invalid number of arguments for rgb-combine command.");
       case ("greyscale"):
         if (commands.length < 4) {
           return false;
@@ -135,17 +120,16 @@ public class Controller implements ControllerImp {
         break;
       default:
         if (commands.length < 3) {
-//          throw new IllegalArgumentException("Invalid number of arguments for standard command");
           return false;
         }
         break;
     }
-
       return true;
   }
 
   @Override
-  public int executeCommands(String[] commands, int commandVal, Model currentModel) {
+  public int executeCommands(String[] commands, int commandVal, Model currentModel)
+      throws IOException {
     String imageName = commands[1];
     String newImageName = commands[2];
 
