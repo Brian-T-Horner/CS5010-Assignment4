@@ -135,16 +135,6 @@ public class PPMModel implements Model{
   }
 
 
-//  @Override
-//  public int darken(String currentImageName, String newImageName, int scale) {
-//    Image i = images.get(currentImageName);
-//    if (i != null) {
-//      images.put(newImageName, i.darken(scale));
-//      return 1;
-//    }
-//    return 0;
-//  }
-
   @Override
   public int rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
     getRedComponent(currentImageName, redImageName);
