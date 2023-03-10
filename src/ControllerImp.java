@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  * Interface for controller objects for the MVC model of this program.
  */
@@ -9,7 +12,7 @@ public interface ControllerImp {
     * @param currentModel Current model that the controller is communicating with.
     * @return 0 if failure, all other numbers for success.
     */
-   void run(Model currentModel);
+   void run(Model currentModel) throws IOException;
 
    /**
     * Method to instruct model to execute all other commands but load and save.
