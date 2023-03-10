@@ -11,7 +11,7 @@ public interface Model {
    * @param newImageName The name to assign to the loaded image.
    * @return 0 for failure, other numbers for success.
    */
-  int loadImage(String imagePath, String newImageName);
+  void loadImage(String imagePath, String newImageName);
 
   /**
    * Method to save an image - calls the image object method.
@@ -19,7 +19,7 @@ public interface Model {
    * @param imageName The name of the image to save.
    * @return 0 for failure, other numbers for success.
    */
-  int saveImage(String imagePath, String imageName);
+  void saveImage(String imagePath, String imageName);
 
   /**
    * Method to get the red component of an image - calls the image object method.
@@ -27,7 +27,7 @@ public interface Model {
    * @param newImageName The name to save the resulting image as.
    * @return 0 for failure, other numbers for success.
    */
-  int getRedComponent(String currentImageName, String newImageName);
+  void getRedComponent(String currentImageName, String newImageName);
 
   /**
    * Method to get the green component of an image - calls the image object method.
@@ -35,23 +35,21 @@ public interface Model {
    * @param newImageName The name to save the resulting image as.
    * @return 0 for failure, other numbers for success.
    */
-  int getGreenComponent(String currentImageName, String newImageName);
+  void getGreenComponent(String currentImageName, String newImageName);
 
   /**
    * Method to get the blue component of an image - calls the image object method.
    * @param currentImageName The name of the image to get the blue component from.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
-  int getBlueComponent(String currentImageName, String newImageName);
+  void getBlueComponent(String currentImageName, String newImageName);
 
   /**
    * Method to flip an image horizontally - calls the image object method.
    * @param currentImageName The name of the image to flip horizontally.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
-  int flipHorizontal(String currentImageName, String newImageName);
+  void flipHorizontal(String currentImageName, String newImageName);
 
   /**
    * Method to flip an image vertically - calls the image object method.
@@ -59,7 +57,7 @@ public interface Model {
    * @param newImageName The name to save the resulting image as.
    * @return 0 for failure, other numbers for success.
    */
-  int flipVertical(String currentImageName, String newImageName);
+  void flipVertical(String currentImageName, String newImageName);
 
   /**
    * Method to get the value image of an image - calls the image object method.
@@ -67,7 +65,7 @@ public interface Model {
    * @param newImageName The name to save the resulting image as.
    * @return 0 for failure, other numbers for success.
    */
-  int getValueImage(String currentImageName, String newImageName);
+  void getValueImage(String currentImageName, String newImageName);
 
   /**
    * Method to get the intensity image of an image - calls the image object method.
@@ -75,7 +73,7 @@ public interface Model {
    * @param newImageName The name to save the resulting image as.
    * @return 0 for failure, other numbers for success.
    */
-  int getIntensityImage(String currentImageName, String newImageName);
+  void getIntensityImage(String currentImageName, String newImageName);
 
   /**
    * Method to get the luma image of an image - calls the image object method.
@@ -83,7 +81,7 @@ public interface Model {
    * @param newImageName The name to save the resulting image as.
    * @return 0 for failure, other numbers for success.
    */
-  int getLumaImage(String currentImageName, String newImageName);
+  void getLumaImage(String currentImageName, String newImageName);
 
   /**
    * Method to brighten or darken an image - calls the image object method.
@@ -92,7 +90,7 @@ public interface Model {
    * @param scale The scale to brighten or darken the image.
    * @return 0 for failure, other numbers for success.
    */
-  int brighten(String currentImageName, String newImageName, int scale);
+  void brighten(String currentImageName, String newImageName, int scale);
 
   /**
    * Method to split an image into its rgb components - calls the image object method.
@@ -102,7 +100,7 @@ public interface Model {
    * @param blueImageName The name to save the resulting blue component image as.
    * @return 0 for failure, other numbers for success.
    */
-  int rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName);
+  void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName);
 
   /**
    * Method to combine rgb components into one image.
@@ -112,7 +110,7 @@ public interface Model {
    * @param bImageName The name of the blue component image.
    * @return 0 for failure, other numbers for success.
    */
-  int rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName);
+  void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName);
 
   /**
    * Method to get the greyscale image of an image - calls the image object method.
@@ -121,7 +119,7 @@ public interface Model {
    * @param newImageName The name to save the resulting image as.
    * @return 0 for failure, other numbers for success.
    */
-  int greyscale(String greyScaleComponent, String imageName, String newImageName);
+  void greyscale(String greyScaleComponent, String imageName, String newImageName);
 
   /**
    * Method to get the commands that are available with the Model object.
