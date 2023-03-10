@@ -1,5 +1,5 @@
 /**
- * Interface for manipulating a .ppm image file.
+ * Interface for manipulating an image file.
  */
 public interface Image {
 

@@ -75,47 +75,50 @@ public class Controller implements ControllerImp {
     String[] currentCommands = new String[5];
     int valueCommand = 0;
     Scanner scan = new Scanner(this.in);
-      currentCommands[0] = scan.next();
-      currentCommands[0] = currentCommands[0].toLowerCase();
-      switch (currentCommands[0]) {
-        case "load":
-          String loadImagePath = scan.next();
-          String loadImageName = scan.next();
-          currentModel.loadImage(loadImagePath, loadImageName);
-          break;
-        case "save":
-          String saveImagePath = scan.next();
-          String saveImageName = scan.next();
-          currentModel.saveImage(saveImagePath, saveImageName);
-          break;
-        case "quit":
-          System.out.println("Exiting application...");
-          System.exit(0);
-          break;
-        default:
-          // Default for all other commands other than load and save
+    currentCommands[0] = scan.next();
+    currentCommands[0] = currentCommands[0].toLowerCase();
+    if (!(currentModel.getCommands().contains(currentCommands[0]))) {
+      throw new IllegalArgumentException("Invalid command " + currentCommands[0] + " for this current model");
+    }
+    switch (currentCommands[0]) {
+      case "load":
+        String loadImagePath = scan.next();
+        String loadImageName = scan.next();
+        currentModel.loadImage(loadImagePath, loadImageName);
+        break;
+      case "save":
+        String saveImagePath = scan.next();
+        String saveImageName = scan.next();
+        currentModel.saveImage(saveImagePath, saveImageName);
+        break;
+      case "quit":
+        System.out.println("Exiting application...");
+        System.exit(0);
+        break;
+      default:
+        // Default for all other commands other than load and save
 
-          // Check if an int would be passed for the command
-          if(currentCommands[0].equals("brighten")) {
-            // Try to get the int command for brighten
-            try {
-              valueCommand = scan.nextInt();
-            } catch (Exception e) {
-              e.printStackTrace();
-              System.out.println(e);
-              break;
-            }
+        // Check if an int would be passed for the command
+        if(currentCommands[0].equals("brighten")) {
+          // Try to get the int command for brighten
+          try {
+            valueCommand = scan.nextInt();
+          } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+            break;
           }
+        }
 
-          // Get the rest of the commands in the currentCommands array
-          int i = 1;
-          while(scan.hasNext()){
-            currentCommands[i] = scan.next();
-            i++;
-          }
-          executeCommands(currentCommands, valueCommand, currentModel);
-          break;
-      }
+        // Get the rest of the commands in the currentCommands array
+        int i = 1;
+        while(scan.hasNext()){
+          currentCommands[i] = scan.next();
+          i++;
+        }
+        executeCommands(currentCommands, valueCommand, currentModel);
+        break;
+    }
 
   }
 
@@ -126,9 +129,6 @@ public class Controller implements ControllerImp {
    * @param currentModel Current model controller is communicating with.
    */
   private boolean checkCommands(String[] commands, Model currentModel) throws IllegalArgumentException {
-    if (!(currentModel.getCommands().contains(commands[0]))) {
-      throw new IllegalArgumentException("Invalid command " + commands[0] + " for this current model");
-    }
     switch(commands[0]) {
       case ("rgb-split"):
       case ("rgb-combine"):

@@ -62,6 +62,11 @@ public class ImageUtil {
     }
   }
 
+  /**
+   * Method to read in an image in the PPM Format.
+   * @param filename Path to the image file.
+   * @return A new Image object from the loaded image.
+   */
   public static Image readIntoPPMImage(String filename) {
     Scanner sc;
     try {
@@ -111,6 +116,12 @@ public class ImageUtil {
       return new PPMImage(width, height, red, blue, green);
   }
 
+  /**
+   * Method to write a PPMImage to disk.
+   * @param image Name of the image to write to disk.
+   * @param fileName Path to location to write the image.
+   * @throws IOException If path is invalid.
+   */
   public static void writeToPPMFile(Image image, String fileName) throws IOException {
     String fullFileName = String.format("%s.ppm", fileName);
     File ppmFile = new File(fullFileName);
@@ -127,6 +138,12 @@ public class ImageUtil {
     }
     ppmWriter.close();
   }
+
+  /**
+   * Method to write a buffered image from an image.
+   * @param image Image to be used to write buffered image.
+   * @return The resulting buffered image.
+   */
   public static BufferedImage writeBufferedImage(Image image) {
     BufferedImage buffImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
     int r, g, b, pixel;

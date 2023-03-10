@@ -1,5 +1,8 @@
 import java.util.Arrays;
 
+/**
+ * A class to represent an image in PPM Format.
+ */
 public class PPMImage implements Image {
 
   private final int height;
@@ -11,7 +14,14 @@ public class PPMImage implements Image {
 
   private final int[][] blueComponent;
 
-
+  /**
+   * Constructor for a PPMImage object.
+   * @param width The width of the image in pixels.
+   * @param height The height of the image in pixels.
+   * @param red The red component of the rgb of the image.
+   * @param blue The blue component of the rgb of the image.
+   * @param green The green component of the rgb of the image.
+   */
   public PPMImage(int width, int height, int[][] red,
                   int[][] blue, int[][] green) {
     this.height = height;
@@ -22,22 +32,38 @@ public class PPMImage implements Image {
   }
 
 
+  /**
+   * Method to determine if the PPMImage object represents one rgb channel.
+   * @return True if the PPMImage object does represent one rgb channel, false if otherwise.
+   */
   @Override
   public boolean isSingleChannel() {
     return Arrays.equals(redComponent, greenComponent)
             && Arrays.equals(redComponent, blueComponent);
   }
 
+  /**
+   * Method to return the red component of the PPMImage objects rgb.
+   * @return A matrix representing the red component of the PPMImage.
+   */
   @Override
   public int[][] getRedComponent() {
     return redComponent;
   }
 
+  /**
+   * Method to return the green component of the PPMImage objects rgb.
+   * @return A matrix representing the green component of the PPMImage.
+   */
   @Override
   public int[][] getGreenComponent() {
     return greenComponent;
   }
 
+  /**
+   * Method to return the blue component of the
+   * @return
+   */
   @Override
   public int[][] getBlueComponent() {
     return blueComponent;
