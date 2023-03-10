@@ -199,6 +199,5 @@ public class PPMImage implements Image {
     return 67499 * this.getWidth() * this.getHeight();
   }
 
-
 }
 
