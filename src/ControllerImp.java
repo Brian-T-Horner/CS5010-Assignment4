@@ -9,7 +9,7 @@ public interface ControllerImp {
     * @param currentModel Current model that the controller is communicating with.
     * @return 0 if failure, all other numbers for success.
     */
-   int run(Model currentModel);
+   void run(Model currentModel);
 
    /**
     * Method to instruct model to execute all other commands but load and save.
@@ -19,6 +19,6 @@ public interface ControllerImp {
     * @param currentModel Current model the controller is instructing.
     * @return 0 for failure, all other numbers for success.
     */
-   int executeCommands(String[] commands, int commandVal, Model currentModel);
+   void executeCommands(String[] commands, int commandVal, Model currentModel);
 
 }

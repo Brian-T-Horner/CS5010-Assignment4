@@ -36,7 +36,6 @@ public class MockModel implements Model {
      * Method to test the controller to loadPPMImage method.
      * @param imagePath Path to the image to load into the model.
      * @param newImageName Name to assign to the image loaded into the model.
-     * @return An int that is the uniqueCode for this MockModel.
      */
     @Override
     public void loadImage(String imagePath, String newImageName) {
@@ -53,33 +52,33 @@ public class MockModel implements Model {
      * Method to test the controller to savePPMImage method.
      * @param imagePath Path to save the image stored in the model.
      * @param imageName Image to save to the imagePath.
-     * @return An int that is the uniqueCode for this MockModel.
      */
     @Override
-    public int saveImage(String imagePath, String imageName) {
+    public void saveImage(String imagePath, String imageName) {
         log.append("savePPMImage: imagePath = ");
         log.append(imagePath);
         log.append(" imageName = ");
         log.append(imageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
      * Method to test the controller to getRedComponent method.
      * @param currentImageName String that is the name of the current image.
      * @param newImageName String that is the new name of the new image from the redComponent of the
-*      *                   currentImage.
-     * @return An int that is the uniqueCode for this MockModel.
+     *                   currentImage.
      */
     @Override
-    public int getRedComponent(String currentImageName, String newImageName) {
+    public void getRedComponent(String currentImageName, String newImageName) {
         log.append("getRedScaleImage: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -87,33 +86,33 @@ public class MockModel implements Model {
      * @param currentImageName String that is the name of the current image.
      * @param newImageName String that is the new name of the new image from the greenComponent of the
      *                     currentImage.
-     * @return An int that is the uniqueCode of this MockModel.
      */
     @Override
-    public int getGreenComponent(String currentImageName, String newImageName) {
+    public void getGreenComponent(String currentImageName, String newImageName) {
         log.append("getGreenScaleImage: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
      * Method to test the controller to getBlueComponent method.
      * @param currentImageName String that is the name of the current image.
      * @param newImageName String that is the new name of the new image from the blueComponent of the
-     *      *              currentImage.
-     * @return An int that is the uniqueCode of this MockModel.
+     *                     currentImage.
      */
     @Override
-    public int getBlueComponent(String currentImageName, String newImageName) {
+    public void getBlueComponent(String currentImageName, String newImageName) {
         log.append("getBlueScaleImage: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -121,16 +120,16 @@ public class MockModel implements Model {
      * @param currentImageName String that is the name of the current image.
      * @param newImageName String that is the new name of the new image from the flipHorizontal
      *                     transformation of the currentImage.
-     * @return An int that is the uniqueCode of this MockModel.
      */
     @Override
-    public int flipHorizontal(String currentImageName, String newImageName) {
+    public void flipHorizontal(String currentImageName, String newImageName) {
         log.append("flipHorizontal: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -138,16 +137,16 @@ public class MockModel implements Model {
      * @param currentImageName String that is the name of the current image.
      * @param newImageName String that is the new name of the new image from the flipVertical
      *                     transformation of the currentImage.
-     * @return An int that is the uniqueCode of this MockModel.
      */
     @Override
-    public int flipVertical(String currentImageName, String newImageName) {
+    public void flipVertical(String currentImageName, String newImageName) {
         log.append("flipVertical: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -155,16 +154,16 @@ public class MockModel implements Model {
      * @param currentImageName String that is the name of the current image.
      * @param newImageName String that is the new name of the new image from the getValueImage
      *                     transformation of the currentImage.
-     * @return An int that is the uniqueCode of this MockModel.
      */
     @Override
-    public int getValueImage(String currentImageName, String newImageName) {
+    public void getValueImage(String currentImageName, String newImageName) {
         log.append("getValueImage: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -172,16 +171,16 @@ public class MockModel implements Model {
      * @param currentImageName String that is the name of the current image.
      * @param newImageName String that is the new name of the new image from the getIntensityImage
      *                     transformation of the currentImage.
-     * @return An int that is the uniqueCode of this MockModel.
      */
     @Override
-    public int getIntensityImage(String currentImageName, String newImageName) {
+    public void getIntensityImage(String currentImageName, String newImageName) {
         log.append("getIntensityImage: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -189,16 +188,16 @@ public class MockModel implements Model {
      * @param currentImageName String that is the name of the current image.
      * @param newImageName String that is the new name of the new image from the getLumaImage
      *                     transformation of the currentImage.
-     * @return An int that is the uniqueCode of this MockModel.
      */
     @Override
-    public int getLumaImage(String currentImageName, String newImageName) {
+    public void getLumaImage(String currentImageName, String newImageName) {
         log.append("getLumaImage: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -208,18 +207,18 @@ public class MockModel implements Model {
      *                     transformation of the currentImage.
      * @param scale The scale to be applied to the currentImage.
      *              Positive for brighten, negative for darken.
-     * @return An int that is the uniqueCode of this MockModel.
      */
     @Override
-    public int brighten(String currentImageName, String newImageName, int scale) {
+    public void brighten(String currentImageName, String newImageName, int scale) {
         log.append("brighten: currentImageName = ");
         log.append(currentImageName);
         log.append(" newImageName = ");
         log.append(newImageName);
         log.append(" scale = ");
         log.append(scale);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -228,10 +227,9 @@ public class MockModel implements Model {
      * @param redImageName String that is the new name of the redComponent of the currentImage.
      * @param greenImageName String that is the new name of the greenComponent of the currentImage.
      * @param blueImageName String that is the new name of the blueComponent of the currentImage
-     * @return An int that is the uniqueCode of this MockModel.
      */
     @Override
-    public int rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
+    public void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
         log.append("rgbSplit: currentImageName = ");
         log.append(currentImageName);
         log.append(" redImageName = ");
@@ -240,8 +238,9 @@ public class MockModel implements Model {
         log.append(greenImageName);
         log.append(" blueImageName = ");
         log.append(blueImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -250,10 +249,9 @@ public class MockModel implements Model {
      * @param rImageName String that is the name of the red component image.
      * @param gImageName String that is the name of the green component image.
      * @param bImageName String that is the name of the blue component image.
-     * @return An int that is the UniqueCode of this MockModel.
      */
     @Override
-    public int rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) {
+    public void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) {
         log.append("rgbCombine: newImageName = ");
         log.append(newImageName);
         log.append(" redImageName = ");
@@ -262,8 +260,9 @@ public class MockModel implements Model {
         log.append(gImageName);
         log.append(" blueImageName = ");
         log.append(bImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 
     /**
@@ -271,17 +270,17 @@ public class MockModel implements Model {
      * @param greyScaleComponent Method of greyscale transformation.
      * @param imageName String that is the image name to do the greyscale transformation on.
      * @param newImageName String that is the new name of the new greyscale image.
-     * @return An int that is the UniqueCode of this MockModel.
      */
     @Override
-    public int greyscale(String greyScaleComponent, String imageName, String newImageName) {
+    public void greyscale(String greyScaleComponent, String imageName, String newImageName) {
         log.append("greyscale: greyScaleComponent = ");
         log.append(greyScaleComponent);
         log.append(" imageName = ");
         log.append(imageName);
         log.append(" newImageName = ");
         log.append(newImageName);
+        log.append(" uniqueCode = ");
+        log.append(this.uniqueCode);
         log.append("\n");
-        return uniqueCode;
     }
 }

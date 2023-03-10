@@ -9,7 +9,6 @@ public interface Model {
    * Method to load an image - calls the image object method.
    * @param imagePath The path of the image to load.
    * @param newImageName The name to assign to the loaded image.
-   * @return 0 for failure, other numbers for success.
    */
   void loadImage(String imagePath, String newImageName);
 
@@ -17,7 +16,6 @@ public interface Model {
    * Method to save an image - calls the image object method.
    * @param imagePath The path of where to save the image.
    * @param imageName The name of the image to save.
-   * @return 0 for failure, other numbers for success.
    */
   void saveImage(String imagePath, String imageName);
 
@@ -25,7 +23,6 @@ public interface Model {
    * Method to get the red component of an image - calls the image object method.
    * @param currentImageName The name of the image to get the red component from.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
   void getRedComponent(String currentImageName, String newImageName);
 
@@ -33,7 +30,6 @@ public interface Model {
    * Method to get the green component of an image - calls the image object method.
    * @param currentImageName The name of the image to get the green component from.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
   void getGreenComponent(String currentImageName, String newImageName);
 
@@ -55,7 +51,6 @@ public interface Model {
    * Method to flip an image vertically - calls the image object method.
    * @param currentImageName The name of the image to flip vertically.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
   void flipVertical(String currentImageName, String newImageName);
 
@@ -63,7 +58,6 @@ public interface Model {
    * Method to get the value image of an image - calls the image object method.
    * @param currentImageName The name of the image to get the value image from.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
   void getValueImage(String currentImageName, String newImageName);
 
@@ -71,7 +65,6 @@ public interface Model {
    * Method to get the intensity image of an image - calls the image object method.
    * @param currentImageName The name of the image to get the intensity image from.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
   void getIntensityImage(String currentImageName, String newImageName);
 
@@ -79,7 +72,6 @@ public interface Model {
    * Method to get the luma image of an image - calls the image object method.
    * @param currentImageName The name of the image to get the luma image from.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
   void getLumaImage(String currentImageName, String newImageName);
 
@@ -88,7 +80,6 @@ public interface Model {
    * @param currentImageName The name of the image to brighten or darken.
    * @param newImageName The name to save the resulting image as.
    * @param scale The scale to brighten or darken the image.
-   * @return 0 for failure, other numbers for success.
    */
   void brighten(String currentImageName, String newImageName, int scale);
 
@@ -98,7 +89,6 @@ public interface Model {
    * @param redImageName The name to save the resulting red component image as.
    * @param greenImageName The name to save the resulting green component image as.
    * @param blueImageName The name to save the resulting blue component image as.
-   * @return 0 for failure, other numbers for success.
    */
   void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName);
 
@@ -108,7 +98,6 @@ public interface Model {
    * @param rImageName The name of the red component image.
    * @param gImageName The name of the green component image.
    * @param bImageName The name of the blue component image.
-   * @return 0 for failure, other numbers for success.
    */
   void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName);
 
@@ -117,7 +106,6 @@ public interface Model {
    * @param greyScaleComponent The method to get the grey scale of the image.
    * @param imageName The image to get the grey scale image from.
    * @param newImageName The name to save the resulting image as.
-   * @return 0 for failure, other numbers for success.
    */
   void greyscale(String greyScaleComponent, String imageName, String newImageName);
 

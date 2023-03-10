@@ -30,7 +30,7 @@ public class Controller implements ControllerImp {
     while (status != 0) {
       System.out.print("$: ");
       try {
-        status = new Controller(new InputStreamReader(System.in), System.out).run(newModel);
+        new Controller(new InputStreamReader(System.in), System.out).run(newModel);
       } catch (Exception e) {
         if (e instanceof IllegalArgumentException) {
           e.printStackTrace();
@@ -52,7 +52,7 @@ public class Controller implements ControllerImp {
    * @return Integer representing the status of the program. 0 for failure, all other numbers success.
    */
   @Override
-  public int run(Model currentModel) {
+  public void run(Model currentModel) {
     Objects.requireNonNull(currentModel);
     String[] currentCommands = new String[5];
     int valueCommand = 0;
@@ -63,11 +63,13 @@ public class Controller implements ControllerImp {
         case "load":
           String loadImagePath = scan.next();
           String loadImageName = scan.next();
-          return currentModel.loadImage(loadImagePath, loadImageName);
+          currentModel.loadImage(loadImagePath, loadImageName);
+          break;
         case "save":
           String saveImagePath = scan.next();
           String saveImageName = scan.next();
-          return currentModel.saveImage(saveImagePath, saveImageName);
+          currentModel.saveImage(saveImagePath, saveImageName);
+          break;
         default:
           // Default for all other commands other than load and save
 
@@ -89,10 +91,9 @@ public class Controller implements ControllerImp {
             currentCommands[i] = scan.next();
             i++;
           }
-          return executeCommands(currentCommands, valueCommand, currentModel);
-
+          executeCommands(currentCommands, valueCommand, currentModel);
+          break;
       }
-      return 1;
 
   }
 
@@ -136,52 +137,63 @@ public class Controller implements ControllerImp {
    * @return 0 for failure, all other numbers for success.
    */
   @Override
-  public int executeCommands(String[] commands, int commandVal, Model currentModel) {
+  public void executeCommands(String[] commands, int commandVal, Model currentModel) {
     String imageName = commands[1];
     String newImageName = commands[2];
 
       // If commands do not pass checks.
       if(!checkCommands(commands, currentModel)){
-        return 0;
+        throw new IllegalArgumentException("Invalid arguments passed");
       }
 
       switch(commands[0]){
         case "redscale":
-          return currentModel.getRedComponent(imageName, newImageName);
+          currentModel.getRedComponent(imageName, newImageName);
+          break;
         case "greenscale":
-          return currentModel.getGreenComponent(imageName, newImageName);
+          currentModel.getGreenComponent(imageName, newImageName);
+          break;
         case "bluescale":
-          return currentModel.getBlueComponent(imageName, newImageName);
+          currentModel.getBlueComponent(imageName, newImageName);
+          break;
         case "vertical-flip":
-          return currentModel.flipVertical(imageName, newImageName);
+          currentModel.flipVertical(imageName, newImageName);
+          break;
         case "horizontal-flip":
-          return currentModel.flipHorizontal(imageName, newImageName);
+          currentModel.flipHorizontal(imageName, newImageName);
+          break;
         case "value":
-          return currentModel.getValueImage(imageName, newImageName);
+          currentModel.getValueImage(imageName, newImageName);
+          break;
         case "intensity":
-          return currentModel.getIntensityImage(imageName, newImageName);
+          currentModel.getIntensityImage(imageName, newImageName);
+          break;
         case "luma":
-          return currentModel.getLumaImage(imageName, newImageName);
+          currentModel.getLumaImage(imageName, newImageName);
+          break;
         case "greyscale":
           String greyScaleComponent = commands[1];
           String currentImageName = commands[2];
           String destImageName = commands[3];
-          return currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
+          currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
+          break;
         case "brighten":
-          return currentModel.brighten(imageName, newImageName, commandVal);
+          currentModel.brighten(imageName, newImageName, commandVal);
+          break;
         case "rgb-split":
           String newRImageName = commands[2];
           String newGImageName = commands[3];
           String newBImageName = commands[4];
-          return currentModel.rgbSplit(imageName, newRImageName, newGImageName, newBImageName);
+          currentModel.rgbSplit(imageName, newRImageName, newGImageName, newBImageName);
+          break;
         case "rgb-combine":
           String rImageName = commands[2];
           String gImageName = commands[3];
           String bImageName = commands[4];
-          return currentModel.rgbCombine(imageName, rImageName, gImageName, bImageName);
+          currentModel.rgbCombine(imageName, rImageName, gImageName, bImageName);
+          break;
         default:
           break;
       }
-    return 1;
   }
 }
