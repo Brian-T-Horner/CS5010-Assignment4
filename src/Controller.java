@@ -81,19 +81,16 @@ public class Controller implements ControllerImp {
     Scanner scan = new Scanner(this.in);
     String commandString = scan.nextLine();
     currentCommands = commandString.split(" ");
-
     if(currentCommands[0].equals("quit")){
       System.out.println("Exiting application...");
       System.exit(0);
     }
-
     if(currentCommands.length < 3) {
       throw new IllegalArgumentException("Every command needs at least than 3 parameters.");
     }
     if(currentCommands.length > 5) {
       throw new IllegalArgumentException("No command needs more than 5 parameters.");
     }
-
     switch (currentCommands[0]) {
       case "load":
         if(currentCommands.length > 3) {
@@ -133,7 +130,6 @@ public class Controller implements ControllerImp {
         executeCommands(currentCommands, valueCommand, currentModel);
         break;
     }
-
   }
 
 
