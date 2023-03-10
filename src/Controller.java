@@ -63,11 +63,11 @@ public class Controller implements ControllerImp {
         case "load":
           String loadImagePath = scan.next();
           String loadImageName = scan.next();
-          return currentModel.loadPPMImage(loadImagePath, loadImageName);
+          return currentModel.loadImage(loadImagePath, loadImageName);
         case "save":
           String saveImagePath = scan.next();
           String saveImageName = scan.next();
-          return currentModel.savePPMImage(saveImagePath, saveImageName);
+          return currentModel.saveImage(saveImagePath, saveImageName);
         default:
           // Default for all other commands other than load and save
 

@@ -17,14 +17,14 @@ public class PPMModel implements Model{
   }
 
   @Override
-  public int loadPPMImage(String imagePath, String newImageName) {
+  public int loadImage(String imagePath, String newImageName) {
     Image i = ImageUtil.readIntoPPMImage(imagePath);
     images.put(newImageName,i);
     return 1;
   }
 
   @Override
-  public int savePPMImage(String imagePath, String imageName) {
+  public int saveImage(String imagePath, String imageName) {
     Image i = images.get(imageName);
     if(i != null) {
       try {

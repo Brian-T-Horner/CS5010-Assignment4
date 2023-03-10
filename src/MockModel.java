@@ -39,7 +39,7 @@ public class MockModel implements Model {
      * @return An int that is the uniqueCode for this MockModel.
      */
     @Override
-    public int loadPPMImage(String imagePath, String newImageName) {
+    public int loadImage(String imagePath, String newImageName) {
         log.append("loadPPMImage: imagePath = ");
         log.append(imagePath);
         log.append(" newImageName = ");
@@ -55,7 +55,7 @@ public class MockModel implements Model {
      * @return An int that is the uniqueCode for this MockModel.
      */
     @Override
-    public int savePPMImage(String imagePath, String imageName) {
+    public int saveImage(String imagePath, String imageName) {
         log.append("savePPMImage: imagePath = ");
         log.append(imagePath);
         log.append(" imageName = ");
