@@ -70,24 +70,17 @@ public class Controller implements ControllerImp {
           // Default for all other commands other than load and save
 
           // Check if an int would be passed for the command
-          if(currentCommands[0].equals("brighten") || currentCommands[0].equals("darken")) {
+          if(currentCommands[0].equals("brighten")) {
             // Try to get the int command for brighten
             try {
               valueCommand = scan.nextInt();
-            } catch(Exception e) {
+            } catch (Exception e) {
               e.printStackTrace();
               System.out.println(e);
               break;
             }
-
-            // Fix value command if outside capped region.
-            if (valueCommand < 0) {
-              valueCommand = 0;
-            }
-            if(valueCommand > 255) {
-              valueCommand = 255;
-            }
           }
+
           // Get the rest of the commands in the currentCommands array
           int i = 1;
           while(scan.hasNext()){
@@ -162,8 +155,8 @@ public class Controller implements ControllerImp {
           return currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
         case "brighten":
           return currentModel.brighten(imageName, newImageName, commandVal);
-        case "darken":
-          return currentModel.darken(imageName, newImageName, commandVal);
+//        case "darken":
+//          return currentModel.darken(imageName, newImageName, commandVal);
         case "rgb-split":
           String newRImageName = commands[2];
           String newGImageName = commands[3];

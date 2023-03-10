@@ -132,17 +132,17 @@ public class MockModel implements Model {
         return uniqueCode;
     }
 
-    @Override
-    public int darken(String currentImageName, String newImageName, int scale) {
-        log.append("darken: currentImageName = ");
-        log.append(currentImageName);
-        log.append(" newImageName = ");
-        log.append(newImageName);
-        log.append(" scale = ");
-        log.append(scale);
-        log.append("\n");
-        return uniqueCode;
-    }
+//    @Override
+//    public int darken(String currentImageName, String newImageName, int scale) {
+//        log.append("darken: currentImageName = ");
+//        log.append(currentImageName);
+//        log.append(" newImageName = ");
+//        log.append(newImageName);
+//        log.append(" scale = ");
+//        log.append(scale);
+//        log.append("\n");
+//        return uniqueCode;
+//    }
 
     @Override
     public int rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
