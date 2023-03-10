@@ -98,9 +98,23 @@ public class MockModel implements Model {
     }
 
     @Override
-    public int rgbSplit(String currentImageName, String newImageName, String redImageName, String greenImageName, String blueImageName) {
+    public int rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
         log.append("rgbSplit: currentImageName = " + currentImageName + " redImageName = " + redImageName
                 + " greenImageName = " + greenImageName + " blueImageName = " + blueImageName + "\n");
+        return uniqueCode;
+    }
+
+    @Override
+    public int rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) {
+        log.append("rgbCombine: newImageName = " + newImageName + " redImageName = " + rImageName
+            + " greenImageName = " + gImageName + " blueImageName = " + bImageName + "\n");
+        return uniqueCode;
+    }
+
+    @Override
+    public int greyscale(String greyScaleComponent, String imageName, String newImageName) {
+        log.append("greyscale: greyScaleComponent = " + greyScaleComponent + " ImageName = "
+            + imageName + " newImageName = " + newImageName +"\n");
         return uniqueCode;
     }
 }

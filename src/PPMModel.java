@@ -104,7 +104,19 @@ public class PPMModel implements Model{
 
   //TODO: Implement
   @Override
-  public int rgbSplit(String currentImageName, String newImageName, String redImageName, String greenImageName, String blueImageName) {
+  public int rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
+    return 1;
+  }
+
+  //TODO: Implement
+  @Override
+  public int rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) {
+    return 1;
+  }
+
+  //TODO: Implement
+  @Override
+  public int greyscale(String greyScaleComponent, String imageName, String newImageName) {
     return 1;
   }
 }

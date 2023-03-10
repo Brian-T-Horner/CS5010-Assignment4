@@ -81,7 +81,17 @@ public class Controller implements ControllerImp {
 
           // Check if an int would be passed for the command
           if(currentCommands[0].equals("brighten")) {
-            valueCommand = scan.nextInt();
+            // Try to get the int command for brighten
+            try {
+              valueCommand = scan.nextInt();
+            } catch(Exception e) {
+              e.printStackTrace();
+              System.out.println(e);
+              status = 0;
+              break;
+            }
+
+            // Fix value command if outside capped region.
             if (valueCommand < 0) {
               valueCommand = 0;
             }
@@ -103,11 +113,35 @@ public class Controller implements ControllerImp {
 
 
   //TODO: implementation
-  private boolean checkCommands(String[] commands, int commandVal, Model currentModel) throws IllegalArgumentException {
+  private boolean checkCommands(String[] commands, Model currentModel) throws IllegalArgumentException {
     if (!(currentModel.getCommands().contains(commands[0]))) {
       throw new IllegalArgumentException("Invalid command for this current model");
     }
-      return false;
+
+    switch(commands[0]) {
+      case ("rgb-split"):
+      case ("rgb-combine"):
+        if (commands.length < 5) {
+
+//          throw new IllegalArgumentException("Invalid number of arguments for rgb-split command.");
+          return false;
+        }
+        break;
+      //          throw new IllegalArgumentException("Invalid number of arguments for rgb-combine command.");
+      case ("greyscale"):
+        if (commands.length < 4) {
+          return false;
+        }
+        break;
+      default:
+        if (commands.length < 3) {
+//          throw new IllegalArgumentException("Invalid number of arguments for standard command");
+          return false;
+        }
+        break;
+    }
+
+      return true;
   }
 
   @Override
@@ -115,10 +149,11 @@ public class Controller implements ControllerImp {
     String imageName = commands[1];
     String newImageName = commands[2];
 
+      // If commands do not pass checks.
+      if(!checkCommands(commands, currentModel)){
+        return 0;
+      }
 
-    if (commands.length < 3) {
-      throw new IllegalArgumentException("Must have a name for the new image");
-    }
       switch(commands[0]){
         case "redscale":
           return currentModel.getRedComponent(imageName, newImageName);
@@ -137,21 +172,23 @@ public class Controller implements ControllerImp {
         case "luma":
           return currentModel.getLumaImage(imageName, newImageName);
         case "greyscale":
-          break; //TODO:
+          String greyScaleComponent = commands[1];
+          String currentImageName = commands[2];
+          String destImageName = commands[3];
+          return currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
         case "brighten":
           return currentModel.brighten(imageName, newImageName, commandVal);
         case "rgb-split":
-          if (commands.length < 5) {
-            throw new IllegalArgumentException("Needs 3 names for the new red, green and blue images");
-          }
-
-
+          String newRImageName = commands[2];
+          String newGImageName = commands[3];
+          String newBImageName = commands[4];
+          return currentModel.rgbSplit(imageName, newRImageName, newGImageName, newBImageName);
+        case "rgb-combine":
           String rImageName = commands[2];
           String gImageName = commands[3];
           String bImageName = commands[4];
-          return currentModel.rgbSplit(imageName, newImageName, rImageName, gImageName, bImageName);
+          return currentModel.rgbCombine(imageName, rImageName, gImageName, bImageName);
         default:
-
           break;
       }
     return 1;

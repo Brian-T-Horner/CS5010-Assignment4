@@ -121,4 +121,30 @@ public class ModelControllerTest {
     assertEquals("6767\n6767\n", out.toString());
   }
 
+  @Test
+  public void testRGBCombine() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("rgb-combine koala-red-tint koala-red koala-green koala-blue");
+    ControllerImp controllerTest = new Controller(in, out);
+    StringBuilder log = new StringBuilder();
+    controllerTest.run(new MockModel(log, 42131));
+    assertEquals("rgbCombine: newImageName = koala-red-tint " +
+        "redImageName = koala-red greenImageName = koala-green blueImageName = koala-blue\n",
+        log.toString());
+    assertEquals("42131\n42131\n", out.toString());
+  }
+
+  @Test
+  public void testGreyScale() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("greyscale value-component koala koala-greyscale");
+    ControllerImp controllerTest = new Controller(in, out);
+    StringBuilder log = new StringBuilder();
+    controllerTest.run(new MockModel(log, 754329));
+    assertEquals("greyscale: greyScaleComponent = value-component " +
+            "imageName = koala newImageName = koala-greyscale\n",
+        log.toString());
+    assertEquals("754329\n75439\n", out.toString());
+  }
+
 }
