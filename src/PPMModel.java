@@ -7,9 +7,9 @@ import java.util.*;
  */
 public class PPMModel implements Model {
 
-  Map<String, Image> images = new HashMap<>();
+  private Map<String, Image> images = new HashMap<>();
 
-  Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip", "greyscale", "brighten",
+  private final Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip", "greyscale", "brighten",
           "rgb-split", "rgb-combine", "value", "intensity", "luma", "save", "load", "darken"));
 
   /**
@@ -38,8 +38,8 @@ public class PPMModel implements Model {
   @Override
   public void loadImage(String imagePath, String newImageName) throws FileNotFoundException {
     Image i = ImageUtil.readIntoPPMImage(imagePath);
-    if(i == null) {
-      throw new FileNotFoundException("File " + imagePath + " not found!");
+    if (i == null) {
+      throw new FileNotFoundException("File \"" + imagePath + "\" not found!");
     }
     images.put(newImageName, i);
   }
@@ -54,14 +54,16 @@ public class PPMModel implements Model {
   @Override
   public void saveImage(String imagePath, String imageName) throws IOException, NoSuchElementException {
     Image i = images.get(imageName);
-    if (i != null) {
-      try {
-        ImageUtil.writeToPPMFile(i, imagePath);
-      } catch (IOException e) {
-        throw new IOException("Invalid image path");
-      }
-    } else {
-      throw new NoSuchElementException("Image with name " + imageName + " not in memory.");
+    if (i == null) {
+      throw new NoSuchElementException("Image with name \"" + imageName + "\" not in memory.");
+    }
+    if (!imagePath.endsWith(".ppm")) {
+      throw new IOException("Filename needs to end with .ppm");
+    }
+    try {
+      ImageUtil.writeToPPMFile(i, imagePath);
+    } catch (IOException e) {
+      throw new IOException("Invalid image path");
     }
   }
 
@@ -73,7 +75,7 @@ public class PPMModel implements Model {
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public void getRedComponent(String currentImageName, String newImageName) {
+  public void getRedComponent(String currentImageName, String newImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getRedComponent();
@@ -91,12 +93,12 @@ public class PPMModel implements Model {
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public void getGreenComponent(String currentImageName, String newImageName) {
+  public void getGreenComponent(String currentImageName, String newImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getGreenComponent();
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
-    }else {
+    } else {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
   }
@@ -109,7 +111,7 @@ public class PPMModel implements Model {
    * @return 0 for failure, other numbers for success.
    */
   @Override
-  public void getBlueComponent(String currentImageName, String newImageName) throws NoSuchElementException{
+  public void getBlueComponent(String currentImageName, String newImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getBlueComponent();
@@ -222,7 +224,7 @@ public class PPMModel implements Model {
         images.put(newImageName, i.darken(-1 * scale));
       }
     } else {
-      throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("Image with name \"" + currentImageName + "\" not in memory.");
     }
   }
 

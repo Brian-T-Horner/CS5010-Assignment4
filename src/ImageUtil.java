@@ -124,9 +124,8 @@ public class ImageUtil {
    * @throws IOException If path is invalid.
    */
   public static void writeToPPMFile(Image image, String fileName) throws IOException {
-    String fullFileName = String.format("%s.ppm", fileName);
-    File ppmFile = new File(fullFileName);
-    FileWriter ppmWriter = new FileWriter(fullFileName);
+    File ppmFile = new File(fileName);
+    FileWriter ppmWriter = new FileWriter(fileName);
     ppmWriter.write("P3\n");
     ppmWriter.write(String.format("%s %s\n",image.getWidth(),image.getHeight()));
     ppmWriter.write("255\n");

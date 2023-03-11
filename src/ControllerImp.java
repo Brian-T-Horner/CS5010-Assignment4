@@ -22,6 +22,6 @@ public interface ControllerImp {
     * @param currentModel Current model the controller is instructing.
     * @return 0 for failure, all other numbers for success.
     */
-   void executeCommands(String[] commands, int commandVal, Model currentModel);
+   void executeCommands(String[] commands, int commandVal, Model currentModel) throws IOException;
 
 }
