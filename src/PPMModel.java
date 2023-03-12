@@ -1,6 +1,11 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * PPMModel that controls the method of a PPMImage.
@@ -16,7 +21,7 @@ public class PPMModel implements Model {
    * Constructor for PPMModel. No parameters as only one default field.
    */
   public PPMModel() {
-    //only one default field
+    //only two default field
   }
 
   /**
@@ -131,11 +136,10 @@ public class PPMModel implements Model {
   @Override
   public void flipHorizontal(String currentImageName, String newImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
-    if (i != null) {
-      images.put(newImageName, i.flipHorizontal());
-    } else {
+    if (i == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
+    images.put(newImageName, i.flipHorizontal());
   }
 
   /**
@@ -148,11 +152,10 @@ public class PPMModel implements Model {
   @Override
   public void flipVertical(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
-    if (i != null) {
-      images.put(newImageName, i.flipHorizontal());
-    } else {
+    if (i == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
+    images.put(newImageName, i.flipHorizontal());
   }
 
   /**
@@ -165,11 +168,10 @@ public class PPMModel implements Model {
   @Override
   public void getValueImage(String currentImageName, String newImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
-    if (i != null) {
-      images.put(newImageName, i.getValueImage());
-    } else {
+    if (i == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
+    images.put(newImageName, i.getValueImage());
   }
 
   /**
@@ -182,11 +184,10 @@ public class PPMModel implements Model {
   @Override
   public void getIntensityImage(String currentImageName, String newImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
-    if (i != null) {
-      images.put(newImageName, i.getIntensityImage());
-    } else {
+    if (i == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
+    images.put(newImageName, i.getIntensityImage());
   }
 
   /**
@@ -199,11 +200,10 @@ public class PPMModel implements Model {
   @Override
   public void getLumaImage(String currentImageName, String newImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
-    if (i != null) {
-      images.put(newImageName, i.getLumaImage());
-    } else {
+    if (i == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
+    images.put(newImageName, i.getLumaImage());
   }
 
   /**
@@ -217,15 +217,11 @@ public class PPMModel implements Model {
   @Override
   public void brighten(String currentImageName, String newImageName, int scale) throws NoSuchElementException {
     Image i = images.get(currentImageName);
-    if (i != null) {
-      if (scale >= 0) {
-        images.put(newImageName, i.brighten(scale));
-      } else {
-        images.put(newImageName, i.darken(-1 * scale));
-      }
-    } else {
+    if (i == null) {
       throw new NoSuchElementException("Image with name \"" + currentImageName + "\" not in memory.");
     }
+    images.put(newImageName, i.brighten(scale));
+
   }
 
   /**
@@ -300,7 +296,6 @@ public class PPMModel implements Model {
    * @param newImageName       The name to save the resulting grey scale image as.
    * @return 0 for failure, other numbers for success.
    */
-  //TODO: Implement
   @Override
   public void greyscale(String greyScaleComponent, String imageName, String newImageName) throws NoSuchElementException {
     switch (greyScaleComponent) {
