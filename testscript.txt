@@ -1,0 +1,148 @@
+#test load
+
+load imagepath imagename garbage
+
+load imagepath
+
+load fakeImagepath imagename
+
+#successes
+
+load images/donut.ppm donut
+
+#test save
+
+save imagepath imagename garbage
+
+save imagepath
+
+save InvalidImagepath imagename
+
+#successes
+
+save images/donut.ppm donut
+
+#test greyscale
+
+greyscale red-component donut dest-donut garbage
+
+greyscale red-component
+
+greyscale red-component invalid-donut dest-image-name
+
+#successes
+
+greyscale red-component donut red-comp
+
+greyscale blue-component donut blue-comp
+
+greyscale green-component donut green-comp
+
+greyscale value-component donut value-comp
+
+greyscale luma-component donut luma-comp
+
+greyscale intensity-component donut intensity-comp
+
+#test horizontal-flip
+
+horizontal-flip invalid-image-name dest-image-name garbage
+
+horizontal-flip donut
+
+horizontal-flip invalid-donut hflipped-image
+
+#successses
+
+horizontal-flip donut hflipped-image
+
+#test vertical-flip
+
+vertical-flip invalid-donut dest-donut garbage
+
+vertical-flip donut
+
+vertical-flip invalid-donut dest-donut
+
+#successes
+
+vertical-flip donut vflipped-image
+
+#test brighten
+
+brighten increment invalid-donut dest-donut garbage
+
+brighten increment
+
+brighten NotANumberincrement donut dest-donut
+
+brighten increment invalid-donut dest-donut
+
+#successes
+
+brighten 50 donut brighten-by-50-image
+
+# test rgb-split
+
+rgb-split donut dest-image-name-red dest-image-name-green dest-image-name-blue garbage
+
+rgb-split donut dest-donut-red dest-donut-green
+
+rgb-split invalid-donut dest-donut-red dest-donut-green
+
+#successes
+
+rgb-split donut red-image green-image blue-image
+
+#test rgb-combine
+
+rgb-combine donut red-image green-image
+
+rgb-combine donut red-image green-image blue-image garbage
+
+rgb-combine donut invalid-red-image green-image blue-image
+
+rgb-combine donut red-image invalid-green-image blue-image
+
+rgb-combine donut red-image green-image invalid-blue-image
+
+#successes
+
+rgb-combine rgb-donut red-image green-image blue-image
+
+
+#unknown command
+
+abcd ef
+
+#save successes
+
+save images/rgb-donut.ppm rgb-donut
+
+save images/red-image.ppm red-image
+
+save images/green-image.ppm green-image
+
+save images/blue-image.ppm blue-image
+
+save images/brighten-by-50-image.ppm brighten-by-50-image
+
+save images/vflipped-image.ppm vflipped-image
+
+save images/hflipped-image.ppm hflipped-image
+
+save images/red-comp.ppm red-comp
+
+save images/blue-comp.ppm blue-comp
+
+save images/green-comp.ppm green-comp
+
+save images/value-comp.ppm value-comp
+
+save images/intensity-comp.ppm intensity-comp
+
+save images/luma-comp.ppm luma-comp
+
+
+
+

@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 /**
  * A class to represent an image in PPM Format.
@@ -16,11 +15,12 @@ public class PPMImage implements Image {
 
   /**
    * Constructor for a PPMImage object.
-   * @param width The width of the image in pixels.
+   *
+   * @param width  The width of the image in pixels.
    * @param height The height of the image in pixels.
-   * @param red The red component of the rgb of the image.
-   * @param blue The blue component of the rgb of the image.
-   * @param green The green component of the rgb of the image.
+   * @param red    The red component of the rgb of the image.
+   * @param blue   The blue component of the rgb of the image.
+   * @param green  The green component of the rgb of the image.
    */
   public PPMImage(int width, int height, int[][] red,
                   int[][] blue, int[][] green) {
@@ -33,17 +33,8 @@ public class PPMImage implements Image {
 
 
   /**
-   * Method to determine if the PPMImage object represents one rgb channel.
-   * @return True if the PPMImage object does represent one rgb channel, false if otherwise.
-   */
-  @Override
-  public boolean isSingleChannel() {
-    return Arrays.equals(redComponent, greenComponent)
-            && Arrays.equals(redComponent, blueComponent);
-  }
-
-  /**
    * Method to return the red component of the PPMImage objects rgb.
+   *
    * @return A matrix representing the red component of the PPMImage.
    */
   @Override
@@ -53,6 +44,7 @@ public class PPMImage implements Image {
 
   /**
    * Method to return the green component of the PPMImage objects rgb.
+   *
    * @return A matrix representing the green component of the PPMImage.
    */
   @Override
@@ -62,6 +54,7 @@ public class PPMImage implements Image {
 
   /**
    * Method to return the blue component of the PPMImage objects rgb.
+   *
    * @return A matrix representing the blue component of the PPMImage.
    */
   @Override
@@ -71,6 +64,7 @@ public class PPMImage implements Image {
 
   /**
    * Method to return the height of the PPMImage in pixels.
+   *
    * @return An integer representing the height of the PPMImage in pixels.
    */
   @Override
@@ -80,6 +74,7 @@ public class PPMImage implements Image {
 
   /**
    * Method to return the width of the PPMImage in pixels.
+   *
    * @return An integer representing the width of the PPMImage in pixels.
    */
   @Override
@@ -89,6 +84,7 @@ public class PPMImage implements Image {
 
   /**
    * A method to flip the PPMImage horizontally and return a resulting Image.
+   *
    * @return The resulting image of the flip horizontal of the PPMImage.
    */
   @Override
@@ -101,6 +97,7 @@ public class PPMImage implements Image {
 
   /**
    * A method flip horizontal the individual rgb components of an image. Supports flipHorizontal method.
+   *
    * @param arr The array to flip horizontally.
    * @return The result of flipping the arr array horizontally.
    */
@@ -120,6 +117,7 @@ public class PPMImage implements Image {
 
   /**
    * A method to flip the PPMImage vertically.
+   *
    * @return The resulting image of the flip vertical of the PPMImage.
    */
   @Override
@@ -132,6 +130,7 @@ public class PPMImage implements Image {
 
   /**
    * A method flip vertical the individual rgb components of an image. Supports flipVertical method.
+   *
    * @param arr The array to flip vertical.
    * @return The result of flipping the arr array vertical.
    */
@@ -151,6 +150,7 @@ public class PPMImage implements Image {
 
   /**
    * Method to get the value image from the PPMImage object.
+   *
    * @return A new image that is the value image from the PPMImage.
    */
   @Override
@@ -171,6 +171,7 @@ public class PPMImage implements Image {
 
   /**
    * A method to get the intensity image of a PPMImage.
+   *
    * @return A new image that is the intensity image of the PPMImage.
    */
   @Override
@@ -195,6 +196,7 @@ public class PPMImage implements Image {
 
   /**
    * Method to get the luma image of a PPMImage.
+   *
    * @return A new image that is the luma image of the PPMImage.
    */
   @Override
@@ -219,6 +221,7 @@ public class PPMImage implements Image {
 
   /**
    * Method to brighten a PPMImage
+   *
    * @param scale Scale to brighten (positive number) the image or darken (negative number) the image.
    * @return An image that is the result of brightening the PPMImage.
    */
@@ -232,7 +235,8 @@ public class PPMImage implements Image {
 
   /**
    * A method to brighten a matrix array of the PPMImage.
-   * @param arr Array to brighten.
+   *
+   * @param arr   Array to brighten.
    * @param scale The scale to brighten.
    * @return A new matrix that is the result of the brighten operation.
    */
@@ -252,42 +256,10 @@ public class PPMImage implements Image {
     return brightened;
   }
 
-  /**
-   * A method to darken a PPMImage.
-   * @param scale Scale to darken the image. Negative number.
-   * @return A new image that is the result of the darken operation on PPMImage.
-   */
-  @Override
-  public Image darken(int scale) {
-    int[][] red = darkenArray(redComponent, scale);
-    int[][] green = darkenArray(greenComponent, scale);
-    int[][] blue = darkenArray(blueComponent, scale);
-    return new PPMImage(width, height, red, blue, green);
-  }
-
-  /**
-   * A helper method to darken a matrix for use with method darken.
-   * @param arr Matrix to darken.
-   * @param scale The scale to apply to darken.
-   * @return A new matrix that is the result of the darken.
-   */
-  private int[][] darkenArray(int[][] arr, int scale) {
-    int [][] darkened = new int[width][height];
-    for (int i = 0; i < width; i ++) {
-      for (int j = 0; j < height; j++) {
-        int val = arr[i][j] - scale;
-        if (val < 0) {
-          val = 0;
-        }
-        darkened[i][j] = val;
-      }
-    }
-    return darkened;
-  }
-
 
   /**
    * Method to determine if two PPMImage objects are equal.
+   *
    * @param o An object to check if equal to {@code this} PPMImage.
    * @return True if equal, false if otherwise.
    */
@@ -309,6 +281,7 @@ public class PPMImage implements Image {
 
   /**
    * Method to get a hashCode for a PPMImage.
+   *
    * @return An integer hashcode for the object.
    */
   @Override

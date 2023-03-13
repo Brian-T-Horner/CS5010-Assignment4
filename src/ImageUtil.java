@@ -64,6 +64,7 @@ public class ImageUtil {
 
   /**
    * Method to read in an image in the PPM Format.
+   *
    * @param filename Path to the image file.
    * @return A new Image object from the loaded image.
    */
@@ -114,27 +115,27 @@ public class ImageUtil {
         blue[j][i] = b;
       }
     }
-      return new PPMImage(width, height, red, blue, green);
+    return new PPMImage(width, height, red, blue, green);
   }
 
   /**
    * Method to write a PPMImage to disk.
-   * @param image Name of the image to write to disk.
+   *
+   * @param image    Name of the image to write to disk.
    * @param fileName Path to location to write the image.
    * @throws IOException If path is invalid.
    */
   public static void writeToPPMFile(Image image, String fileName) throws IOException {
-    String fullFileName = String.format("%s.ppm", fileName);
-    File ppmFile = new File(fullFileName);
-    FileWriter ppmWriter = new FileWriter(fullFileName);
+    File ppmFile = new File(fileName);
+    FileWriter ppmWriter = new FileWriter(fileName);
     ppmWriter.write("P3\n");
-    ppmWriter.write(String.format("%s %s\n",image.getWidth(),image.getHeight()));
+    ppmWriter.write(String.format("%s %s\n", image.getWidth(), image.getHeight()));
     ppmWriter.write("255\n");
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
-          ppmWriter.write(String.format("%d\n",image.getRedComponent()[j][i]));
-          ppmWriter.write(String.format("%d\n",image.getGreenComponent()[j][i]));
-          ppmWriter.write(String.format("%d\n",image.getBlueComponent()[j][i]));
+        ppmWriter.write(String.format("%d\n", image.getRedComponent()[j][i]));
+        ppmWriter.write(String.format("%d\n", image.getGreenComponent()[j][i]));
+        ppmWriter.write(String.format("%d\n", image.getBlueComponent()[j][i]));
       }
     }
     ppmWriter.close();
@@ -142,6 +143,7 @@ public class ImageUtil {
 
   /**
    * Method to write a buffered image from an image.
+   *
    * @param image Image to be used to write buffered image.
    * @return The resulting buffered image.
    */

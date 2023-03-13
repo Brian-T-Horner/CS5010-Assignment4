@@ -1,7 +1,8 @@
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
@@ -30,43 +31,11 @@ public class Controller implements ControllerImp {
    *
    * @param args Command line arguments to be passed to the program.
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     Model newModel = new PPMModel();
-    ControllerImp controller =  new Controller(new InputStreamReader(System.in), System.out);
-    while (true) {
-      System.out.print("$: ");
-      try {
-        controller.run(newModel);
-      } catch (Exception e) {
-        if (e instanceof IllegalArgumentException) {
-          e.printStackTrace();
-          System.out.println(e);
-          System.out.println("Please try again with appropriate arguments.");
-        } else if (e instanceof InputMismatchException) {
-          e.printStackTrace();
-          System.out.println(e);
-          System.out.println("The command you are trying to run needs an integer as an argument. Please try again.");
-        } else if (e instanceof FileNotFoundException) {
-          e.printStackTrace();
-          System.out.println(e);
-          System.out.println("Please try loading an image again with a valid file name.");
-        } else if (e instanceof NoSuchElementException) {
-          e.printStackTrace();
-          System.out.println(e);
-          System.out.println("Please again after loading the appropriate image or be sure to pass arguments in.");
-        } else if (e instanceof IOException) {
-          e.printStackTrace();
-          System.out.println(e);
-          System.out.println("Please try with a valid path.");
-        } else {
-          e.printStackTrace();
-          System.out.println(e);
-          System.exit(1);
-        }
-      }
-    }
+    ControllerImp controller = new Controller(new InputStreamReader(System.in), System.out);
+    controller.run(newModel);
   }
-
 
   /**
    * Method to run the program, accept inputs and pass load, save images to Model.
@@ -76,87 +45,112 @@ public class Controller implements ControllerImp {
   @Override
   public void run(Model currentModel) throws IOException {
     Objects.requireNonNull(currentModel);
-    String[] currentCommands = new String[5];
-    int valueCommand = 0;
-    Scanner scan = new Scanner(this.in);
-    String commandString = scan.nextLine();
-    currentCommands = commandString.split(" ");
-    if(currentCommands[0].equals("quit")){
-      System.out.println("Exiting application...");
-      System.exit(0);
-    }
-    if(currentCommands.length < 3) {
-      throw new IllegalArgumentException("Every command needs at least than 3 parameters.");
-    }
-    if(currentCommands.length > 5) {
-      throw new IllegalArgumentException("No command needs more than 5 parameters.");
-    }
-    switch (currentCommands[0]) {
-      case "load":
-        if(currentCommands.length > 3) {
-          throw new IllegalArgumentException("Load command only takes 3 parameters.");
-        }
-        String loadImagePath = currentCommands[1];
-        String loadImageName = currentCommands[2];
+    
+    while (true) {
+      Scanner scan = new Scanner(this.in);
+      out.append("$ ");
+      /*
+      TODO I think final functionality will be entering in commands line by line or read from
+      text file.
+       */
+      while (scan.hasNextLine()) {
+        String commandString = scan.nextLine();
+        String[] commands = commandString.split(" ");
 
-        currentModel.loadImage(loadImagePath, loadImageName);
-        break;
-      case "save":
-        if(currentCommands.length > 3) {
-          throw new IllegalArgumentException("Save command only takes 3 parameters.");
+        if (commandString.startsWith("run") && commandString.endsWith(".txt")) {
+          String filepath = commandString.replace("run", "").trim();
+          out.append(runFromFile(filepath, currentModel)).append("\n");
+          out.append("$ ");
+          continue;
+
         }
-        String saveImagePath = currentCommands[1];
-        String saveImageName = currentCommands[2];
-        currentModel.saveImage(saveImagePath, saveImageName);
-        break;
-      case "rgb-split":
-      case "rgb-combine":
-        if(currentCommands.length < 5) {
-          throw new IllegalArgumentException("rgb-split and rgb-combine commands need to take 5 parameters.");
+
+        if (commands[0].equals("quit")) {
+          out.append("Exiting application...");
+          System.exit(0);
         }
-        executeCommands(currentCommands, valueCommand,currentModel);
-        break;
-      case "brighten":
-        try {
-          valueCommand = Integer.parseInt(currentCommands[1]);
-        } catch (Exception e){
-          throw new IllegalArgumentException("Second command of brighten must be a valid integer");
+
+        if (!checkCommands(commands)) {
+          out.append("$ ");
+          continue;
         }
-        executeCommands(currentCommands, valueCommand, currentModel);
-        break;
-      default:
-        // Default for all other commands other than load and save
-        // Get the rest of the commands in the currentCommands array
-        executeCommands(currentCommands, valueCommand, currentModel);
-        break;
+        executeCommands(commands, currentModel);
+
+        out.append("$ ");
+      }
     }
   }
 
+  private String runFromFile(String filepath, Model currentModel) throws IOException {
+    File f = new File(filepath);
+    BufferedReader br;
+    try {
+      br = new BufferedReader(new FileReader(f));
+    } catch (Exception e) {
+      return e.getMessage();
+    }
+
+    String line;
+    while ((line = br.readLine()) != null) {
+      String[] commands = line.split(" ");
+      if (!checkCommands(commands)) {
+        continue;
+      }
+      executeCommands(commands, currentModel);
+    }
+    return "";
+
+  }
+
+
+  // TODO break up and use predicates
+
+  // TODO for each command, test number of args errors, test error for each specific command
 
   /**
    * Private method to check all other commands but save and load.
    *
-   * @param commands     Array of strings of commands to check.
-   * @param currentModel Current model controller is communicating with.
+   * @param commands Array of strings of commands to check.
    */
-  private boolean checkCommands(String[] commands, Model currentModel) throws IllegalArgumentException {
+  private boolean checkCommands(String[] commands) throws IllegalArgumentException, IOException {
+
+    if (commands[0].isEmpty() || commands[0].charAt(0) == '#') {
+      return false;
+    }
+
     switch (commands[0]) {
+      case "load":
+      case "save":
+      case ("redscale"):
+      case ("greenscale"):
+      case ("bluescale"):
+      case ("vertical-flip"):
+      case ("horizontal-flip"):
+      case ("luma"):
+      case ("intensity"):
+      case ("value"):
+        if (commands.length != 3) {
+          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
+          return false;
+        }
+        break;
       case ("rgb-split"):
       case ("rgb-combine"):
-        if (commands.length < 5) {
-          throw new IllegalArgumentException("Invalid number of arguments for command " + commands[0] + ".");
+        if (commands.length != 5) {
+          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
+          return false;
         }
         break;
       case ("greyscale"):
-        if (commands.length < 4) {
-          throw new IllegalArgumentException("Invalid number of arguments for command " + commands[0] + ".");
+      case ("brighten"):
+        if (commands.length != 4) {
+          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
+          return false;
         }
         break;
       default:
-        if (commands.length < 3) {
-          throw new IllegalArgumentException("Invalid number of arguments for command " + commands[0] + ".");
-        }
-        break;
+        out.append("Invalid commands. Please try again.\n");
+        return false;
     }
     return true;
   }
@@ -165,67 +159,134 @@ public class Controller implements ControllerImp {
    * Method to execute all other commands but save and load.
    *
    * @param commands     String array of current commands to be executed.
-   * @param commandVal   Integer values for commands that take a value.
    * @param currentModel Current model the controller is communicating with.
    */
   @Override
-  public void executeCommands(String[] commands, int commandVal, Model currentModel) {
+  public void executeCommands(String[] commands, Model currentModel) throws IOException {
     String imageName = commands[1];
     String newImageName = commands[2];
-
-    // If commands do not pass checks.
-    checkCommands(commands, currentModel);
-
+    int commandVal = 0;
 
     switch (commands[0]) {
+      case "load":
+        String loadImagePath = commands[1];
+        String loadImageName = commands[2];
+        try {
+          currentModel.loadImage(loadImagePath, loadImageName);
+        } catch (Exception e) {
+          out.append(e.getMessage()).append("\n");
+          break;
+        }
+        break;
+      case "save":
+        String saveImagePath = commands[1];
+        String saveImageName = commands[2];
+        try {
+          currentModel.saveImage(saveImagePath, saveImageName);
+        } catch (Exception e) {
+          out.append(e.getMessage()).append("\n");
+          break;
+        }
+        break;
+      case "brighten":
+        try {
+          commandVal = Integer.parseInt(commands[1]);
+        } catch (Exception e) {
+          out.append("Second command of brighten must be a valid integer.\n");
+        }
+        String brightenImageName = commands[2];
+        String brightenNewImageName = commands[3];
+        try {
+          currentModel.brighten(brightenImageName, brightenNewImageName, commandVal);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
+        break;
       case "redscale":
-        currentModel.getRedComponent(imageName, newImageName);
+        try {
+          currentModel.getRedComponent(imageName, newImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "greenscale":
-        currentModel.getGreenComponent(imageName, newImageName);
+        try {
+          currentModel.getGreenComponent(imageName, newImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "bluescale":
-        currentModel.getBlueComponent(imageName, newImageName);
+        try {
+          currentModel.getBlueComponent(imageName, newImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "vertical-flip":
-        currentModel.flipVertical(imageName, newImageName);
+        try {
+          currentModel.flipVertical(imageName, newImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "horizontal-flip":
-        currentModel.flipHorizontal(imageName, newImageName);
+        try {
+          currentModel.flipHorizontal(imageName, newImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "value":
-        currentModel.getValueImage(imageName, newImageName);
+        try {
+          currentModel.getValueImage(imageName, newImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "intensity":
-        currentModel.getIntensityImage(imageName, newImageName);
+        try {
+          currentModel.getIntensityImage(imageName, newImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "luma":
-        currentModel.getLumaImage(imageName, newImageName);
+        try {
+          currentModel.getLumaImage(imageName, newImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "greyscale":
         String greyScaleComponent = commands[1];
         String currentImageName = commands[2];
         String destImageName = commands[3];
-        currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
-        break;
-      case "brighten":
-        String brightenImageName = commands[2];
-        String brightenNewImageName = commands[3];
-        currentModel.brighten(brightenImageName, brightenNewImageName, commandVal);
+        try {
+          currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "rgb-split":
         String newRImageName = commands[2];
         String newGImageName = commands[3];
         String newBImageName = commands[4];
-        currentModel.rgbSplit(imageName, newRImageName, newGImageName, newBImageName);
+        try {
+          currentModel.rgbSplit(imageName, newRImageName, newGImageName, newBImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
       case "rgb-combine":
         String rImageName = commands[2];
         String gImageName = commands[3];
         String bImageName = commands[4];
-        currentModel.rgbCombine(imageName, rImageName, gImageName, bImageName);
-        break;
-      default:
+        try {
+          currentModel.rgbCombine(imageName, rImageName, gImageName, bImageName);
+        } catch (NoSuchElementException e) {
+          out.append(e.getMessage()).append("\n");
+        }
         break;
     }
   }
