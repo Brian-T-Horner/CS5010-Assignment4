@@ -37,7 +37,6 @@ public class Controller implements ControllerImp {
     controller.run(newModel);
   }
 
-
   /**
    * Method to run the program, accept inputs and pass load, save images to Model.
    *
@@ -59,7 +58,8 @@ public class Controller implements ControllerImp {
 
         if (commandString.startsWith("run") && commandString.endsWith(".txt")) {
           String filepath = commandString.replace("run", "").trim();
-          out.append(runFromFile(filepath, currentModel));
+          out.append(runFromFile(filepath, currentModel)).append("\n");
+          out.append("$ ");
           continue;
         }
 
@@ -69,6 +69,7 @@ public class Controller implements ControllerImp {
         }
 
         if (!checkCommands(commands)) {
+          out.append("$ ");
           continue;
         }
         executeCommands(commands, currentModel);
@@ -98,12 +99,23 @@ public class Controller implements ControllerImp {
     return "";
   }
 
-//  private boolean checkCommand(String[] commands,String commandName,int numArgs,Appendable out) {
-//    if(commands.length > )
+//  private boolean checkCommand(Appendable out,String commandName, int argsExpected,
+//                               int argsSupplied,BiFunction<Integer,Integer,Boolean> b) throws IOException {
+//    if(!b.apply(argsSupplied, argsExpected)) {
+//      out.append("Invalid number of arguments for command \"").append(commandName).append("\".")
+//              .append(" Requires ").append(String.valueOf(argsExpected))
+//              .append(", given ").append(String.valueOf(argsSupplied))
+//              .append(" arguments.");
+//      return false;
+//    }
+//    return true;
+//
 //  }
 
 
   // TODO break up and use predicates
+
+  // TODO for each command, test number of args errors, test error for each specific command
 
   /**
    * Private method to check all other commands but save and load.
@@ -119,25 +131,6 @@ public class Controller implements ControllerImp {
     switch (commands[0]) {
       case "load":
       case "save":
-        if (commands.length > 3) {
-          out.append("Load command only takes 3 parameters.\n");
-          return false;
-        }
-        break;
-      case ("rgb-split"):
-      case ("rgb-combine"):
-        if (commands.length < 5) {
-          out.append("Invalid number of arguments for command ").append(commands[0]).append(".");
-          return false;
-        }
-        break;
-      case ("greyscale"):
-      case ("brighten"):
-        if (commands.length < 4) {
-          out.append("Invalid number of arguments for command ").append(commands[0]).append(".");
-          return false;
-        }
-        break;
       case ("redscale"):
       case ("greenscale"):
       case ("bluescale"):
@@ -146,14 +139,28 @@ public class Controller implements ControllerImp {
       case ("luma"):
       case ("intensity"):
       case ("value"):
-        if (commands.length < 3 || commands.length > 5) {
-          out.append("Invalid number of arguments for command ").append(commands[0]).append(".");
+        if (commands.length != 3) {
+          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
+          return false;
+        }
+        break;
+      case ("rgb-split"):
+      case ("rgb-combine"):
+        if (commands.length != 5) {
+          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
+          return false;
+        }
+        break;
+      case ("greyscale"):
+      case ("brighten"):
+        if (commands.length != 4) {
+          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
           return false;
         }
         break;
       default:
-        out.append("Invalid commands. Please try again\n");
-        break;
+        out.append("Invalid commands. Please try again.\n");
+        return false;
     }
     return true;
   }

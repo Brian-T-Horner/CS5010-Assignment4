@@ -155,7 +155,7 @@ public class PPMModel implements Model {
     if (i == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
-    images.put(newImageName, i.flipHorizontal());
+    images.put(newImageName, i.flipVertical());
   }
 
   /**
@@ -237,7 +237,7 @@ public class PPMModel implements Model {
   public void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i == null) {
-      throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("Image with name \"" + currentImageName + "\" not in memory.");
     }
     int[][] r = i.getRedComponent();
     int[][] g = i.getGreenComponent();
@@ -268,13 +268,13 @@ public class PPMModel implements Model {
     Image blueImage = images.get(bImageName);
     String exceptionOut = "";
     if (redImage == null) {
-      exceptionOut += "Image with name " + rImageName + " not in memory.\n";
+      exceptionOut += "Image with name \"" + rImageName + "\" not in memory.\t";
     }
     if (blueImage == null) {
-      exceptionOut += "Image with name " + bImageName + " not in memory.\n";
+      exceptionOut += "Image with name \"" + bImageName + "\" not in memory.\t";
     }
     if (greenImage == null) {
-      exceptionOut += "Image with name " + gImageName + " not in memory.\n";
+      exceptionOut += "Image with name \"" + gImageName + "\" not in memory.\t";
     }
     if (!exceptionOut.isEmpty()) {
       throw new NoSuchElementException(exceptionOut);
