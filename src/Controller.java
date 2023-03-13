@@ -99,19 +99,6 @@ public class Controller implements ControllerImp {
     return "";
   }
 
-//  private boolean checkCommand(Appendable out,String commandName, int argsExpected,
-//                               int argsSupplied,BiFunction<Integer,Integer,Boolean> b) throws IOException {
-//    if(!b.apply(argsSupplied, argsExpected)) {
-//      out.append("Invalid number of arguments for command \"").append(commandName).append("\".")
-//              .append(" Requires ").append(String.valueOf(argsExpected))
-//              .append(", given ").append(String.valueOf(argsSupplied))
-//              .append(" arguments.");
-//      return false;
-//    }
-//    return true;
-//
-//  }
-
 
   // TODO break up and use predicates
 
