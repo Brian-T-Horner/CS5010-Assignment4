@@ -45,6 +45,7 @@ public class Controller implements ControllerImp {
   @Override
   public void run(Model currentModel) throws IOException {
     Objects.requireNonNull(currentModel);
+    
     while (true) {
       Scanner scan = new Scanner(this.in);
       out.append("$ ");
@@ -61,6 +62,7 @@ public class Controller implements ControllerImp {
           out.append(runFromFile(filepath, currentModel)).append("\n");
           out.append("$ ");
           continue;
+
         }
 
         if (commands[0].equals("quit")) {
@@ -97,6 +99,7 @@ public class Controller implements ControllerImp {
       executeCommands(commands, currentModel);
     }
     return "";
+
   }
 
 
