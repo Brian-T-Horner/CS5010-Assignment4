@@ -8,7 +8,7 @@ load fakeImagepath imagename
 
 #successes
 
-load images/donut.ppm donut
+load images/donuts.ppm donut
 
 #test save
 
@@ -82,6 +82,8 @@ brighten increment invalid-donut dest-donut
 
 brighten 50 donut brighten-by-50-image
 
+brighten -20 donut brighten-by-neg-20-image
+
 # test rgb-split
 
 rgb-split donut dest-image-name-red dest-image-name-green dest-image-name-blue garbage
@@ -142,6 +144,8 @@ save images/value-comp.ppm value-comp
 save images/intensity-comp.ppm intensity-comp
 
 save images/luma-comp.ppm luma-comp
+
+save images/brighten-by-neg-20-image.ppm brighten-by-neg-20-image
 
 
 

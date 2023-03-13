@@ -1,7 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 /**
  * Model interface for our MVC designed program.
@@ -126,10 +125,4 @@ public interface Model {
    */
   void greyscale(String greyScaleComponent, String imageName, String newImageName) throws NoSuchElementException;
 
-  /**
-   * Method to get the commands that are available with the Model object.
-   *
-   * @return Set of string commands for the current model.
-   */
-  Set<String> getCommands();
 }

@@ -129,7 +129,7 @@ public class ImageUtil {
     File ppmFile = new File(fileName);
     FileWriter ppmWriter = new FileWriter(fileName);
     ppmWriter.write("P3\n");
-    ppmWriter.write(String.format("%s %s\n", image.getWidth(), image.getHeight()));
+    ppmWriter.write(String.format("%d %d\n", image.getWidth(), image.getHeight()));
     ppmWriter.write("255\n");
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
