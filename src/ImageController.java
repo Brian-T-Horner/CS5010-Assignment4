@@ -31,10 +31,16 @@ public class ImageController implements Controller {
    *
    * @param args Command line arguments to be passed to the program.
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
     Model newModel = new ImageModel();
     Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
-    controller.run(newModel);
+    try  {
+      controller.run(newModel);
+    } catch(IOException e) {
+      System.out.println("IO error: output cannot be appended.");
+    }
+    System.exit(0);
+
   }
 
   /**
@@ -56,6 +62,11 @@ public class ImageController implements Controller {
         String commandString = scan.nextLine();
         String[] commands = commandString.split(" ");
 
+        if (commands[0].equals("quit")) {
+          out.append("Exiting application...");
+          return;
+        }
+
         if (commandString.startsWith("run") && commandString.endsWith(".txt")) {
           String filepath = commandString.replace("run", "").trim();
           out.append(runFromFile(filepath, currentModel)).append("\n");
@@ -63,10 +74,6 @@ public class ImageController implements Controller {
           continue;
         }
 
-        if (commands[0].equals("quit")) {
-          out.append("Exiting application...");
-          System.exit(0);
-        }
 
         if (!checkCommands(commands)) {
           out.append("$ ");

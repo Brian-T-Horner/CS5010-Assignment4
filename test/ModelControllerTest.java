@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import org.junit.Test;
@@ -14,10 +15,10 @@ public class ModelControllerTest {
    * Method to test the controller to loadPPMImage method.
    */
   @Test
-  public void testLoadPPMImage() {
+  public void testLoadPPMImage() throws IOException {
     StringBuffer out = new StringBuffer();
-    Reader in = new StringReader("load images/koala.ppm koala");
-    ControllerImp controllerTest = new Controller(in, out);
+    Reader in = new StringReader("load images/koala.ppm koala\nquit");
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 3390));
     assertEquals("loadPPMImage: imagePath = images/koala.ppm " +
@@ -29,10 +30,10 @@ public class ModelControllerTest {
    * Method to test the controller to savePPMImage method.
    */
   @Test
-  public void testSavePPMImage() {
+  public void testSavePPMImage() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("save images/koala-brighter.ppm koala-brighter");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 4537));
     assertEquals("savePPMImage: imagePath = images/koala-brighter.ppm " +
@@ -43,10 +44,10 @@ public class ModelControllerTest {
    * Method to test the controller to flipHorizontal method.
    */
   @Test
-  public void testFlipHorizontal() {
+  public void testFlipHorizontal() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("horizontal-flip koala-vertical koala-vertical-horizontal");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 7362));
     assertEquals("flipHorizontal: currentImageName = koala-vertical " +
@@ -57,10 +58,10 @@ public class ModelControllerTest {
    * Method to test the controller to flipVertical method.
    */
   @Test
-  public void testFlipVertical() {
+  public void testFlipVertical() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("vertical-flip koala koala-vertical");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 999));
     assertEquals("flipVertical: currentImageName = koala " +
@@ -71,10 +72,10 @@ public class ModelControllerTest {
    * Method to test the controller to valueImage method.
    */
   @Test
-  public void testValueImage() {
+  public void testValueImage() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("value koala koala-value");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 1432));
     assertEquals("getValueImage: currentImageName = koala " +
@@ -85,10 +86,10 @@ public class ModelControllerTest {
    * Method to test the controller to intensityImage method.
    */
   @Test
-  public void testIntensityImage() {
+  public void testIntensityImage() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("intensity koala koala-intensity");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 33332));
     assertEquals("getIntensityImage: currentImageName = koala " +
@@ -100,10 +101,10 @@ public class ModelControllerTest {
    * Method to test the controller to lumaImage method.
    */
   @Test
-  public void testLumaImage() {
+  public void testLumaImage() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("luma koala koala-luma");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 9191));
     assertEquals("getLumaImage: currentImageName = koala " +
@@ -114,10 +115,10 @@ public class ModelControllerTest {
    * Method to test the controller to brighten method.
    */
   @Test
-  public void testBrighten() {
+  public void testBrighten() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("brighten 50 koala koala-brighten");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 34342));
     assertEquals("brighten: currentImageName = koala " +
@@ -128,10 +129,10 @@ public class ModelControllerTest {
    * Method to test the controller to brighten (darken) method.
    */
   @Test
-  public void testDarken() {
+  public void testDarken() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("brighten -50 koala koala-brighten");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 3754));
     assertEquals("brighten: currentImageName = koala " +
@@ -142,10 +143,10 @@ public class ModelControllerTest {
    * Method to test the controller to rgbSplit method.
    */
   @Test
-  public void testRGBSplit() {
+  public void testRGBSplit() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("rgb-split koala koala-red koala-green koala-blue");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 6767));
     assertEquals("rgbSplit: currentImageName = koala " +
@@ -156,10 +157,10 @@ public class ModelControllerTest {
    * Method to test the controller to rgbCombine method.
    */
   @Test
-  public void testRGBCombine() {
+  public void testRGBCombine() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("rgb-combine koala-red-tint koala-red koala-green koala-blue");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 42131));
     assertEquals("rgbCombine: newImageName = koala-red-tint " +
@@ -171,10 +172,10 @@ public class ModelControllerTest {
    * Method to test the controller to greyScale method.
    */
   @Test
-  public void testGreyScale() {
+  public void testGreyScale() throws IOException {
     StringBuffer out = new StringBuffer();
     Reader in = new StringReader("greyscale value-component koala koala-greyscale");
-    ControllerImp controllerTest = new Controller(in, out);
+    Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 754329));
     assertEquals("greyscale: greyScaleComponent = value-component " +
