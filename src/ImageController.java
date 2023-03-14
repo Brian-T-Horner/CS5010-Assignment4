@@ -163,7 +163,6 @@ public class ImageController implements Controller {
     String imageName = commands[1];
     String newImageName = commands[2];
     int commandVal;
-
     try {
       switch (commands[0]) {
         case "load":
