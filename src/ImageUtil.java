@@ -115,7 +115,7 @@ public class ImageUtil {
         blue[j][i] = b;
       }
     }
-    return new PPMImage(width, height, red, blue, green);
+    return new PPMModel.PPMImage(width, height, red, blue, green);
   }
 
   /**

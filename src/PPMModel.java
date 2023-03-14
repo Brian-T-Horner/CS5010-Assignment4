@@ -1,26 +1,20 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 /**
  * PPMModel that controls the method of a PPMImage.
  */
-public class ImageModel implements Model {
+public class PPMModel implements Model {
 
   private Map<String, Image> images = new HashMap<>();
-
-  private final Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip", "greyscale", "brighten",
-          "rgb-split", "rgb-combine", "value", "intensity", "luma", "save", "load", "darken"));
 
   /**
    * Constructor for PPMModel. No parameters as only one default field.
    */
-  public ImageModel() {
+  public PPMModel() {
     //only two default field
   }
 
@@ -129,7 +123,12 @@ public class ImageModel implements Model {
     if (i == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
-    images.put(newImageName, i.flipHorizontal());
+    int[][] red = flipArrayHorizontal(i, i.getRedComponent());
+    int[][] green = flipArrayHorizontal(i, i.getGreenComponent());
+    int[][] blue = flipArrayHorizontal(i, i.getBlueComponent());
+    Image horizontal = new PPMImage(i.getWidth(), i.getHeight(), red, blue, green);
+
+    images.put(newImageName, horizontal);
   }
 
   /**
@@ -145,7 +144,12 @@ public class ImageModel implements Model {
     if (i == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
-    images.put(newImageName, i.flipVertical());
+    int[][] red = flipArrayVertical(i, i.getRedComponent());
+    int[][] green = flipArrayVertical(i, i.getGreenComponent());
+    int[][] blue = flipArrayVertical(i, i.getBlueComponent());
+    Image vertical = new PPMImage(i.getWidth(), i.getHeight(), red, blue, green);
+
+    images.put(newImageName, vertical);
   }
 
   /**
@@ -157,11 +161,26 @@ public class ImageModel implements Model {
    */
   @Override
   public void getValueImage(String currentImageName, String newImageName) throws NoSuchElementException {
-    Image i = images.get(currentImageName);
-    if (i == null) {
+    Image img = images.get(currentImageName);
+    if (img == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
-    images.put(newImageName, i.getValueImage());
+    int width = img.getWidth();
+    int height = img.getHeight();
+    int[][] value = new int[width][height];
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        int redValue = img.getRedComponent()[i][j];
+        int greenValue = img.getGreenComponent()[i][j];
+        int blueValue = img.getBlueComponent()[i][j];
+        int max = Math.max(redValue, greenValue);
+        max = Math.max(max, blueValue);
+        value[i][j] = max;
+      }
+    }
+    Image val = new PPMImage(width, height, value, value, value);
+
+    images.put(newImageName, val);
   }
 
   /**
@@ -173,11 +192,30 @@ public class ImageModel implements Model {
    */
   @Override
   public void getIntensityImage(String currentImageName, String newImageName) throws NoSuchElementException {
-    Image i = images.get(currentImageName);
-    if (i == null) {
+    Image img = images.get(currentImageName);
+    if (img == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
-    images.put(newImageName, i.getIntensityImage());
+    int width = img.getWidth();
+    int height = img.getHeight();
+    int[][] intensity = new int[width][height];
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        int redValue = img.getRedComponent()[i][j];
+        int greenValue = img.getGreenComponent()[i][j];
+        int blueValue = img.getBlueComponent()[i][j];
+        int intensityValue = (int) Math.ceil((double) (redValue + greenValue + blueValue) / 3);
+        if (intensityValue > 255) {
+          intensityValue = 255;
+        } else if (intensityValue < 0) {
+          intensityValue = 0;
+        }
+        intensity[i][j] = intensityValue;
+      }
+    }
+    Image i = new PPMImage(width, height, intensity, intensity, intensity);
+
+    images.put(newImageName, i);
   }
 
   /**
@@ -189,11 +227,29 @@ public class ImageModel implements Model {
    */
   @Override
   public void getLumaImage(String currentImageName, String newImageName) throws NoSuchElementException {
-    Image i = images.get(currentImageName);
-    if (i == null) {
+    Image img = images.get(currentImageName);
+    if (img == null) {
       throw new NoSuchElementException("Image with name " + currentImageName + " not in memory.");
     }
-    images.put(newImageName, i.getLumaImage());
+    int width = img.getWidth();
+    int height = img.getHeight();
+    int[][] luma = new int[width][height];
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        int redValue = img.getRedComponent()[i][j];
+        int greenValue = img.getGreenComponent()[i][j];
+        int blueValue = img.getBlueComponent()[i][j];
+        int lumaValue = (int) Math.ceil((double) 0.2126 * redValue + 0.7152 * greenValue + 0.0722 * blueValue);
+        if (lumaValue > 255) {
+          lumaValue = 255;
+        } else if (lumaValue < 0) {
+          lumaValue = 0;
+        }
+        luma[i][j] = lumaValue;
+      }
+    }
+    Image lumaImg = new PPMImage(width, height, luma, luma, luma);
+    images.put(newImageName, lumaImg);
   }
 
   /**
@@ -206,11 +262,18 @@ public class ImageModel implements Model {
    */
   @Override
   public void brighten(String currentImageName, String newImageName, int scale) throws NoSuchElementException {
-    Image i = images.get(currentImageName);
-    if (i == null) {
+    Image img = images.get(currentImageName);
+    if (img == null) {
       throw new NoSuchElementException("Image with name \"" + currentImageName + "\" not in memory.");
     }
-    images.put(newImageName, i.brighten(scale));
+    int width = img.getWidth();
+    int height = img.getHeight();
+    int[][] red = brightenArray(img,img.getRedComponent(), scale);
+    int[][] green = brightenArray(img,img.getGreenComponent(), scale);
+    int[][] blue = brightenArray(img,img.getBlueComponent(), scale);
+    Image brightened = new PPMImage(width, height, red, blue, green);
+
+    images.put(newImageName, brightened);
 
   }
 
@@ -323,4 +386,85 @@ public class ImageModel implements Model {
     return (firstImage.getHeight() == secondImage.getHeight()
             && firstImage.getWidth() == secondImage.getWidth());
   }
+
+  private int[][] flipArrayHorizontal(Image img, int[][] arr) {
+    int temp;
+    int height = img.getHeight();
+    int width = img.getWidth();
+    int[][] flippedH = new int[width][height];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width / 2; j++) {
+        temp = arr[width - j - 1][i];
+        flippedH[width - j - 1][i] = arr[j][i];
+        flippedH[j][i] = temp;
+      }
+    }
+
+    return flippedH;
+  }
+
+  private int[][] flipArrayVertical(Image img, int[][] arr) {
+    int temp;
+    int height = img.getHeight();
+    int width = img.getWidth();
+    int[][] flippedV = new int[width][height];
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height / 2; j++) {
+        temp = arr[i][j];
+        flippedV[i][j] = arr[i][height - 1 - j];
+        flippedV[i][height - 1 - j] = temp;
+      }
+    }
+    return flippedV;
+  }
+
+  /**
+   * A method to brighten a matrix array of the PPMImage.
+   *
+   * @param arr   Array to brighten.
+   * @param scale The scale to brighten.
+   * @return A new matrix that is the result of the brighten operation.
+   */
+  private int[][] brightenArray(Image img, int[][] arr, int scale) {
+    int height = img.getHeight();
+    int width = img.getWidth();
+    int[][] brightened = new int[width][height];
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        int val = arr[i][j] + scale;
+        if (val > 255) {
+          val = 255;
+        } else if (val < 0) {
+          val = 0;
+        }
+        brightened[i][j] = val;
+      }
+    }
+    return brightened;
+  }
+
+
+  /**
+   * A class to represent an image in PPM Format.
+   */
+  public static class PPMImage extends AbstractImage {
+
+    /**
+     * Constructor for a PPMImage object.
+     *
+     * @param width  The width of the image in pixels.
+     * @param height The height of the image in pixels.
+     * @param red    The red component of the rgb of the image.
+     * @param blue   The blue component of the rgb of the image.
+     * @param green  The green component of the rgb of the image.
+     */
+    public PPMImage(int width, int height, int[][] red,
+                    int[][] blue, int[][] green) {
+      super(width, height,red,
+      blue, green);
+    }
+
+  }
+
+
 }

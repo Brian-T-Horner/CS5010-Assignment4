@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -32,11 +31,11 @@ public class ImageController implements Controller {
    * @param args Command line arguments to be passed to the program.
    */
   public static void main(String[] args) {
-    Model newModel = new ImageModel();
+    Model newModel = new PPMModel();
     Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
-    try  {
+    try {
       controller.run(newModel);
-    } catch(IOException e) {
+    } catch (IOException e) {
       System.out.println("IO error: output cannot be appended.");
     }
     System.exit(0);
@@ -51,38 +50,32 @@ public class ImageController implements Controller {
   @Override
   public void run(Model currentModel) throws IOException {
     Objects.requireNonNull(currentModel);
+
+    Scanner scan = new Scanner(this.in);
     out.append("$ ");
-    while (true) {
-      Scanner scan = new Scanner(this.in);
-      /*
-      TODO I think final functionality will be entering in commands line by line or read from
-      text file.
-       */
-      while (scan.hasNextLine()) {
-        String commandString = scan.nextLine();
-        String[] commands = commandString.split(" ");
+    while (scan.hasNextLine()) {
+      String commandString = scan.nextLine();
+      String[] commands = commandString.split(" ");
 
-        if (commands[0].equals("quit")) {
-          out.append("Exiting application...");
-          return;
-        }
-
-        if (commandString.startsWith("run") && commandString.endsWith(".txt")) {
-          String filepath = commandString.replace("run", "").trim();
-          out.append(runFromFile(filepath, currentModel)).append("\n");
-          out.append("$ ");
-          continue;
-        }
-
-
-        if (!checkCommands(commands)) {
-          out.append("$ ");
-          continue;
-        }
-        executeCommands(commands, currentModel);
-
-        out.append("$ ");
+      if (commands[0].equals("quit")) {
+        out.append("Exiting application...");
+        return;
       }
+
+      if (commandString.startsWith("run") && commandString.endsWith(".txt")) {
+        String filepath = commandString.replace("run", "").trim();
+        out.append(runFromFile(filepath, currentModel)).append("\n").append("$ ");
+        continue;
+      }
+
+
+      if (!checkCommands(commands)) {
+        out.append("$ ");
+        continue;
+      }
+      executeCommands(commands, currentModel);
+      out.append("$ ");
+
     }
   }
 
@@ -109,8 +102,6 @@ public class ImageController implements Controller {
   }
 
 
-
-
   // TODO for each command, test number of args errors, test error for each specific command
 
   /**
@@ -118,7 +109,7 @@ public class ImageController implements Controller {
    *
    * @param commands Array of strings of commands to check.
    */
-  private boolean checkCommands(String[] commands) throws IllegalArgumentException, IOException {
+  private boolean checkCommands(String[] commands) throws IOException {
 
     if (commands[0].isEmpty() || commands[0].charAt(0) == '#') {
       return false;
@@ -173,129 +164,74 @@ public class ImageController implements Controller {
     String newImageName = commands[2];
     int commandVal;
 
-    switch (commands[0]) {
-      case "load":
-        String loadImagePath = commands[1];
-        String loadImageName = commands[2];
-        try {
+    try {
+      switch (commands[0]) {
+        case "load":
+          String loadImagePath = commands[1];
+          String loadImageName = commands[2];
           currentModel.loadImage(loadImagePath, loadImageName);
-        } catch (Exception e) {
-          out.append(e.getMessage()).append("\n");
           break;
-        }
-        break;
-      case "save":
-        String saveImagePath = commands[1];
-        String saveImageName = commands[2];
-        try {
+        case "save":
+          String saveImagePath = commands[1];
+          String saveImageName = commands[2];
           currentModel.saveImage(saveImagePath, saveImageName);
-        } catch (Exception e) {
-          out.append(e.getMessage()).append("\n");
           break;
-        }
-        break;
-      case "brighten":
-        try {
-          commandVal = Integer.parseInt(commands[1]);
-        } catch (Exception e) {
-          out.append("Second command of \"brighten\" must be a valid integer.\n");
-          break;
-        }
-        String brightenImageName = commands[2];
-        String brightenNewImageName = commands[3];
-        try {
+        case "brighten":
+          try {
+            commandVal = Integer.parseInt(commands[1]);
+          } catch (Exception e) {
+            out.append("Second argument of \"brighten\" must be a valid integer.\n");
+            break;
+          }
+          String brightenImageName = commands[2];
+          String brightenNewImageName = commands[3];
           currentModel.brighten(brightenImageName, brightenNewImageName, commandVal);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
           break;
-        }
-        break;
-      case "redscale":
-        try {
+        case "redscale":
           currentModel.getRedComponent(imageName, newImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "greenscale":
-        try {
+          break;
+        case "greenscale":
           currentModel.getGreenComponent(imageName, newImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "bluescale":
-        try {
+          break;
+        case "bluescale":
           currentModel.getBlueComponent(imageName, newImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "vertical-flip":
-        try {
+          break;
+        case "vertical-flip":
           currentModel.flipVertical(imageName, newImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "horizontal-flip":
-        try {
+          break;
+        case "horizontal-flip":
           currentModel.flipHorizontal(imageName, newImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "value":
-        try {
+          break;
+        case "value":
           currentModel.getValueImage(imageName, newImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "intensity":
-        try {
+          break;
+        case "intensity":
           currentModel.getIntensityImage(imageName, newImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "luma":
-        try {
+          break;
+        case "luma":
           currentModel.getLumaImage(imageName, newImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "greyscale":
-        String greyScaleComponent = commands[1];
-        String currentImageName = commands[2];
-        String destImageName = commands[3];
-        try {
+          break;
+        case "greyscale":
+          String greyScaleComponent = commands[1];
+          String currentImageName = commands[2];
+          String destImageName = commands[3];
           currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
-        } catch (Exception e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "rgb-split":
-        String newRImageName = commands[2];
-        String newGImageName = commands[3];
-        String newBImageName = commands[4];
-        try {
+          break;
+        case "rgb-split":
+          String newRImageName = commands[2];
+          String newGImageName = commands[3];
+          String newBImageName = commands[4];
           currentModel.rgbSplit(imageName, newRImageName, newGImageName, newBImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
-      case "rgb-combine":
-        String rImageName = commands[2];
-        String gImageName = commands[3];
-        String bImageName = commands[4];
-        try {
+          break;
+        case "rgb-combine":
+          String rImageName = commands[2];
+          String gImageName = commands[3];
+          String bImageName = commands[4];
           currentModel.rgbCombine(imageName, rImageName, gImageName, bImageName);
-        } catch (NoSuchElementException e) {
-          out.append(e.getMessage()).append("\n");
-        }
-        break;
+          break;
+      }
+    } catch (Exception e) {
+      out.append(e.getMessage()).append("\n");
     }
   }
 }
