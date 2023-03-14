@@ -29,8 +29,8 @@ public class MockModel implements Model {
      * Method to return the commands of the MockModel. (Same as commands for Model).
      * @return A Set of strings that are the commands available for the model.
      */
-    @Override
-    public Set<String> getCommands(){return commands;}
+//    @Override
+//    public Set<String> getCommands(){return commands;}
 
     /**
      * Method to test the controller to loadPPMImage method.
