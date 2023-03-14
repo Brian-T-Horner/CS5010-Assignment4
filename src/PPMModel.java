@@ -50,11 +50,7 @@ public class PPMModel implements Model {
     if (!imagePath.endsWith(".ppm")) {
       throw new IOException("Filename needs to end with .ppm");
     }
-    try {
-      ImageUtil.writeToPPMFile(i, imagePath);
-    } catch (IOException e) {
-      throw new IOException("Invalid image path");
-    }
+    ImageUtil.writeToPPMFile(i, imagePath);
   }
 
   /**
@@ -268,9 +264,9 @@ public class PPMModel implements Model {
     }
     int width = img.getWidth();
     int height = img.getHeight();
-    int[][] red = brightenArray(img,img.getRedComponent(), scale);
-    int[][] green = brightenArray(img,img.getGreenComponent(), scale);
-    int[][] blue = brightenArray(img,img.getBlueComponent(), scale);
+    int[][] red = brightenArray(img, img.getRedComponent(), scale);
+    int[][] green = brightenArray(img, img.getGreenComponent(), scale);
+    int[][] blue = brightenArray(img, img.getBlueComponent(), scale);
     Image brightened = new PPMImage(width, height, red, blue, green);
 
     images.put(newImageName, brightened);
@@ -460,8 +456,8 @@ public class PPMModel implements Model {
      */
     public PPMImage(int width, int height, int[][] red,
                     int[][] blue, int[][] green) {
-      super(width, height,red,
-      blue, green);
+      super(width, height, red,
+              blue, green);
     }
 
   }

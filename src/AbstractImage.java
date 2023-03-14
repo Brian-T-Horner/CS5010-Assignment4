@@ -1,11 +1,10 @@
+import java.util.Arrays;
+
 public abstract class AbstractImage implements Image {
   protected final int height;
   protected final int width;
-
   protected final int[][] redComponent;
-
   protected final int[][] greenComponent;
-
   protected final int[][] blueComponent;
 
   public AbstractImage(int width, int height, int[][] red,
@@ -84,8 +83,8 @@ public abstract class AbstractImage implements Image {
     PPMModel.PPMImage c = (PPMModel.PPMImage) o;
 
     return c.getWidth() == this.getWidth() && c.getHeight() == this.getHeight() &&
-            c.blueComponent.equals(blueComponent) && c.greenComponent.equals(greenComponent) &&
-            c.redComponent.equals(redComponent);
+            Arrays.equals(c.blueComponent,blueComponent) && Arrays.equals(c.greenComponent,greenComponent) &&
+            Arrays.equals(c.redComponent,redComponent);
 
   }
 
