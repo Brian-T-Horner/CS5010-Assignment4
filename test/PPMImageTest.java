@@ -49,9 +49,9 @@ public class PPMImageTest {
     bi1 = generateRandomArray(width, height);
 
 
-    i2 = new PPMImage(width, height, ri1, ri1, ri1);
-
-    i1 = new PPMImage(width, height, ri1, bi1, gi1);
+//    i2 = new PPMImage(width, height, ri1, ri1, ri1);
+//
+//    i1 = new PPMImage(width, height, ri1, bi1, gi1);
   }
 
 

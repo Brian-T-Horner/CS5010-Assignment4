@@ -3,8 +3,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.function.Function;
 
 /**
  * Class that is the Controller of our MVC model.
@@ -13,6 +16,8 @@ public class ImageController implements Controller {
 
   final Readable in;
   final Appendable out;
+
+  Map<String, Function<String[], Command>> knownCommands;
 
   /**
    * Contructor for the creation of a Controller object.
@@ -73,6 +78,8 @@ public class ImageController implements Controller {
         out.append("$ ");
         continue;
       }
+      
+
       executeCommands(commands, currentModel);
       out.append("$ ");
 
@@ -158,80 +165,70 @@ public class ImageController implements Controller {
    * @param commands     String array of current commands to be executed.
    * @param currentModel Current model the controller is communicating with.
    */
-  @Override
-  public void executeCommands(String[] commands, Model currentModel) throws IOException {
-    String imageName = commands[1];
-    String newImageName = commands[2];
-    int commandVal;
-
+  private void executeCommands(String[] commands, Model currentModel) throws IOException {
+    Command cmd = null;
     try {
       switch (commands[0]) {
         case "load":
-          String loadImagePath = commands[1];
-          String loadImageName = commands[2];
-          currentModel.loadImage(loadImagePath, loadImageName);
+          cmd = new Load(commands);
           break;
         case "save":
-          String saveImagePath = commands[1];
-          String saveImageName = commands[2];
-          currentModel.saveImage(saveImagePath, saveImageName);
+          cmd = new Save(commands);
           break;
         case "brighten":
           try {
-            commandVal = Integer.parseInt(commands[1]);
+            int commandVal = Integer.parseInt(commands[1]);
           } catch (Exception e) {
             out.append("Second argument of \"brighten\" must be a valid integer.\n");
             break;
           }
-          String brightenImageName = commands[2];
-          String brightenNewImageName = commands[3];
-          currentModel.brighten(brightenImageName, brightenNewImageName, commandVal);
+          cmd = new Brighten(commands);
           break;
         case "redscale":
-          currentModel.getRedComponent(imageName, newImageName);
+          cmd = new Redscale(commands);
           break;
         case "greenscale":
-          currentModel.getGreenComponent(imageName, newImageName);
+          cmd = new Greenscale(commands);
           break;
         case "bluescale":
-          currentModel.getBlueComponent(imageName, newImageName);
+          cmd = new Bluescale(commands);
           break;
         case "vertical-flip":
-          currentModel.flipVertical(imageName, newImageName);
+          cmd = new VerticalFlip(commands);
           break;
         case "horizontal-flip":
-          currentModel.flipHorizontal(imageName, newImageName);
+          cmd = new HorizontalFlip(commands);
           break;
         case "value":
-          currentModel.getValueImage(imageName, newImageName);
+          cmd = new Value(commands);
           break;
         case "intensity":
-          currentModel.getIntensityImage(imageName, newImageName);
+          cmd = new Intensity(commands);
           break;
         case "luma":
-          currentModel.getLumaImage(imageName, newImageName);
+          cmd = new Luma(commands);
           break;
         case "greyscale":
-          String greyScaleComponent = commands[1];
-          String currentImageName = commands[2];
-          String destImageName = commands[3];
-          currentModel.greyscale(greyScaleComponent, currentImageName, destImageName);
+          cmd = new Greyscale(commands);
           break;
         case "rgb-split":
-          String newRImageName = commands[2];
-          String newGImageName = commands[3];
-          String newBImageName = commands[4];
-          currentModel.rgbSplit(imageName, newRImageName, newGImageName, newBImageName);
+          cmd = new RGBSplit(commands);
           break;
         case "rgb-combine":
-          String rImageName = commands[2];
-          String gImageName = commands[3];
-          String bImageName = commands[4];
-          currentModel.rgbCombine(imageName, rImageName, gImageName, bImageName);
+          cmd = new RGBCombine(commands);
           break;
+        default:
+          out.append(String.format("Unknown command %s", commands[0]));
+          cmd = null;
+          break;
+      }
+      if(cmd != null){
+        cmd.go(currentModel);
+        cmd = null;
       }
     } catch (Exception e) {
       out.append(e.getMessage()).append("\n");
     }
+
   }
 }
