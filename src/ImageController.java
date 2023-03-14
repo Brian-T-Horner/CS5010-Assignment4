@@ -158,11 +158,10 @@ public class ImageController implements Controller {
    * @param commands     String array of current commands to be executed.
    * @param currentModel Current model the controller is communicating with.
    */
-  @Override
-  public void executeCommands(String[] commands, Model currentModel) throws IOException {
+  private void executeCommands(String[] commands, Model currentModel) throws IOException {
     String imageName = commands[1];
     String newImageName = commands[2];
-    int commandVal;
+    int commandVal = Integer.parseInt(commands[1]);
     try {
       switch (commands[0]) {
         case "load":
