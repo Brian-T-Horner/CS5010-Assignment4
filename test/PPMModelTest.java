@@ -4,13 +4,11 @@ import IME.model.PPMModel;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -232,6 +230,10 @@ public class PPMModelTest {
 
   @Test
   public void testSaveImage() {
+    try {
+      m.loadImage("test/donut.ppm", "donut-2");
+    } catch (Exception ignored) {
+    }
     assertThrows(IOException.class, ()
         -> m.saveImage("invalid-path","donut-2"));
     assertThrows(NoSuchElementException.class, ()
