@@ -1,0 +1,17 @@
+
+load donut.ppm donut
+
+greyscale red-component donut red-donut
+
+horizontal-flip red-donut hflipped-red-donut
+
+brighten -20 hflipped-red-donut darkened-hflipped-red-donut
+
+save red-donut.ppm red-donut
+
+save hflipped-red-donut.ppm hflipped-red-donut
+
+save darkened-hflipped-red-donut.ppm darkened-hflipped-red-donut
+
+
+

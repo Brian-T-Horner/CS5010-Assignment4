@@ -147,6 +147,18 @@ save images/luma-comp.ppm luma-comp
 
 save images/brighten-by-neg-20-image.ppm brighten-by-neg-20-image
 
+greenscale donut green-donut
+
+redscale donut green-donut
+
+bluescale donut green-donut
+
+luma donut green-donut
+
+value donut green-donut
+
+intensity donut green-donut
+
 
 
 

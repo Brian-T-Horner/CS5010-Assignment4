@@ -49,7 +49,7 @@ either line-by-line input of commands or via a .txt file
 that contains commands. Commented lines beginning with a "#"
 character are supported.
 
-**The provided script can be run by typing "run testscript.txt" into
+**The provided script can be run by typing "run script.txt" into
 the command line once the program is ran.**
 
 Similarly, any text file with commands can be run with the "run" command,
