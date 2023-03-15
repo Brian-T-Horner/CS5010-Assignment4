@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 /**
  * Class for a Bluescale Command object.
  */
@@ -20,7 +22,7 @@ public class Bluescale implements Command {
    * @param m A model.
    */
   @Override
-  public void run(Model m) {
+  public void run(Model m) throws FileNotFoundException {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getBlueComponent(imageName, newImageName);
