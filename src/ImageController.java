@@ -177,7 +177,7 @@ public class ImageController implements Controller {
           break;
         case "brighten":
           try {
-            int commandVal = Integer.parseInt(commands[1]);
+            Integer.parseInt(commands[1]);
           } catch (Exception e) {
             out.append("Second argument of \"brighten\" must be a valid integer.\n");
             break;
@@ -219,12 +219,10 @@ public class ImageController implements Controller {
           break;
         default:
           out.append(String.format("Unknown command %s", commands[0]));
-          cmd = null;
           break;
       }
       if(cmd != null){
         cmd.go(currentModel);
-        cmd = null;
       }
     } catch (Exception e) {
       out.append(e.getMessage()).append("\n");

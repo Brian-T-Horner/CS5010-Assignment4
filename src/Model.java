@@ -7,6 +7,8 @@ import java.util.NoSuchElementException;
  */
 public interface Model {
 
+  Image getImage(String imageName);
+
   /**
    * Method to load an image - calls the image object method.
    *
