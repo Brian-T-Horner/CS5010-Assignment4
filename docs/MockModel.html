@@ -131,13 +131,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">MockModel</span>
 extends java.lang.Object
-implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></pre>
-<div class="block">MockModel for testing Controller in isolation.</div>
+implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></pre>
+<div class="block">MockModel for testing IME.control.Controller in isolation.</div>
 </li>
 </ul>
 </div>
@@ -224,7 +224,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="Image.html" title="interface in &lt;Unnamed&gt;">Image</a></code></td>
+<td class="colFirst"><code><a href="Image.html" title="interface in &lt;Unnamed&gt;">IME.model.Image</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImage(java.lang.String)">getImage</a></span>&#8203;(java.lang.String&nbsp;imageName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -361,10 +361,10 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getImage</h4>
-<pre class="methodSignature">public&nbsp;<a href="Image.html" title="interface in &lt;Unnamed&gt;">Image</a>&nbsp;getImage&#8203;(java.lang.String&nbsp;imageName)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Image.html" title="interface in &lt;Unnamed&gt;">IME.model.Image</a>&nbsp;getImage&#8203;(java.lang.String&nbsp;imageName)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#getImage(java.lang.String)">getImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#getImage(java.lang.String)">getImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -379,7 +379,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to loadPPMImage method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#loadImage(java.lang.String,java.lang.String)">loadImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#loadImage(java.lang.String,java.lang.String)">loadImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>imagePath</code> - Path to the image to load into the model.</dd>
 <dd><code>newImageName</code> - Name to assign to the image loaded into the model.</dd>
@@ -397,10 +397,10 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to savePPMImage method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#saveImage(java.lang.String,java.lang.String)">saveImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#saveImage(java.lang.String,java.lang.String)">saveImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>imagePath</code> - Path to save the image stored in the model.</dd>
-<dd><code>imageName</code> - Image to save to the imagePath.</dd>
+<dd><code>imageName</code> - IME.model.Image to save to the imagePath.</dd>
 </dl>
 </li>
 </ul>
@@ -415,7 +415,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to getRedComponent method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#getRedComponent(java.lang.String,java.lang.String)">getRedComponent</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#getRedComponent(java.lang.String,java.lang.String)">getRedComponent</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the redComponent of the
@@ -434,7 +434,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to getGreenComponent method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#getGreenComponent(java.lang.String,java.lang.String)">getGreenComponent</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#getGreenComponent(java.lang.String,java.lang.String)">getGreenComponent</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the greenComponent of the
@@ -453,7 +453,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to getBlueComponent method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#getBlueComponent(java.lang.String,java.lang.String)">getBlueComponent</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#getBlueComponent(java.lang.String,java.lang.String)">getBlueComponent</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the blueComponent of the
@@ -472,7 +472,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to flipHorizontal method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#flipHorizontal(java.lang.String,java.lang.String)">flipHorizontal</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#flipHorizontal(java.lang.String,java.lang.String)">flipHorizontal</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the flipHorizontal
@@ -491,7 +491,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to flipVertical method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#flipVertical(java.lang.String,java.lang.String)">flipVertical</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#flipVertical(java.lang.String,java.lang.String)">flipVertical</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the flipVertical
@@ -510,7 +510,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to getValueImage method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#getValueImage(java.lang.String,java.lang.String)">getValueImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#getValueImage(java.lang.String,java.lang.String)">getValueImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the getValueImage
@@ -529,7 +529,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to the getIntensityImage method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#getIntensityImage(java.lang.String,java.lang.String)">getIntensityImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#getIntensityImage(java.lang.String,java.lang.String)">getIntensityImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the getIntensityImage
@@ -548,7 +548,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to the getLumaImage method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#getLumaImage(java.lang.String,java.lang.String)">getLumaImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#getLumaImage(java.lang.String,java.lang.String)">getLumaImage</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the getLumaImage
@@ -568,7 +568,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to the brighten method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#brighten(java.lang.String,java.lang.String,int)">brighten</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#brighten(java.lang.String,java.lang.String,int)">brighten</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>newImageName</code> - String that is the new name of the new image from the brighten
@@ -591,7 +591,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to rgbSplit method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#rgbSplit(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">rgbSplit</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#rgbSplit(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">rgbSplit</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentImageName</code> - String that is the name of the current image.</dd>
 <dd><code>redImageName</code> - String that is the new name of the redComponent of the currentImage.</dd>
@@ -613,7 +613,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to rgbCombine method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#rgbCombine(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">rgbCombine</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#rgbCombine(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">rgbCombine</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>newImageName</code> - String that is the new name of the combined image from the rgb components.</dd>
 <dd><code>rImageName</code> - String that is the name of the red component image.</dd>
@@ -634,7 +634,7 @@ implements <a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></
 <div class="block">Method to test the controller to greyscale method.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Model.html#greyscale(java.lang.String,java.lang.String,java.lang.String)">greyscale</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">Model</a></code></dd>
+<dd><code><a href="Model.html#greyscale(java.lang.String,java.lang.String,java.lang.String)">greyscale</a></code>&nbsp;in interface&nbsp;<code><a href="Model.html" title="interface in &lt;Unnamed&gt;">IME.model.Model</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>greyScaleComponent</code> - Method of greyscale transformation.</dd>
 <dd><code>imageName</code> - String that is the image name to do the greyscale transformation on.</dd>

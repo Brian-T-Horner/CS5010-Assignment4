@@ -1,12 +1,16 @@
+import IME.control.Controller;
+import IME.control.ImageController;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import org.junit.Test;
+import IME.control.Controller;
+import IME.control.ImageController;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Class to test the Controller in isolation with a MockModel.
+ * Class to test the IME.control.Controller in isolation with a MockModel.
  */
 public class ModelControllerTest {
 

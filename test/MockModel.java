@@ -1,9 +1,11 @@
+import IME.model.Image;
+import IME.model.Model;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * MockModel for testing Controller in isolation.
+ * MockModel for testing IME.control.Controller in isolation.
  */
 public class MockModel implements Model {
 
@@ -54,7 +56,7 @@ public class MockModel implements Model {
   /**
   * Method to test the controller to savePPMImage method.
   * @param imagePath Path to save the image stored in the model.
-  * @param imageName Image to save to the imagePath.
+  * @param imageName IME.model.Image to save to the imagePath.
   */
   @Override
   public void saveImage(String imagePath, String imageName) {

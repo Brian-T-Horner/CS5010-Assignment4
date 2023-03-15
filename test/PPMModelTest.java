@@ -1,3 +1,6 @@
+import IME.model.Image;
+import IME.model.Model;
+import IME.model.PPMModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +15,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Class to test the PPMModel.
+ * Class to test the IME.model.PPMModel.
  */
 public class PPMModelTest {
 

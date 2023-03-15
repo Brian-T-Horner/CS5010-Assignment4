@@ -1,8 +1,8 @@
 # Assignment 4- IME
 
-Model
+IME.model.Model
 
-Controller
+IME.control.Controller
 
 Commands
 
@@ -13,9 +13,9 @@ Commands
 
 This program supports the following commands:
 
-load image-path image-name: Load an image from the specified path and refer it to henceforth in the program by the given image name.
+load image-path image-name: commands.Load an image from the specified path and refer it to henceforth in the program by the given image name.
 
-save image-path image-name: Save the image with the given name to the specified path which should include the name of the file.
+save image-path image-name: commands.Save the image with the given name to the specified path which should include the name of the file.
 
 greyscale red-component image-name dest-image-name: Create a greyscale image with the red-component of the image with the given name, and refer to it henceforth in the program by the given destination name. Similar commands for green, blue, value, luma, intensity components should be supported.
 
@@ -29,7 +29,7 @@ rgb-split image-name dest-image-name-red dest-image-name-green dest-image-name-b
 
 rgb-combine image-name red-image green-image blue-image: Combine the three greyscale images into a single image that gets its red, green and blue components from the three images respectively.
 
-run script-file: Load and run the script commands in the specified file
+run script-file: commands.Load and run the script commands in the specified file
 
 luma image-name dest-image-name: Create a greyscale image based on the luma component of an image.
 This is essentially shorthand for the greyscale command.
@@ -59,7 +59,7 @@ followed by the relative or absolute path to the file.
 
 
 
-## Image Source
+## IME.model.Image Source
 
 I, Ted Banken, own the image "donut.ppm" and authorize its use 
 in this project.
