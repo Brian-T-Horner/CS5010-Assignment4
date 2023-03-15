@@ -15,7 +15,8 @@ public interface Model {
    * @param imagePath    The path of the image to load.
    * @param newImageName The name to assign to the loaded image.
    */
-  void loadImage(String imagePath, String newImageName) throws FileNotFoundException;
+  void loadImage(String imagePath, String newImageName)
+          throws FileNotFoundException;
 
   /**
    * Method to save an image - calls the image object method.
@@ -23,7 +24,8 @@ public interface Model {
    * @param imagePath The path of where to save the image.
    * @param imageName The name of the image to save.
    */
-  void saveImage(String imagePath, String imageName) throws IOException, NoSuchElementException;
+  void saveImage(String imagePath, String imageName)
+          throws IOException, NoSuchElementException;
 
   /**
    * Method to get the red component of an image - calls the image object method.
@@ -31,7 +33,8 @@ public interface Model {
    * @param currentImageName The name of the image to get the red component from.
    * @param newImageName     The name to save the resulting image as.
    */
-  void getRedComponent(String currentImageName, String newImageName);
+  void getRedComponent(String currentImageName, String newImageName)
+          throws FileNotFoundException;
 
   /**
    * Method to get the green component of an image - calls the image object method.
@@ -39,7 +42,8 @@ public interface Model {
    * @param currentImageName The name of the image to get the green component from.
    * @param newImageName     The name to save the resulting image as.
    */
-  void getGreenComponent(String currentImageName, String newImageName);
+  void getGreenComponent(String currentImageName, String newImageName)
+          throws FileNotFoundException;
 
   /**
    * Method to get the blue component of an image - calls the image object method.
@@ -47,7 +51,8 @@ public interface Model {
    * @param currentImageName The name of the image to get the blue component from.
    * @param newImageName     The name to save the resulting image as.
    */
-  void getBlueComponent(String currentImageName, String newImageName);
+  void getBlueComponent(String currentImageName, String newImageName)
+          throws FileNotFoundException;
 
   /**
    * Method to flip an image horizontally - calls the image object method.
@@ -55,7 +60,8 @@ public interface Model {
    * @param currentImageName The name of the image to flip horizontally.
    * @param newImageName     The name to save the resulting image as.
    */
-  void flipHorizontal(String currentImageName, String newImageName) throws NoSuchElementException;
+  void flipHorizontal(String currentImageName, String newImageName)
+          throws NoSuchElementException;
 
   /**
    * Method to flip an image vertically - calls the image object method.
@@ -63,7 +69,8 @@ public interface Model {
    * @param currentImageName The name of the image to flip vertically.
    * @param newImageName     The name to save the resulting image as.
    */
-  void flipVertical(String currentImageName, String newImageName) throws NoSuchElementException;
+  void flipVertical(String currentImageName, String newImageName)
+          throws NoSuchElementException;
 
   /**
    * Method to get the value image of an image - calls the image object method.
@@ -71,7 +78,8 @@ public interface Model {
    * @param currentImageName The name of the image to get the value image from.
    * @param newImageName     The name to save the resulting image as.
    */
-  void getValueImage(String currentImageName, String newImageName) throws NoSuchElementException;
+  void getValueImage(String currentImageName, String newImageName)
+          throws NoSuchElementException;
 
   /**
    * Method to get the intensity image of an image - calls the image object method.
@@ -88,7 +96,8 @@ public interface Model {
    * @param currentImageName The name of the image to get the luma image from.
    * @param newImageName     The name to save the resulting image as.
    */
-  void getLumaImage(String currentImageName, String newImageName) throws NoSuchElementException;
+  void getLumaImage(String currentImageName, String newImageName)
+          throws NoSuchElementException;
 
   /**
    * Method to brighten or darken an image - calls the image object method.

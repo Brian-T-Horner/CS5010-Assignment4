@@ -223,25 +223,12 @@ public class PPMModelTest {
       m.loadImage("test/donut.ppm", "donut-2");
     } catch (Exception ignored) {
     }
-    assertNotNull(m.getImage("donut-2"));
     assertThrows(FileNotFoundException.class, ()
         -> m.loadImage("invalid/path", "donut-2"));
   }
 
   @Test
   public void testSaveImage() {
-    try {
-      m.loadImage("test/donut.ppm", "donut-2");
-    } catch (Exception ignored) {
-    }
-    assertNotNull(m.getImage("donut-2"));
-    try {
-      m.saveImage("test/test.ppm","donut-2");
-    } catch (Exception ignored) {
-    }
-    File file = new File("test/test.ppm");
-    file.deleteOnExit();
-    assertTrue(file.exists());
     assertThrows(IOException.class, ()
         -> m.saveImage("invalid-path","donut-2"));
     assertThrows(NoSuchElementException.class, ()

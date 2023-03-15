@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 /**
  * A Redscale command object.
  */
@@ -19,7 +21,7 @@ public class Redscale implements Command {
    * @param m A model.
    */
   @Override
-  public void run(Model m) {
+  public void run(Model m) throws FileNotFoundException {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getRedComponent(imageName, newImageName);
