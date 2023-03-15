@@ -1,13 +1,24 @@
 # Assignment 4- IME
 
-IME.model.Model
+There are two main packages: the model package and the control package.
 
-IME.control.Controller
+The model package contains the interfaces Model and Image and the
+classes AbstractImage and PPMModel.
 
-Commands
+Model contains all the logic and operations for loading, 
+manipulating images, and saving images.
 
+Image contains the data structure of a single image.
 
+These are implemented for ASCII PPM files in PPMImage and PPMModel
+where PPMImage is nested inside. 
 
+The control package contains the Controller interface and its implementation
+ImageController. This controller is how the user interfaces the program, through
+the command line using the main method.
+
+Inside control is the command package. Each command that the program supports has a method
+that implements the Command interface for use inside ImageController.
 
 ## Usage
 
