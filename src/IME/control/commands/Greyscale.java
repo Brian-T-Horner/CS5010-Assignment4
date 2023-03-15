@@ -2,6 +2,7 @@ package IME.control.commands;
 
 import IME.model.Model;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 /**
  * A commands.Greyscale command object.
@@ -25,7 +26,7 @@ public class Greyscale implements Command {
    * @param m A model.
    */
   @Override
-  public void run(Model m) throws IOException {
+  public void run(Model m) throws NoSuchElementException {
     String greyScaleComponent = commands[1];
     String currentImageName = commands[2];
     String destImageName = commands[3];

@@ -2,6 +2,7 @@ package IME;
 
 import IME.model.Image;
 import IME.model.PPMModel;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
@@ -153,7 +154,7 @@ public class ImageUtil {
    */
   public static BufferedImage writeBufferedImage(Image image) {
     BufferedImage buffImage = new BufferedImage(image.getWidth(), image.getHeight(),
-        BufferedImage.TYPE_INT_RGB);
+            BufferedImage.TYPE_INT_RGB);
     int r;
     int g;
     int b;

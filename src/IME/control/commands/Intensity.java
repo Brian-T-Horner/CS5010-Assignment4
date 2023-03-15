@@ -1,5 +1,7 @@
 package IME.control.commands;
 
+import java.util.NoSuchElementException;
+
 import IME.model.Model;
 
 /**
@@ -24,7 +26,7 @@ public class Intensity implements Command {
    * @param m A model.
    */
   @Override
-  public void run(Model m) {
+  public void run(Model m) throws NoSuchElementException {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getIntensityImage(imageName, newImageName);

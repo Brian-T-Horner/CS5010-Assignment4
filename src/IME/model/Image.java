@@ -1,7 +1,7 @@
 package IME.model;
 
 /**
- * Interface for manipulating an image file.
+ * Interface for accessing an image file.
  */
 public interface Image {
 

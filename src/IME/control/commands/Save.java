@@ -29,6 +29,5 @@ public class Save implements Command {
     String saveImagePath = commands[1];
     String saveImageName = commands[2];
     m.saveImage(saveImagePath, saveImageName);
-
   }
 }

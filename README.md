@@ -17,7 +17,7 @@ The control package contains the Controller interface and its implementation
 ImageController. This controller is how the user interfaces the program, through
 the command line using the main method.
 
-Inside control is the command package. Each command that the program supports has a method
+Inside control is the command package. Each command that the program supports has a class
 that implements the Command interface for use inside ImageController.
 
 ## Usage

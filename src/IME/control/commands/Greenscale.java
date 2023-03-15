@@ -1,5 +1,7 @@
 package IME.control.commands;
 
+import java.io.FileNotFoundException;
+
 import IME.model.Model;
 
 /**
@@ -25,7 +27,7 @@ public class Greenscale implements Command {
    * @param m A model.
    */
   @Override
-  public void run(Model m) {
+  public void run(Model m) throws FileNotFoundException {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getGreenComponent(imageName, newImageName);

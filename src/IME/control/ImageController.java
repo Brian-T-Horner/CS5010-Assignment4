@@ -89,12 +89,10 @@ public class ImageController implements Controller {
         continue;
       }
 
-
       if (!checkCommands(commands)) {
         out.append("$ ");
         continue;
       }
-      
 
       executeCommands(commands, currentModel);
       out.append("$ ");
@@ -172,7 +170,6 @@ public class ImageController implements Controller {
         return false;
     }
     return true;
-
   }
 
   /**
@@ -243,6 +240,5 @@ public class ImageController implements Controller {
     } catch (Exception e) {
       out.append(e.getMessage()).append("\n");
     }
-
   }
 }

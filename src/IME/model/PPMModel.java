@@ -1,11 +1,11 @@
 package IME.model;
 
-import IME.model.Model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+
 import IME.ImageUtil;
 
 /**
@@ -19,7 +19,7 @@ public class PPMModel implements Model {
    * Constructor for IME.model.PPMModel. No parameters as only one default field.
    */
   public PPMModel() {
-    //only two default field
+    //only one default field
   }
 
   @Override
@@ -32,7 +32,7 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to load a PPMImage - calls the PPMImage object method.
+   * Method to load a PPMImage.
    *
    * @param imagePath    The path of the PPMImage to load.
    * @param newImageName The name to assign to the loaded PPMImage.
@@ -47,14 +47,14 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to save an PPMImage - calls the PPMImage object method.
+   * Method to save an PPMImage.
    *
    * @param imagePath The path of where to save the PPMImage.
    * @param imageName The name of the PPMImage to save.
    */
   @Override
   public void saveImage(String imagePath, String imageName)
-      throws IOException, NoSuchElementException {
+          throws IOException, NoSuchElementException {
     Image i = images.get(imageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName + "\" not in memory.");
@@ -66,14 +66,14 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to get the red component of an PPMImage - calls the PPMImage object method.
+   * Method to get the redscale image of an PPMImage.
    *
    * @param currentImageName The name of the PPMImage to get the red component from.
    * @param newImageName     The name to save the resulting PPMImage as.
    */
   @Override
   public void getRedComponent(String currentImageName, String newImageName)
-      throws NoSuchElementException {
+          throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getRedComponent();
@@ -84,14 +84,14 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to get the green component of an PPMImage - calls the PPMImage object method.
+   * Method to get the greenscale image of an PPMImage.
    *
    * @param currentImageName The name of the PPMImage to get the green component from.
    * @param newImageName     The name to save the resulting PPMImage as.
    */
   @Override
   public void getGreenComponent(String currentImageName, String newImageName)
-      throws NoSuchElementException {
+          throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getGreenComponent();
@@ -102,14 +102,14 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to get the blue component of an PPMImage - calls the PPMImage object method.
+   * Method to get the bluescale image of an PPMImage.
    *
    * @param currentImageName The name of the PPMImage to get the blue component from.
    * @param newImageName     The name to save the resulting PPMImage as.
    */
   @Override
   public void getBlueComponent(String currentImageName, String newImageName)
-      throws NoSuchElementException {
+          throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getBlueComponent();
@@ -120,14 +120,14 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to flip an PPMImage horizontally - calls the PPMImage object method.
+   * Method to flip an PPMImage horizontally.
    *
    * @param currentImageName The name of the PPMImage to flip horizontally.
    * @param newImageName     The name to save the resulting PPMImage as.
    */
   @Override
   public void flipHorizontal(String currentImageName, String newImageName)
-      throws NoSuchElementException {
+          throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
@@ -141,7 +141,7 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to flip an PPMImage vertically - calls the PPMImage object method.
+   * Method to flip an PPMImage vertically.
    *
    * @param currentImageName The name of the PPMImage to flip vertically.
    * @param newImageName     The name to save the resulting PPMImage as.
@@ -161,14 +161,14 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to get the value image of an PPMImage - calls the PPMImage object method.
+   * Method to get the value image of an PPMImage.
    *
    * @param currentImageName The name of the PPMImage to get the value image from.
    * @param newImageName     The name to save the resulting value image as.
    */
   @Override
   public void getValueImage(String currentImageName, String newImageName)
-      throws NoSuchElementException {
+          throws NoSuchElementException {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
@@ -192,14 +192,14 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to get the intensity image of an PPMImage - calls the PPMImage object method.
+   * Method to get the intensity image of an PPMImage.
    *
    * @param currentImageName The name of the PPMImage to get the intensity image from.
    * @param newImageName     The name to save the resulting intensity image as.
    */
   @Override
   public void getIntensityImage(String currentImageName, String newImageName)
-      throws NoSuchElementException {
+          throws NoSuchElementException {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
@@ -227,14 +227,14 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to get the luma image of an PPMImage - calls the PPMImage object method.
+   * Method to get the luma image of an PPMImage.
    *
    * @param currentImageName The name of the PPMImage to get the luma image from.
    * @param newImageName     The name to save the resulting luma image as.
    */
   @Override
   public void getLumaImage(String currentImageName, String newImageName)
-      throws NoSuchElementException {
+          throws NoSuchElementException {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
@@ -248,7 +248,7 @@ public class PPMModel implements Model {
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];
         int lumaValue = (int) Math.ceil(0.2126 * redValue + 0.7152
-            * greenValue + 0.0722 * blueValue);
+                * greenValue + 0.0722 * blueValue);
         if (lumaValue > 255) {
           lumaValue = 255;
         } else if (lumaValue < 0) {
@@ -262,7 +262,7 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to brighten or darken an PPMImage - calls the PPMImage object method.
+   * Method to brighten or darken an PPMImage.
    *
    * @param currentImageName The name of the PPMImage to brighten or darken.
    * @param newImageName     The name to save the resulting PPMImage as.
@@ -270,11 +270,11 @@ public class PPMModel implements Model {
    */
   @Override
   public void brighten(String currentImageName, String newImageName, int scale)
-      throws NoSuchElementException {
+          throws NoSuchElementException {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + currentImageName
-          + "\" not in memory.");
+              + "\" not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -288,7 +288,7 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to split an PPMImage into its rgb components - calls the PPMImage object method.
+   * Method to split an PPMImage into its rgb components.
    *
    * @param currentImageName The name of the PPMImage to split into its rgb components.
    * @param redImageName     The name to save the resulting red component PPMImage as.
@@ -297,11 +297,11 @@ public class PPMModel implements Model {
    */
   @Override
   public void rgbSplit(String currentImageName, String redImageName, String greenImageName,
-      String blueImageName) throws NoSuchElementException {
+                       String blueImageName) throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + currentImageName
-          + "\" not in memory.");
+              + "\" not in memory.");
     }
     int[][] r = i.getRedComponent();
     int[][] g = i.getGreenComponent();
@@ -326,7 +326,7 @@ public class PPMModel implements Model {
    */
   @Override
   public void rgbCombine(String newImageName, String rImageName, String gImageName,
-      String bImageName) throws NoSuchElementException {
+                         String bImageName) throws NoSuchElementException {
     Image redImage = images.get(rImageName);
     Image greenImage = images.get(gImageName);
     Image blueImage = images.get(bImageName);
@@ -353,7 +353,7 @@ public class PPMModel implements Model {
   }
 
   /**
-   * Method to get the greyscale image of an PPMImage - calls the PPMImage object method.
+   * Method to get the greyscale image of an PPMImage.
    *
    * @param greyScaleComponent The method to get the grey scale of the PPMImage.
    * @param imageName          The PPMImage to get the grey scale image from.
@@ -361,7 +361,7 @@ public class PPMModel implements Model {
    */
   @Override
   public void greyscale(String greyScaleComponent, String imageName, String newImageName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     switch (greyScaleComponent) {
       case "value-component":
         getValueImage(imageName, newImageName);
@@ -383,17 +383,10 @@ public class PPMModel implements Model {
         break;
       default:
         throw new IllegalArgumentException("Argument \"" + greyScaleComponent
-            + "\" invalid for \"greyscale\"");
+                + "\" invalid for \"greyscale\"");
     }
   }
 
-  /**
-   * Helper method to compare dimensions of two PPMImages and see height and width are equal.
-   *
-   * @param firstImage  First PPMImage to compare.
-   * @param secondImage Second PPMImage to compare.
-   * @return True if height and widths are equal, false if otherwise.
-   */
   private boolean compareDimensions(Image firstImage, Image secondImage) {
     return (firstImage.getHeight() == secondImage.getHeight()
             && firstImage.getWidth() == secondImage.getWidth());
@@ -430,13 +423,7 @@ public class PPMModel implements Model {
     return flippedV;
   }
 
-  /**
-   * A method to brighten a matrix array of the PPMImage.
-   *
-   * @param arr   Array to brighten.
-   * @param scale The scale to brighten.
-   * @return A new matrix that is the result of the brighten operation.
-   */
+
   private int[][] brightenArray(Image img, int[][] arr, int scale) {
     int height = img.getHeight();
     int width = img.getWidth();
@@ -477,6 +464,4 @@ public class PPMModel implements Model {
     }
 
   }
-
-
 }

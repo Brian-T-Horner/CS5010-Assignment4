@@ -2,6 +2,7 @@ package IME.control.commands;
 
 import IME.model.Model;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 /**
  * A commands.HorizontalFlip command object.
@@ -25,7 +26,7 @@ public class HorizontalFlip implements Command {
    * @param m A model.
    */
   @Override
-  public void run(Model m) throws IOException {
+  public void run(Model m) throws NoSuchElementException {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.flipHorizontal(imageName, newImageName);

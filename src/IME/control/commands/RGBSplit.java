@@ -2,6 +2,7 @@ package IME.control.commands;
 
 import IME.model.Model;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 /**
  * An commands.RGBSplit command object.
@@ -25,7 +26,7 @@ public class RGBSplit implements Command {
    * @param m A model.
    */
   @Override
-  public void run(Model m) throws IOException {
+  public void run(Model m) throws NoSuchElementException {
     String imageName = commands[1];
     String newRImageName = commands[2];
     String newGImageName = commands[3];

@@ -1,14 +1,14 @@
 package IME.model;
 
-import IME.model.Image;
-import IME.model.PPMModel;
 import java.util.Arrays;
 
 /**
- * IME.model.AbstractImage class.
+ * An abstract class for Image.
  */
 public abstract class AbstractImage implements Image {
+
   protected final int height;
+
   protected final int width;
   protected final int[][] redComponent;
   protected final int[][] greenComponent;

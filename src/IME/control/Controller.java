@@ -9,8 +9,7 @@ import java.io.IOException;
 public interface Controller {
 
   /**
-   * Run method for the program. Takes in input, parses input and calls methods to instruct view
-   * and model.
+   * Run method for the program. Takes in input, parses input and calls methods to instruct its model.
    *
    * @param currentModel Current model that the controller is communicating with.
    */
