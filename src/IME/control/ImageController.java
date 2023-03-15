@@ -25,7 +25,6 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.Scanner;
 
-
 /**
  * Class that is the IME.control.Controller of our MVC model.
  */
