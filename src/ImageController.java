@@ -219,7 +219,7 @@ public class ImageController implements Controller {
           out.append(String.format("Unknown command %s", commands[0]));
           break;
       }
-      if(cmd != null) {
+      if (cmd != null) {
         cmd.run(currentModel);
       }
     } catch (Exception e) {

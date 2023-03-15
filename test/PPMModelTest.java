@@ -238,7 +238,6 @@ public class PPMModelTest {
     try {
       m.saveImage("test/test.ppm","donut-2");
     } catch (Exception ignored) {
-      ;
     }
     File file = new File("test/test.ppm");
     file.deleteOnExit();
