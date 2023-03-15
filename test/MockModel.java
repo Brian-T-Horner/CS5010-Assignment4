@@ -10,8 +10,9 @@ public class MockModel implements Model {
   private StringBuilder log;
   private final int uniqueCode;
 
-  Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip", "greyscale", "brighten",
-            "rgb-split", "rgb-combine", "value", "intensity", "luma", "load", "save", "darken"));
+  Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip",
+      "greyscale", "brighten", "rgb-split", "rgb-combine", "value", "intensity", "luma",
+      "load", "save", "darken"));
 
 
   /**
@@ -231,7 +232,8 @@ public class MockModel implements Model {
   * @param blueImageName String that is the new name of the blueComponent of the currentImage
   */
   @Override
-  public void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) {
+  public void rgbSplit(String currentImageName, String redImageName,
+      String greenImageName, String blueImageName) {
     log.append("rgbSplit: currentImageName = ");
     log.append(currentImageName);
     log.append(" redImageName = ");
@@ -253,7 +255,8 @@ public class MockModel implements Model {
   * @param bImageName String that is the name of the blue component image.
   */
   @Override
-  public void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) {
+  public void rgbCombine(String newImageName, String rImageName,
+      String gImageName, String bImageName) {
     log.append("rgbCombine: newImageName = ");
     log.append(newImageName);
     log.append(" redImageName = ");
