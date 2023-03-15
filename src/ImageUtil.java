@@ -8,8 +8,8 @@ import java.io.FileInputStream;
 
 
 /**
- * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change this method
- * as required.
+ * This class contains utility methods to read a PPM image from file and simply print its contents.
+ * Feel free to change this method as required.
  */
 public class ImageUtil {
 
@@ -148,8 +148,12 @@ public class ImageUtil {
    * @return The resulting buffered image.
    */
   public static BufferedImage writeBufferedImage(Image image) {
-    BufferedImage buffImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-    int r, g, b, pixel;
+    BufferedImage buffImage = new BufferedImage(image.getWidth(), image.getHeight(),
+        BufferedImage.TYPE_INT_RGB);
+    int r;
+    int g;
+    int b;
+    int pixel;
     for (int i = 0; i < image.getWidth(); i++) {
       for (int j = 0; j < image.getHeight(); j++) {
         r = image.getRedComponent()[i][j];

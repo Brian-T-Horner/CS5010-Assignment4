@@ -1,4 +1,6 @@
-
+/**
+ * A Redscale command object.
+ */
 public class Redscale implements Command {
   String[] commands;
 
@@ -10,13 +12,14 @@ public class Redscale implements Command {
   public Redscale(String[] commands) {
     this.commands = commands;
   }
+
   /**
-   * Method to run the inheriting commands functionality on a model m.
+   * Method to have model m run its getRedComponent method.
    *
    * @param m A model.
    */
   @Override
-  public void go(Model m) {
+  public void run(Model m) {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getRedComponent(imageName, newImageName);

@@ -1,5 +1,6 @@
-
-
+/**
+ * A Greenscale command object.
+ */
 public class Greenscale implements Command {
 
   String [] commands;
@@ -15,12 +16,12 @@ public class Greenscale implements Command {
 
 
   /**
-   * Method to run the greenscale command on a model m.
+   * Method to have model m run its getGreenComponent method.
    *
    * @param m A model.
    */
   @Override
-  public void go(Model m) {
+  public void run(Model m) {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getGreenComponent(imageName, newImageName);

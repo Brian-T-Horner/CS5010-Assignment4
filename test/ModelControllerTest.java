@@ -21,8 +21,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 3390));
-    assertEquals("loadPPMImage: imagePath = images/koala.ppm " +
-            "newImageName = koala uniqueCode = 3390\n", log.toString());
+    assertEquals("loadPPMImage: imagePath = images/koala.ppm "
+        + "newImageName = koala uniqueCode = 3390\n", log.toString());
 
   }
 
@@ -36,8 +36,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 4537));
-    assertEquals("savePPMImage: imagePath = images/koala-brighter.ppm " +
-            "imageName = koala-brighter uniqueCode = 4537\n", log.toString());
+    assertEquals("savePPMImage: imagePath = images/koala-brighter.ppm "
+        + "imageName = koala-brighter uniqueCode = 4537\n", log.toString());
   }
 
   /**
@@ -50,8 +50,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 7362));
-    assertEquals("flipHorizontal: currentImageName = koala-vertical " +
-            "newImageName = koala-vertical-horizontal uniqueCode = 7362\n", log.toString());
+    assertEquals("flipHorizontal: currentImageName = koala-vertical "
+        + "newImageName = koala-vertical-horizontal uniqueCode = 7362\n", log.toString());
   }
 
   /**
@@ -64,8 +64,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 999));
-    assertEquals("flipVertical: currentImageName = koala " +
-            "newImageName = koala-vertical uniqueCode = 999\n", log.toString());
+    assertEquals("flipVertical: currentImageName = koala "
+        + "newImageName = koala-vertical uniqueCode = 999\n", log.toString());
   }
 
   /**
@@ -78,8 +78,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 1432));
-    assertEquals("getValueImage: currentImageName = koala " +
-            "newImageName = koala-value uniqueCode = 1432\n", log.toString());
+    assertEquals("getValueImage: currentImageName = koala "
+        + "newImageName = koala-value uniqueCode = 1432\n", log.toString());
   }
 
   /**
@@ -92,8 +92,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 33332));
-    assertEquals("getIntensityImage: currentImageName = koala " +
-            "newImageName = koala-intensity uniqueCode = 33332\n", log.toString());
+    assertEquals("getIntensityImage: currentImageName = koala "
+        + "newImageName = koala-intensity uniqueCode = 33332\n", log.toString());
   }
 
 
@@ -107,8 +107,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 9191));
-    assertEquals("getLumaImage: currentImageName = koala " +
-            "newImageName = koala-luma uniqueCode = 9191\n", log.toString());
+    assertEquals("getLumaImage: currentImageName = koala "
+        + "newImageName = koala-luma uniqueCode = 9191\n", log.toString());
   }
 
   /**
@@ -121,8 +121,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 34342));
-    assertEquals("brighten: currentImageName = koala " +
-            "newImageName = koala-brighten scale = 50 uniqueCode = 34342\n", log.toString());
+    assertEquals("brighten: currentImageName = koala "
+        + "newImageName = koala-brighten scale = 50 uniqueCode = 34342\n", log.toString());
   }
 
   /**
@@ -135,8 +135,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 3754));
-    assertEquals("brighten: currentImageName = koala " +
-        "newImageName = koala-brighten scale = -50 uniqueCode = 3754\n", log.toString());
+    assertEquals("brighten: currentImageName = koala "
+        + "newImageName = koala-brighten scale = -50 uniqueCode = 3754\n", log.toString());
   }
 
   /**
@@ -149,8 +149,9 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 6767));
-    assertEquals("rgbSplit: currentImageName = koala " +
-            "redImageName = koala-red greenImageName = koala-green blueImageName = koala-blue uniqueCode = 6767\n", log.toString());
+    assertEquals("rgbSplit: currentImageName = koala "
+        + "redImageName = koala-red greenImageName = koala-green blueImageName "
+        + "= koala-blue uniqueCode = 6767\n", log.toString());
   }
 
   /**
@@ -163,9 +164,9 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 42131));
-    assertEquals("rgbCombine: newImageName = koala-red-tint " +
-        "redImageName = koala-red greenImageName = koala-green blueImageName = koala-blue uniqueCode = 42131\n",
-        log.toString());
+    assertEquals("rgbCombine: newImageName = koala-red-tint "
+            + "redImageName = koala-red greenImageName = koala-green blueImageName "
+            + "= koala-blue uniqueCode = 42131\n", log.toString());
   }
 
   /**
@@ -178,8 +179,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 754329));
-    assertEquals("greyscale: greyScaleComponent = value-component " +
-            "imageName = koala newImageName = koala-greyscale uniqueCode = 754329\n",
+    assertEquals("greyscale: greyScaleComponent = value-component "
+            + "imageName = koala newImageName = koala-greyscale uniqueCode = 754329\n",
         log.toString());
   }
 

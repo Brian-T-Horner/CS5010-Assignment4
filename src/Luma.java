@@ -1,4 +1,6 @@
-
+/**
+ * A Luma command object.
+ */
 public class Luma implements Command {
 
   String[] commands;
@@ -11,13 +13,14 @@ public class Luma implements Command {
   public Luma(String[] commands) {
     this.commands = commands;
   }
+
   /**
-   * Method to run the inheriting commands functionality on a model m.
+   * Method to have model m run its getLumaImage method.
    *
    * @param m A model.
    */
   @Override
-  public void go(Model m) {
+  public void run(Model m) {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getLumaImage(imageName, newImageName);

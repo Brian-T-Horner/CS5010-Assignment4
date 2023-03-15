@@ -1,17 +1,26 @@
+/**
+ * Class for a Bluescale Command object.
+ */
 public class Bluescale implements Command {
 
   String[] commands;
 
-  public Bluescale(String[] commands){
+  /**
+   * Constructor for a Bluescale command object.
+   *
+   * @param commands String array of commands for object.
+   */
+  public Bluescale(String[] commands) {
     this.commands = commands;
   }
+
   /**
-   * Method to run the inheriting commands functionality on a model m.
+   * Method to have model m call its getBlueComponent method.
    *
    * @param m A model.
    */
   @Override
-  public void go(Model m) {
+  public void run(Model m) {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getBlueComponent(imageName, newImageName);

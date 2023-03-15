@@ -1,5 +1,9 @@
+/**
+ * A Value command object.
+ */
 public class Value implements Command {
   String[] commands;
+
   /**
    * Constructor for a Value command object.
    *
@@ -10,12 +14,12 @@ public class Value implements Command {
   }
 
   /**
-   * Method to run the value command on a model m.
+   * Method to have model m call its getValueImage method.
    *
    * @param m A model.
    */
   @Override
-  public void go(Model m) {
+  public void run(Model m) {
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getValueImage(imageName, newImageName);

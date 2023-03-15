@@ -1,20 +1,28 @@
 import java.io.IOException;
 
+/**
+ * An RGBCombine command object.
+ */
 public class RGBCombine implements Command {
 
   String[] commands;
 
+  /**
+   * Constructor for a RGBCombine command object.
+   *
+   * @param commands String array of commands for object.
+   */
   public RGBCombine(String[] commands) {
     this.commands = commands;
   }
 
   /**
-   * Method to run the inheriting commands functionality on a model m.
+   * Method to have model m call its rgbCombine method.
    *
    * @param m A model.
    */
   @Override
-  public void go(Model m) throws IOException {
+  public void run(Model m) throws IOException {
     String imageName = commands[1];
     String rImageName = commands[2];
     String gImageName = commands[3];

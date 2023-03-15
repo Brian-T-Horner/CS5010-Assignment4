@@ -3,11 +3,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.function.Function;
+
 
 /**
  * Class that is the Controller of our MVC model.
@@ -17,7 +15,7 @@ public class ImageController implements Controller {
   final Readable in;
   final Appendable out;
 
-  Map<String, Function<String[], Command>> knownCommands;
+  //Map<String, Function<String[], Command>> knownCommands;
 
   /**
    * Contructor for the creation of a Controller object.
@@ -108,7 +106,6 @@ public class ImageController implements Controller {
 
   }
 
-
   // TODO for each command, test number of args errors, test error for each specific command
 
   /**
@@ -157,6 +154,7 @@ public class ImageController implements Controller {
         return false;
     }
     return true;
+
   }
 
   /**
@@ -221,8 +219,8 @@ public class ImageController implements Controller {
           out.append(String.format("Unknown command %s", commands[0]));
           break;
       }
-      if(cmd != null){
-        cmd.go(currentModel);
+      if(cmd != null) {
+        cmd.run(currentModel);
       }
     } catch (Exception e) {
       out.append(e.getMessage()).append("\n");

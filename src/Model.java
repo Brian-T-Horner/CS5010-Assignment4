@@ -79,7 +79,8 @@ public interface Model {
    * @param currentImageName The name of the image to get the intensity image from.
    * @param newImageName     The name to save the resulting image as.
    */
-  void getIntensityImage(String currentImageName, String newImageName) throws NoSuchElementException;
+  void getIntensityImage(String currentImageName, String newImageName)
+      throws NoSuchElementException;
 
   /**
    * Method to get the luma image of an image - calls the image object method.
@@ -96,7 +97,8 @@ public interface Model {
    * @param newImageName     The name to save the resulting image as.
    * @param scale            The scale to brighten or darken the image.
    */
-  void brighten(String currentImageName, String newImageName, int scale) throws NoSuchElementException;
+  void brighten(String currentImageName, String newImageName, int scale)
+      throws NoSuchElementException;
 
   /**
    * Method to split an image into its rgb components - calls the image object method.
@@ -106,7 +108,8 @@ public interface Model {
    * @param greenImageName   The name to save the resulting green component image as.
    * @param blueImageName    The name to save the resulting blue component image as.
    */
-  void rgbSplit(String currentImageName, String redImageName, String greenImageName, String blueImageName) throws NoSuchElementException;
+  void rgbSplit(String currentImageName, String redImageName, String greenImageName,
+      String blueImageName) throws NoSuchElementException;
 
   /**
    * Method to combine rgb components into one image.
@@ -116,7 +119,8 @@ public interface Model {
    * @param gImageName   The name of the green component image.
    * @param bImageName   The name of the blue component image.
    */
-  void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName) throws NoSuchElementException;
+  void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName)
+      throws NoSuchElementException;
 
   /**
    * Method to get the greyscale image of an image - calls the image object method.
@@ -125,6 +129,7 @@ public interface Model {
    * @param imageName          The image to get the grey scale image from.
    * @param newImageName       The name to save the resulting image as.
    */
-  void greyscale(String greyScaleComponent, String imageName, String newImageName) throws NoSuchElementException;
+  void greyscale(String greyScaleComponent, String imageName, String newImageName)
+      throws NoSuchElementException;
 
 }
