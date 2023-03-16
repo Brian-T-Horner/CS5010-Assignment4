@@ -1,5 +1,5 @@
 
-load donut.ppm donut
+load res/donut.ppm donut
 
 greyscale red-component donut red-donut
 
