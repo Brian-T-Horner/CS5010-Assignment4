@@ -1,11 +1,9 @@
-import IME.control.Controller;
-import IME.control.ImageController;
+import ime.control.Controller;
+import ime.control.ImageController;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import org.junit.Test;
-import IME.control.Controller;
-import IME.control.ImageController;
 
 import static org.junit.Assert.assertEquals;
 

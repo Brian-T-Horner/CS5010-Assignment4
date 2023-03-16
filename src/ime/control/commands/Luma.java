@@ -1,8 +1,8 @@
-package IME.control.commands;
+package ime.control.commands;
 
 import java.util.NoSuchElementException;
 
-import IME.model.Model;
+import ime.model.Model;
 
 /**
  * A commands.Luma command object.

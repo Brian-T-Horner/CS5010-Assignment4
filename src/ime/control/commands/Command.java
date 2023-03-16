@@ -1,6 +1,6 @@
-package IME.control.commands;
+package ime.control.commands;
 
-import IME.model.Model;
+import ime.model.Model;
 import java.io.IOException;
 
 /**

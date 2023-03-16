@@ -1,4 +1,4 @@
-package IME.model;
+package ime.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

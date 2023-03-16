@@ -1,27 +1,26 @@
-package IME.control.commands;
+package ime.control.commands;
 
 import java.util.NoSuchElementException;
 
-import IME.model.Model;
+import ime.model.Model;
 
 /**
- * An commands.Intensity command object.
+ * A commands.Value command object.
  */
-public class Intensity implements Command {
-
+public class Value implements Command {
   String[] commands;
 
   /**
-   * Constructor for an commands.Intensity command object.
+   * Constructor for a commands.Value command object.
    *
    * @param commands String array of commands for the object.
    */
-  public Intensity(String[] commands) {
+  public Value(String[] commands) {
     this.commands = commands;
   }
 
   /**
-   * Method to have model m run its getIntensityImage method.
+   * Method to have model m call its getValueImage method.
    *
    * @param m A model.
    */
@@ -29,6 +28,6 @@ public class Intensity implements Command {
   public void run(Model m) throws NoSuchElementException {
     String imageName = commands[1];
     String newImageName = commands[2];
-    m.getIntensityImage(imageName, newImageName);
+    m.getValueImage(imageName, newImageName);
   }
 }

@@ -1,6 +1,6 @@
-import IME.model.Image;
-import IME.model.Model;
-import IME.model.PPMModel;
+import ime.model.Image;
+import ime.model.Model;
+import ime.model.PPMModel;
 import org.junit.Before;
 import org.junit.Test;
 

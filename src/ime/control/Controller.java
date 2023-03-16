@@ -1,6 +1,6 @@
-package IME.control;
+package ime.control;
 
-import IME.model.Model;
+import ime.model.Model;
 import java.io.IOException;
 
 /**
@@ -9,7 +9,8 @@ import java.io.IOException;
 public interface Controller {
 
   /**
-   * Run method for the program. Takes in input, parses input and calls methods to instruct its model.
+   * Run method for the program. Takes in input, parses input and calls methods to instruct
+   *    its model.
    *
    * @param currentModel Current model that the controller is communicating with.
    */

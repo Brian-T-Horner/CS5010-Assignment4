@@ -2,8 +2,8 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 
-import IME.ImageUtil;
-import IME.model.Image;
+import ime.ImageUtil;
+import ime.model.Image;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -17,7 +17,7 @@ public class ImageUtilTest {
 
   @Test
   public void testReadIntoPPMImage() {
-    assertNotNull(ImageUtil.readIntoPPMImage("donut.ppm"));
+    assertNotNull(ImageUtil.readIntoPPMImage("res/donut.ppm"));
     assertNull(ImageUtil.readIntoPPMImage("invalid-path"));
   }
 
@@ -26,7 +26,7 @@ public class ImageUtilTest {
     Image i = null;
 
     try {
-      i = ImageUtil.readIntoPPMImage("donut.ppm");
+      i = ImageUtil.readIntoPPMImage("res/donut.ppm");
     } catch (Exception ignored) {
     }
     assertNotNull(i);
