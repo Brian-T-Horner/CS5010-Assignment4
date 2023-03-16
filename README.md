@@ -61,7 +61,7 @@ that contains commands. Commented lines beginning with a "#"
 character are supported.
 
 **The provided script can be run by typing "run script.txt" into
-the command line once the program is ran.**
+the command line once the program is ran. The saved files should save to the top level directory**
 
 Similarly, any text file with commands can be run with the "run" command,
 followed by the relative or absolute path to the file.

@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -75,16 +76,16 @@ public class ImageController implements Controller {
     Scanner scan = new Scanner(this.in);
     out.append("$ ");
     while (scan.hasNextLine()) {
-      String commandString = scan.nextLine();
+      String commandString = scan.nextLine().trim();
       String[] commands = commandString.split(" ");
 
       if (commands[0].equals("quit")) {
         out.append("Exiting application...");
         return;
       }
-
-      if (commandString.startsWith("run") && commandString.endsWith(".txt")) {
-        String filepath = commandString.replace("run", "").trim();
+      String filepath = commandString.replace("run","").replace("\"","").trim();
+      System.out.println(filepath);
+      if (commandString.startsWith("run") && filepath.endsWith(".txt")) {
         out.append(runFromFile(filepath, currentModel)).append("\n").append("$ ");
         continue;
       }
@@ -119,10 +120,8 @@ public class ImageController implements Controller {
       executeCommands(commands, currentModel);
     }
     return "";
-
   }
 
-  // TODO for each command, test number of args errors, test error for each specific command
 
   /**
    * Private method to check all other commands but save and load.
