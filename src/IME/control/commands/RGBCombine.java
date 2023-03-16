@@ -1,7 +1,6 @@
 package IME.control.commands;
 
 import IME.model.Model;
-import java.io.IOException;
 import java.util.NoSuchElementException;
 
 /**
