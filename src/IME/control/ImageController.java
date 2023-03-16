@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -84,7 +83,6 @@ public class ImageController implements Controller {
         return;
       }
       String filepath = commandString.replace("run","").replace("\"","").trim();
-      System.out.println(filepath);
       if (commandString.startsWith("run") && filepath.endsWith(".txt")) {
         out.append(runFromFile(filepath, currentModel)).append("\n").append("$ ");
         continue;
