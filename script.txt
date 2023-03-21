@@ -13,5 +13,7 @@ save hflipped-red-donut.ppm hflipped-red-donut
 
 save darkened-hflipped-red-donut.ppm darkened-hflipped-red-donut
 
+quit
+
 
 

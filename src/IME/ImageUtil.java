@@ -11,6 +11,8 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
+import javax.imageio.ImageIO;
+
 
 /**
  * This class contains utility methods to read a PPM image from file and simply print its contents.
@@ -73,7 +75,7 @@ public class ImageUtil {
    * @param filename Path to the image file.
    * @return A new IME.model.Image object from the loaded image.
    */
-  public static Image readIntoPPMImage(String filename) {
+  public static Image loadPPMImage(String filename) {
     Scanner sc;
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -87,7 +89,7 @@ public class ImageUtil {
     while (sc.hasNextLine()) {
       String s = sc.nextLine();
       if (s.charAt(0) != '#') {
-        builder.append(s + System.lineSeparator());
+        builder.append(s).append(System.lineSeparator());
       }
     }
 
@@ -121,6 +123,18 @@ public class ImageUtil {
       }
     }
     return new PPMModel.PPMImage(width, height, red, blue, green);
+  }
+
+  /**
+   * Method to read in an image in the PPM Format.
+   *
+   * @param filename Path to the image file.
+   * @return A new IME.model.Image object from the loaded image.
+   */
+  public static Image loadImage(String filename) throws IOException {
+
+    BufferedImage buf = ImageIO.read(new File(filename));
+    return readBufferedImage(buf);
   }
 
   /**
@@ -169,6 +183,24 @@ public class ImageUtil {
       }
     }
     return buffImage;
+  }
+
+
+  public static Image readBufferedImage(BufferedImage buf) {
+    int height = buf.getHeight();
+    int width = buf.getWidth();
+    int [][] r = new int[width][height];
+    int [][] g = new int[width][height];
+    int [][] b = new int[width][height];
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        int rgb = buf.getRGB(i,j);
+        r[i][j] = rgb >>16 & 0xff;
+        g[i][j] = rgb>>8 & 0xff;
+        b[i][j] = rgb & 0xff;
+      }
+    }
+    return new PPMModel.PPMImage(width,height,r,b,g);
   }
 
 }

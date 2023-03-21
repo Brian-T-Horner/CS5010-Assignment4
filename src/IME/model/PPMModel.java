@@ -39,7 +39,7 @@ public class PPMModel implements Model {
    */
   @Override
   public void loadImage(String imagePath, String newImageName) throws FileNotFoundException {
-    Image i = ImageUtil.readIntoPPMImage(imagePath);
+    Image i = ImageUtil.loadPPMImage(imagePath);
     if (i == null) {
       throw new FileNotFoundException("File \"" + imagePath + "\" not found!");
     }

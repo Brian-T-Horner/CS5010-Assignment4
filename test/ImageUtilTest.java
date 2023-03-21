@@ -17,8 +17,8 @@ public class ImageUtilTest {
 
   @Test
   public void testReadIntoPPMImage() {
-    assertNotNull(ImageUtil.readIntoPPMImage("donut.ppm"));
-    assertNull(ImageUtil.readIntoPPMImage("invalid-path"));
+    assertNotNull(ImageUtil.loadPPMImage("res/donut.ppm"));
+    assertNull(ImageUtil.loadPPMImage("invalid-path"));
   }
 
   @Test
@@ -26,7 +26,7 @@ public class ImageUtilTest {
     Image i = null;
 
     try {
-      i = ImageUtil.readIntoPPMImage("donut.ppm");
+      i = ImageUtil.loadPPMImage("res/donut.ppm");
     } catch (Exception ignored) {
     }
     assertNotNull(i);

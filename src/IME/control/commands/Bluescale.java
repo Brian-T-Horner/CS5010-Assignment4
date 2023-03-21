@@ -26,7 +26,10 @@ public class Bluescale implements Command {
    * @param m A model.
    */
   @Override
-  public void run(Model m) throws FileNotFoundException {
+  public void run(Model m) throws FileNotFoundException,IllegalArgumentException {
+    if(commands.length != 3) {
+      throw new IllegalArgumentException("Invalid number of arguments for command \"bluescale\". 3 required.");
+    }
     String imageName = commands[1];
     String newImageName = commands[2];
     m.getBlueComponent(imageName, newImageName);

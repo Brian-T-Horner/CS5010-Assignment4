@@ -33,6 +33,8 @@ public class ImageController implements Controller {
   final Readable in;
   final Appendable out;
 
+  private boolean quit = false;
+
   //Map<String, Function<String[], commands.Command>> knownCommands;
 
   /**
@@ -78,95 +80,27 @@ public class ImageController implements Controller {
       String commandString = scan.nextLine().trim();
       String[] commands = commandString.split(" ");
 
-      if (commands[0].equals("quit")) {
+      executeCommands(commands, currentModel);
+
+      if(quit) {
         out.append("Exiting application...");
         return;
       }
-      String filepath = commandString.replace("run","").replace("\"","").trim();
-      if (commandString.startsWith("run") && filepath.endsWith(".txt")) {
-        out.append(runFromFile(filepath, currentModel)).append("\n").append("$ ");
-        continue;
-      }
-
-      if (!checkCommands(commands)) {
-        out.append("$ ");
-        continue;
-      }
-
-      executeCommands(commands, currentModel);
       out.append("$ ");
-
     }
   }
 
-  private String runFromFile(String filepath, Model currentModel) throws IOException {
+  private void runFromFile(String filepath, Model currentModel) throws IOException {
 
     BufferedReader br;
-    try {
       File f = new File(filepath);
       br = new BufferedReader(new FileReader(f));
-    } catch (Exception e) {
-      return e.getMessage();
-    }
 
     String line;
     while ((line = br.readLine()) != null) {
       String[] commands = line.split(" ");
-      if (!checkCommands(commands)) {
-        continue;
-      }
       executeCommands(commands, currentModel);
     }
-    return "";
-  }
-
-
-  /**
-   * Private method to check all other commands but save and load.
-   *
-   * @param commands Array of strings of commands to check.
-   */
-  private boolean checkCommands(String[] commands) throws IOException {
-
-    if (commands[0].isEmpty() || commands[0].charAt(0) == '#') {
-      return false;
-    }
-
-    switch (commands[0]) {
-      case "load":
-      case "save":
-      case "redscale":
-      case "greenscale":
-      case "bluescale":
-      case "vertical-flip":
-      case "horizontal-flip":
-      case "luma":
-      case "intensity":
-      case "value":
-        if (commands.length != 3) {
-          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
-          return false;
-        }
-        break;
-      case "rgb-split":
-      case "rgb-combine":
-        if (commands.length != 5) {
-          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
-          return false;
-        }
-        break;
-      case "greyscale":
-      case "brighten":
-        if (commands.length != 4) {
-          out.append("Invalid number of arguments for command ").append(commands[0]).append(".\n");
-          return false;
-        }
-        break;
-      default:
-        out.append("Invalid command. Please try again.\n");
-        return false;
-    }
-    return true;
   }
 
   /**
@@ -227,8 +161,21 @@ public class ImageController implements Controller {
         case "rgb-combine":
           cmd = new RGBCombine(commands);
           break;
+        case "quit":
+          quit = true;
+          break;
+        case "run":
+          if(commands.length != 2) {
+            throw new IllegalArgumentException("Invalid number of arguments for command \"run\". 1 required.");
+          }
+          runFromFile(commands[1]
+                  .replace("\"","").trim(),currentModel);
+          break;
         default:
-          out.append(String.format("Unknown command %s", commands[0]));
+          if(commands[0].isEmpty() || commands[0].charAt(0) == '#') {
+            break;
+          }
+          out.append(String.format("Unknown command \"%s\"\n", commands[0]));
           break;
       }
       if (cmd != null) {
