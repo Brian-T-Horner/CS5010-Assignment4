@@ -1,8 +1,8 @@
-package IME.control.commands;
+package ime.control.commands;
 
 import java.io.FileNotFoundException;
 
-import IME.model.Model;
+import ime.model.Model;
 
 /**
  * Class for a commands.Bluescale commands.Command object.

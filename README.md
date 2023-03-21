@@ -1,4 +1,4 @@
-# Assignment 4- IME
+# Assignment 4- ime
 
 There are two main packages: the model package and the control package.
 
@@ -70,7 +70,7 @@ followed by the relative or absolute path to the file.
 
 
 
-## IME.model.Image Source
+## ime.model.Image Source
 
 I, Ted Banken, own the image "donut.ppm" and authorize its use 
 in this project.

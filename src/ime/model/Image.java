@@ -1,4 +1,4 @@
-package IME.model;
+package ime.model;
 
 /**
  * Interface for accessing an image file.

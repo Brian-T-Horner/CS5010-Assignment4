@@ -1,7 +1,7 @@
-package IME;
+package ime;
 
-import IME.model.Image;
-import IME.model.PPMModel;
+import ime.model.Image;
+import ime.model.PPMModel;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

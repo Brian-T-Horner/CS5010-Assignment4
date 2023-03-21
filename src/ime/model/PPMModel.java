@@ -1,4 +1,4 @@
-package IME.model;
+package ime.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import IME.ImageUtil;
+import ime.ImageUtil;
 
 /**
  * IME.model.PPMModel that controls the method of a PPMImage.
@@ -26,7 +26,8 @@ public class PPMModel implements Model {
   public Image getImage(String imageName) throws NoSuchElementException {
     Image i = images.get(imageName);
     if (i == null) {
-      throw new NoSuchElementException("IME.model.Image with name \"" + imageName + "\" not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+          + "\" not in memory.");
     }
     return i;
   }
@@ -57,7 +58,8 @@ public class PPMModel implements Model {
           throws IOException, NoSuchElementException {
     Image i = images.get(imageName);
     if (i == null) {
-      throw new NoSuchElementException("IME.model.Image with name \"" + imageName + "\" not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+          + "\" not in memory.");
     }
     if (!imagePath.endsWith(".ppm")) {
       throw new IOException("Filename needs to end with .ppm");
@@ -79,7 +81,8 @@ public class PPMModel implements Model {
       int[][] r = i.getRedComponent();
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
-      throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name " + currentImageName
+          + " not in memory.");
     }
   }
 
@@ -97,7 +100,8 @@ public class PPMModel implements Model {
       int[][] r = i.getGreenComponent();
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
-      throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name " + currentImageName
+          + " not in memory.");
     }
   }
 
@@ -115,7 +119,8 @@ public class PPMModel implements Model {
       int[][] r = i.getBlueComponent();
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
-      throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name " + currentImageName
+          + " not in memory.");
     }
   }
 
@@ -130,7 +135,8 @@ public class PPMModel implements Model {
           throws NoSuchElementException {
     Image i = images.get(currentImageName);
     if (i == null) {
-      throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name " + currentImageName
+          + " not in memory.");
     }
     int[][] red = flipArrayHorizontal(i, i.getRedComponent());
     int[][] green = flipArrayHorizontal(i, i.getGreenComponent());
@@ -150,7 +156,8 @@ public class PPMModel implements Model {
   public void flipVertical(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
     if (i == null) {
-      throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name " + currentImageName
+          + " not in memory.");
     }
     int[][] red = flipArrayVertical(i, i.getRedComponent());
     int[][] green = flipArrayVertical(i, i.getGreenComponent());
@@ -171,7 +178,8 @@ public class PPMModel implements Model {
           throws NoSuchElementException {
     Image img = images.get(currentImageName);
     if (img == null) {
-      throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name " + currentImageName
+          + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -202,7 +210,8 @@ public class PPMModel implements Model {
           throws NoSuchElementException {
     Image img = images.get(currentImageName);
     if (img == null) {
-      throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name " + currentImageName
+          + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -237,7 +246,8 @@ public class PPMModel implements Model {
           throws NoSuchElementException {
     Image img = images.get(currentImageName);
     if (img == null) {
-      throw new NoSuchElementException("IME.model.Image with name " + currentImageName + " not in memory.");
+      throw new NoSuchElementException("IME.model.Image with name " + currentImageName
+          + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();

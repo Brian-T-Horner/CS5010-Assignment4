@@ -1,38 +1,36 @@
-package IME.control.commands;
+package ime.control.commands;
 
 import java.util.NoSuchElementException;
 
-import IME.model.Model;
+import ime.model.Model;
 
 /**
- * A commands.Luma command object.
+ * A commands.Value command object.
  */
-public class Luma implements Command {
-
+public class Value implements Command {
   String[] commands;
 
   /**
-   * Constructor for a commands.Luma command object.
+   * Constructor for a commands.Value command object.
    *
    * @param commands String array of commands for the object.
    */
-  public Luma(String[] commands) {
+  public Value(String[] commands) {
     this.commands = commands;
   }
 
   /**
-   * Method to have model m run its getLumaImage method.
+   * Method to have model m call its getValueImage method.
    *
    * @param m A model.
    */
   @Override
   public void run(Model m) throws NoSuchElementException, IllegalArgumentException {
     if(commands.length != 3) {
-      throw new IllegalArgumentException("Invalid number of arguments for command \"luma\". 2 required.");
+      throw new IllegalArgumentException("Invalid number of arguments for command \"value\". 2 required.");
     }
     String imageName = commands[1];
     String newImageName = commands[2];
-    m.getLumaImage(imageName, newImageName);
+    m.getValueImage(imageName, newImageName);
   }
 }
-

@@ -1,7 +1,6 @@
-package IME.control.commands;
+package ime.control.commands;
 
-import IME.model.Model;
-import java.io.IOException;
+import ime.model.Model;
 import java.util.NoSuchElementException;
 
 /**

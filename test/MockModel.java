@@ -1,5 +1,5 @@
-import IME.model.Image;
-import IME.model.Model;
+import ime.model.Image;
+import ime.model.Model;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
