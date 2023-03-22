@@ -453,6 +453,16 @@ public class PPMModel implements Model {
   }
 
 
+  private int[][] applyFilter(int[][] filter, int[][] arr) {
+    //TODO basically what this helper is supposed to do is apply a filter to a given r,g, or b component
+    // the filter array will have odd dimensions, and basically we apply the filter to array with some
+    // linear algebra(not entirely sure how) and once we reach the edges we zero-fill(this is probably confusing too)
+    // but it will make sense. this method will basically be used by all the new tranformations, the filter passed in
+    // is basically like the ones he describes in the homework. so the only difference is the filter.
+    return new int[1][1];
+  }
+
+
   /**
    * A class to represent an image in PPM Format.
    */
