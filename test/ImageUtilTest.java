@@ -21,8 +21,44 @@ public class ImageUtilTest {
     assertNull(ImageUtil.loadPPMImage("invalid-path"));
   }
 
+
   @Test
-  public void writeToPPMFile() {
+  public void testLoadImage() {
+    // TODO test that works with all image types
+    assertNotNull(ImageUtil.loadImage("images/koala-vertical.png"));
+    // TODO add .bmp and .jpg
+    assertNull(ImageUtil.loadImage("invalid-path"));
+  }
+
+
+  @Test
+  public void testwriteBufferedImage() {
+    // TODO make sure image is the same
+    // no other checks needed
+  }
+
+
+  @Test
+  public void testReadBufferedImage() {
+    //TODO
+    // make sure image is the same
+    // no other checks needed
+  }
+
+
+  @Test
+  public void testSaveImage() {
+    //TODO test that save works with all image types
+    // invalid path returns null
+    // test that file actually is created
+  }
+
+
+
+
+
+  @Test
+  public void testWriteToPPMFile() {
     Image i = null;
 
     try {

@@ -73,6 +73,7 @@ public class ImageController implements Controller {
         } catch (IOException e) {
           System.out.println(e.getMessage());
         }
+        //TODO need to abstract this i wrote this in a super hack-y way
       } else {
         System.out.println("To run a text file please input \"-file file-path\" as command line arguments.");
       }
@@ -200,8 +201,10 @@ public class ImageController implements Controller {
           if (commands.length != 2) {
             throw new IllegalArgumentException("Invalid number of arguments for command \"run\". 1 required.");
           }
-          runFromFile(commands[1]
-                  .replace("\"", "").trim(), currentModel);
+          String fileIn; fileIn = readFile(commands[1]);
+          Reader in = new StringReader(fileIn);
+          Controller fileController = new ImageController(in,System.out);
+          fileController.run(currentModel);
           break;
         default:
           if (commands[0].isEmpty() || commands[0].charAt(0) == '#') {

@@ -220,6 +220,7 @@ public class PPMModelTest {
 
   @Test
   public void testLoadImage() {
+    //TODO add tests for input of .png, .jpg, .bmp
     try {
       m.loadImage("test/donut.ppm", "donut-2");
     } catch (Exception ignored) {
@@ -230,6 +231,7 @@ public class PPMModelTest {
 
   @Test
   public void testSaveImage() {
+    //TODO add tests for input of .png, .jpg, .bmp
     try {
       m.loadImage("test/donut.ppm", "donut-2");
     } catch (Exception ignored) {

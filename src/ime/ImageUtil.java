@@ -135,10 +135,36 @@ public class ImageUtil {
    * @param filename Path to the image file.
    * @return A new IME.model.Image object from the loaded image.
    */
-  public static Image loadImage(String filename) throws IOException {
+  public static Image loadImage(String filename) {
 
-    BufferedImage buf = ImageIO.read(new File(filename));
+    if (filename.endsWith(".ppm")) {
+      return loadPPMImage(filename);
+    }
+    BufferedImage buf;
+    try {
+      buf = ImageIO.read(new File(filename));
+    } catch (IOException e) {
+      return null;
+    }
     return readBufferedImage(buf);
+  }
+
+  public static void saveImage(Image image, String fileName) throws IOException {
+    if (fileName.endsWith(".ppm")) {
+      writeToPPMFile(image, fileName);
+      return;
+    }
+    String filetype = "";
+    if (fileName.endsWith(".bmp")) {
+      filetype = "bmp";
+    } else if (fileName.endsWith(".png")) {
+      filetype = "png";
+    } else if (fileName.endsWith(".jpg")) {
+      filetype = "jpg";
+    }
+    BufferedImage buf = writeBufferedImage(image);
+    File outputfile = new File(fileName);
+    ImageIO.write(buf, filetype, outputfile);
   }
 
   /**
@@ -193,18 +219,18 @@ public class ImageUtil {
   public static Image readBufferedImage(BufferedImage buf) {
     int height = buf.getHeight();
     int width = buf.getWidth();
-    int [][] r = new int[width][height];
-    int [][] g = new int[width][height];
-    int [][] b = new int[width][height];
+    int[][] r = new int[width][height];
+    int[][] g = new int[width][height];
+    int[][] b = new int[width][height];
     for (int i = 0; i < width; i++) {
       for (int j = 0; j < height; j++) {
-        int rgb = buf.getRGB(i,j);
-        r[i][j] = rgb >>16 & 0xff;
-        g[i][j] = rgb>>8 & 0xff;
+        int rgb = buf.getRGB(i, j);
+        r[i][j] = rgb >> 16 & 0xff;
+        g[i][j] = rgb >> 8 & 0xff;
         b[i][j] = rgb & 0xff;
       }
     }
-    return new PPMModel.PPMImage(width,height,r,b,g);
+    return new PPMModel.PPMImage(width, height, r, b, g);
   }
 
 }

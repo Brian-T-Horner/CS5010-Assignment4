@@ -25,7 +25,7 @@ public class ModelControllerTest {
     controllerTest.run(new MockModel(log, 3390));
     assertEquals("loadPPMImage: imagePath = images/koala.ppm "
         + "newImageName = koala uniqueCode = 3390\n", log.toString());
-
+    //TODO test .bmp, .jpg, .png file inputs
   }
 
   /**
@@ -40,6 +40,7 @@ public class ModelControllerTest {
     controllerTest.run(new MockModel(log, 4537));
     assertEquals("savePPMImage: imagePath = images/koala-brighter.ppm "
         + "imageName = koala-brighter uniqueCode = 4537\n", log.toString());
+    //TODO test .bmp, .jpg, .png file outputs
   }
 
   /**

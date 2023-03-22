@@ -39,8 +39,11 @@ public class PPMModel implements Model {
    * @param newImageName The name to assign to the loaded PPMImage.
    */
   @Override
-  public void loadImage(String imagePath, String newImageName) throws FileNotFoundException {
-    Image i = ImageUtil.loadPPMImage(imagePath);
+  public void loadImage(String imagePath, String newImageName) throws FileNotFoundException, IllegalArgumentException {
+    if(!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+      throw new IllegalArgumentException("File must be a .bmp, .jpg, .png, or .ppm file.");
+    }
+    Image i = ImageUtil.loadImage(imagePath);
     if (i == null) {
       throw new FileNotFoundException("File \"" + imagePath + "\" not found!");
     }
@@ -61,10 +64,10 @@ public class PPMModel implements Model {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
           + "\" not in memory.");
     }
-    if (!imagePath.endsWith(".ppm")) {
-      throw new IOException("Filename needs to end with .ppm");
+    if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+      throw new IOException("File must be a .bmp, .jpg, .png, or .ppm file.");
     }
-    ImageUtil.writeToPPMFile(i, imagePath);
+    ImageUtil.saveImage(i, imagePath);
   }
 
   /**
