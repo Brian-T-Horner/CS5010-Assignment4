@@ -2,8 +2,8 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 
-import IME.ImageUtil;
-import IME.model.Image;
+import ime.ImageUtil;
+import ime.model.Image;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

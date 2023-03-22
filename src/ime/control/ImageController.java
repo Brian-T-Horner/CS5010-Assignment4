@@ -17,11 +17,18 @@ import ime.control.commands.Value;
 import ime.control.commands.VerticalFlip;
 import ime.model.Model;
 import ime.model.PPMModel;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -55,6 +62,22 @@ public class ImageController implements Controller {
    */
   public static void main(String[] args) {
     Model newModel = new PPMModel();
+    if (args.length > 0) {
+      if (args.length == 2) {
+        String fileIn;
+        try {
+          fileIn = readFile(args[1]);
+          Reader in = new StringReader(fileIn);
+          Controller fileController = new ImageController(in,System.out);
+          fileController.run(newModel);
+        } catch (IOException e) {
+          System.out.println(e.getMessage());
+        }
+      } else {
+        System.out.println("To run a text file please input \"-file file-path\" as command line arguments.");
+      }
+      System.exit(0);
+    }
     Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
     try {
       controller.run(newModel);
@@ -82,7 +105,7 @@ public class ImageController implements Controller {
 
       executeCommands(commands, currentModel);
 
-      if(quit) {
+      if (quit) {
         out.append("Exiting application...");
         return;
       }
@@ -90,11 +113,20 @@ public class ImageController implements Controller {
     }
   }
 
+
+  private static String readFile(String path)
+          throws IOException
+  {
+    byte[] encoded = Files.readAllBytes(Paths.get(path));
+    return new String(encoded, StandardCharsets.UTF_8);
+  }
+
+
   private void runFromFile(String filepath, Model currentModel) throws IOException {
 
     BufferedReader br;
-      File f = new File(filepath);
-      br = new BufferedReader(new FileReader(f));
+    File f = new File(filepath);
+    br = new BufferedReader(new FileReader(f));
 
     String line;
     while ((line = br.readLine()) != null) {
@@ -165,14 +197,14 @@ public class ImageController implements Controller {
           quit = true;
           break;
         case "run":
-          if(commands.length != 2) {
+          if (commands.length != 2) {
             throw new IllegalArgumentException("Invalid number of arguments for command \"run\". 1 required.");
           }
           runFromFile(commands[1]
-                  .replace("\"","").trim(),currentModel);
+                  .replace("\"", "").trim(), currentModel);
           break;
         default:
-          if(commands[0].isEmpty() || commands[0].charAt(0) == '#') {
+          if (commands[0].isEmpty() || commands[0].charAt(0) == '#') {
             break;
           }
           out.append(String.format("Unknown command \"%s\"\n", commands[0]));
