@@ -27,12 +27,12 @@ public class Luma implements Command {
    */
   @Override
   public void run(Model m) throws NoSuchElementException, IllegalArgumentException {
-    if(commands.length != 3) {
+    if(commands.length != 2) {
       throw new IllegalArgumentException("Invalid number of arguments for command \"luma\". "
           + "2 required.");
     }
-    String imageName = commands[1];
-    String newImageName = commands[2];
+    String imageName = commands[0];
+    String newImageName = commands[1];
     m.getLumaImage(imageName, newImageName);
   }
 }

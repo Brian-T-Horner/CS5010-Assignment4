@@ -26,12 +26,12 @@ public class Save implements Command {
    */
   @Override
   public void run(Model m) throws IOException, IllegalArgumentException {
-    if(commands.length != 3) {
+    if(commands.length != 2) {
       throw new IllegalArgumentException("Invalid number of arguments for command \"save\". "
           + "2 required.");
     }
-    String saveImagePath = commands[1];
-    String saveImageName = commands[2];
+    String saveImagePath = commands[0];
+    String saveImageName = commands[1];
     m.saveImage(saveImagePath, saveImageName);
   }
 }

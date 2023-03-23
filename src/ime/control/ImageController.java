@@ -65,7 +65,7 @@ public class ImageController implements Controller {
    *
    * @param args commands.Command line arguments to be passed to the program.
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     Model newModel = new PPMModel();
     if (args.length > 0) {
       if (args.length == 2) {
@@ -82,31 +82,12 @@ public class ImageController implements Controller {
       } else {
         System.out.println("To run a text file please input \"-file file-path\" as command line arguments.");
       }
+
       System.exit(0);
     }
     Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
-    try {
-      knownCommands.put("bluescale", s->new Bluescale(s.nextLine().trim().split(" ")));
-      knownCommands.put("redscale", s-> new Redscale(s.nextLine().trim().split(" ")));
-      knownCommands.put("greenscale", s->new Greenscale(s.nextLine().trim().split(" ")));
-      knownCommands.put("horizontal-flip", s-> new HorizontalFlip(s.nextLine().trim().split(" ")));
-      knownCommands.put("vertical-flip", s->new VerticalFlip(s.nextLine().trim().split(" ")));
-      knownCommands.put("load", s-> new Load(s.nextLine().trim().split(" ")));
-      knownCommands.put("save", s->new Save(s.nextLine().trim().split(" ")));
-      knownCommands.put("greyscale", s-> new Greyscale(s.nextLine().trim().split(" ")));
-      knownCommands.put("luma", s-> new Luma(s.nextLine().trim().split(" ")));
-      knownCommands.put("value", s->new Value(s.nextLine().trim().split(" ")));
-      knownCommands.put("intensity", s-> new Intensity(s.nextLine().trim().split(" ")));
-      knownCommands.put("brighten", s->new Brighten(s.nextLine().trim().split(" ")));
-      knownCommands.put("rgb-split", s-> new RGBSplit(s.nextLine().trim().split(" ")));
-      knownCommands.put("rgb-combine", s->new Brighten(s.nextLine().trim().split(" ")));
+    controller.run(newModel);
 
-
-
-      controller.run(newModel);
-    } catch (IOException e) {
-      System.out.println("IO error: output cannot be appended.");
-    }
     System.exit(0);
 
   }
@@ -121,6 +102,21 @@ public class ImageController implements Controller {
     Objects.requireNonNull(currentModel);
     Scanner scan = new Scanner(this.in);
     out.append("$ ");
+    knownCommands.put("bluescale", s->new Bluescale(s.nextLine().trim().split(" ")));
+    knownCommands.put("redscale", s-> new Redscale(s.nextLine().trim().split(" ")));
+    knownCommands.put("greenscale", s->new Greenscale(s.nextLine().trim().split(" ")));
+    knownCommands.put("horizontal-flip", s-> new HorizontalFlip(s.nextLine().trim().split(" ")));
+    knownCommands.put("vertical-flip", s->new VerticalFlip(s.nextLine().trim().split(" ")));
+    knownCommands.put("load", s-> new Load(s.nextLine().trim().split(" ")));
+    knownCommands.put("save", s->new Save(s.nextLine().trim().split(" ")));
+    knownCommands.put("greyscale", s-> new Greyscale(s.nextLine().trim().split(" ")));
+    knownCommands.put("luma", s-> new Luma(s.nextLine().trim().split(" ")));
+    knownCommands.put("value", s->new Value(s.nextLine().trim().split(" ")));
+    knownCommands.put("intensity", s-> new Intensity(s.nextLine().trim().split(" ")));
+    knownCommands.put("brighten", s->new Brighten(s.nextLine().trim().split(" ")));
+    knownCommands.put("rgb-split", s-> new RGBSplit(s.nextLine().trim().split(" ")));
+    knownCommands.put("rgb-combine", s->new RGBCombine(s.nextLine().trim().split(" ")));
+
     while(scan.hasNext()) {
       Command c;
       String in = scan.next();
