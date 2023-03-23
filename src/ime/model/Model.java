@@ -143,4 +143,9 @@ public interface Model {
   void greyscale(String greyScaleComponent, String imageName, String newImageName)
       throws NoSuchElementException;
 
+  void dither(String imageName, String newImageName);
+  void sepia(String imageName, String newImageName);
+  void sharpen(String imageName, String newImageName);
+  void blur(String imageName, String newImageName);
+
 }
