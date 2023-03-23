@@ -29,7 +29,8 @@ public class Greenscale implements Command {
   @Override
   public void run(Model m) throws FileNotFoundException {
     if(commands.length != 3) {
-      throw new IllegalArgumentException("Invalid number of arguments for command \"greenscale\". 3 required.");
+      throw new IllegalArgumentException("Invalid number of arguments for command \"greenscale\". "
+          + "3 required.");
     }
     String imageName = commands[1];
     String newImageName = commands[2];

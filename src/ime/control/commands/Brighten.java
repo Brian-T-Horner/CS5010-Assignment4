@@ -27,11 +27,17 @@ public class Brighten implements Command {
   @Override
   public void run(Model m) throws NoSuchElementException {
     if(commands.length != 4) {
-      throw new IllegalArgumentException("Invalid number of arguments for command \"brighten\". 4 required.");
+      throw new IllegalArgumentException("Invalid number of arguments for command \"brighten\". "
+          + "4 required.");
     }
-    int brightenScale = Integer.parseInt(commands[1]);
-    String brightenImageName = commands[2];
-    String brightenNewImageName = commands[3];
-    m.brighten(brightenImageName, brightenNewImageName, brightenScale);
+    try {
+      int brightenScale = Integer.parseInt(commands[1]);
+      String brightenImageName = commands[2];
+      String brightenNewImageName = commands[3];
+      m.brighten(brightenImageName, brightenNewImageName, brightenScale);
+    } catch (Exception e) {
+      throw new IllegalArgumentException("Second argument of \"brighten\" "
+          + "must be a valid integer.\n");
+    }
   }
 }

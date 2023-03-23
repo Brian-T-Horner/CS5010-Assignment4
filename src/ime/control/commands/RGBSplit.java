@@ -27,7 +27,8 @@ public class RGBSplit implements Command {
   @Override
   public void run(Model m) throws NoSuchElementException,IllegalArgumentException {
     if(commands.length != 5) {
-      throw new IllegalArgumentException("Invalid number of arguments for command \"rgb-split\". 4 required.");
+      throw new IllegalArgumentException("Invalid number of arguments for command \"rgb-split\". "
+          + "4 required.");
     }
     String imageName = commands[1];
     String newRImageName = commands[2];

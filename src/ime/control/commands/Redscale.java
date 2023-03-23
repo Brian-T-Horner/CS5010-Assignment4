@@ -27,7 +27,8 @@ public class Redscale implements Command {
   @Override
   public void run(Model m) throws FileNotFoundException {
     if(commands.length != 3) {
-      throw new IllegalArgumentException("Invalid number of arguments for command \"redscale\". 2 required.");
+      throw new IllegalArgumentException("Invalid number of arguments for command \"redscale\". "
+          + "2 required.");
     }
     String imageName = commands[1];
     String newImageName = commands[2];

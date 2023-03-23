@@ -27,7 +27,8 @@ public class Save implements Command {
   @Override
   public void run(Model m) throws IOException, IllegalArgumentException {
     if(commands.length != 3) {
-      throw new IllegalArgumentException("Invalid number of arguments for command \"save\". 2 required.");
+      throw new IllegalArgumentException("Invalid number of arguments for command \"save\". "
+          + "2 required.");
     }
     String saveImagePath = commands[1];
     String saveImageName = commands[2];

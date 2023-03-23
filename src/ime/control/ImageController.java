@@ -29,8 +29,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.function.Function;
 
 /**
  * Class that is the IME.control.Controller of our MVC model.
@@ -39,10 +42,11 @@ public class ImageController implements Controller {
 
   final Readable in;
   final Appendable out;
+  static Map<String, Function<Scanner, Command>> knownCommands;
 
   private boolean quit = false;
 
-  //Map<String, Function<String[], commands.Command>> knownCommands;
+
 
   /**
    * Contructor for the creation of a IME.control.Controller object.
@@ -53,6 +57,7 @@ public class ImageController implements Controller {
   public ImageController(Readable in, Appendable out) {
     this.in = in;
     this.out = out;
+    knownCommands = new HashMap<>();
   }
 
   /**
@@ -81,6 +86,23 @@ public class ImageController implements Controller {
     }
     Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
     try {
+      knownCommands.put("bluescale", s->new Bluescale(s.nextLine().trim().split(" ")));
+      knownCommands.put("redscale", s-> new Redscale(s.nextLine().trim().split(" ")));
+      knownCommands.put("greenscale", s->new Greenscale(s.nextLine().trim().split(" ")));
+      knownCommands.put("horizontal-flip", s-> new HorizontalFlip(s.nextLine().trim().split(" ")));
+      knownCommands.put("vertical-flip", s->new VerticalFlip(s.nextLine().trim().split(" ")));
+      knownCommands.put("load", s-> new Load(s.nextLine().trim().split(" ")));
+      knownCommands.put("save", s->new Save(s.nextLine().trim().split(" ")));
+      knownCommands.put("greyscale", s-> new Greyscale(s.nextLine().trim().split(" ")));
+      knownCommands.put("luma", s-> new Luma(s.nextLine().trim().split(" ")));
+      knownCommands.put("value", s->new Value(s.nextLine().trim().split(" ")));
+      knownCommands.put("intensity", s-> new Intensity(s.nextLine().trim().split(" ")));
+      knownCommands.put("brighten", s->new Brighten(s.nextLine().trim().split(" ")));
+      knownCommands.put("rgb-split", s-> new RGBSplit(s.nextLine().trim().split(" ")));
+      knownCommands.put("rgb-combine", s->new Brighten(s.nextLine().trim().split(" ")));
+
+
+
       controller.run(newModel);
     } catch (IOException e) {
       System.out.println("IO error: output cannot be appended.");
@@ -97,18 +119,46 @@ public class ImageController implements Controller {
   @Override
   public void run(Model currentModel) throws IOException {
     Objects.requireNonNull(currentModel);
-
     Scanner scan = new Scanner(this.in);
     out.append("$ ");
-    while (scan.hasNextLine()) {
-      String commandString = scan.nextLine().trim();
-      String[] commands = commandString.split(" ");
-
-      executeCommands(commands, currentModel);
-
-      if (quit) {
-        out.append("Exiting application...");
+    while(scan.hasNext()) {
+      Command c;
+      String in = scan.next();
+      // If quit command
+      if(in.equalsIgnoreCase("q") || in.equalsIgnoreCase("quit")) {
         return;
+      }
+      // if run command
+      if(in.equalsIgnoreCase("run")) {
+        String commandString = scan.nextLine().trim();
+        String[] commands = commandString.split(" ");
+        if (commands.length != 2) {
+          throw new IllegalArgumentException(
+              "Invalid number of arguments for command \"run\". 1 required.");
+        }
+        String fileIn;
+        fileIn = readFile(commands[1]);
+        Reader newIn = new StringReader(fileIn);
+        Controller fileController = new ImageController(newIn, System.out);
+        fileController.run(currentModel);
+        return;
+      }
+
+      // If command is empty of pound sign provided
+      if(in.isEmpty() || in.equals('#')) {
+        out.append(String.format("Unknown command \"%s\"\n", in));
+        return;
+      }
+
+
+      // If looking for command in hashmap
+      Function<Scanner, Command> cmd = knownCommands.getOrDefault(in, null);
+      // If command is not recognized
+      if(cmd == null) {
+        throw new IllegalArgumentException("Unrecognized command");
+      } else {
+        c = cmd.apply(scan);
+        c.run(currentModel);
       }
       out.append("$ ");
     }
@@ -121,6 +171,9 @@ public class ImageController implements Controller {
     byte[] encoded = Files.readAllBytes(Paths.get(path));
     return new String(encoded, StandardCharsets.UTF_8);
   }
+
+
+
 
 
   private void runFromFile(String filepath, Model currentModel) throws IOException {
@@ -220,4 +273,70 @@ public class ImageController implements Controller {
       out.append(e.getMessage()).append("\n");
     }
   }
+
+
+
+
+//  /**
+//   * Main method of the program.
+//   *
+//   * @param args commands.Command line arguments to be passed to the program.
+//   */
+//  public static void main(String[] args) {
+//    Model newModel = new PPMModel();
+//    if (args.length > 0) {
+//      if (args.length == 2) {
+//        String fileIn;
+//        try {
+//          fileIn = readFile(args[1]);
+//          Reader in = new StringReader(fileIn);
+//          Controller fileController = new ImageController(in,System.out);
+//          fileController.run(newModel);
+//        } catch (IOException e) {
+//          System.out.println(e.getMessage());
+//        }
+//        //TODO need to abstract this i wrote this in a super hack-y way
+//      } else {
+//        System.out.println("To run a text file please input \"-file file-path\" as command line arguments.");
+//      }
+//      System.exit(0);
+//    }
+//    Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
+//    try {
+//      controller.run(newModel);
+//    } catch (IOException e) {
+//      System.out.println("IO error: output cannot be appended.");
+//    }
+//    System.exit(0);
+//
+//  }
+
+//  /**
+//   * Method to run the program, accept inputs and pass load, save images to IME.model.Model.
+//   *
+//   * @param currentModel The model the controller object is instructing.
+//   */
+//  @Override
+//  public void run(Model currentModel) throws IOException {
+//    Objects.requireNonNull(currentModel);
+//
+//    Scanner scan = new Scanner(this.in);
+//    out.append("$ ");
+//    while (scan.hasNextLine()) {
+//      String commandString = scan.nextLine().trim();
+//      String[] commands = commandString.split(" ");
+//
+//      executeCommands(commands, currentModel);
+//
+//      if (quit) {
+//        out.append("Exiting application...");
+//        return;
+//      }
+//      out.append("$ ");
+//    }
+//  }
+
+
+
+
 }

@@ -28,7 +28,8 @@ public class Luma implements Command {
   @Override
   public void run(Model m) throws NoSuchElementException, IllegalArgumentException {
     if(commands.length != 3) {
-      throw new IllegalArgumentException("Invalid number of arguments for command \"luma\". 2 required.");
+      throw new IllegalArgumentException("Invalid number of arguments for command \"luma\". "
+          + "2 required.");
     }
     String imageName = commands[1];
     String newImageName = commands[2];
