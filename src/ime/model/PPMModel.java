@@ -2,7 +2,6 @@ package ime.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -28,7 +27,7 @@ public class PPMModel implements Model {
     Image i = images.get(imageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
-              + "\" not in memory.");
+          + "\" not in memory.");
     }
     return i;
   }
@@ -41,7 +40,7 @@ public class PPMModel implements Model {
    */
   @Override
   public void loadImage(String imagePath, String newImageName) throws FileNotFoundException, IllegalArgumentException {
-    if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+    if(!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IllegalArgumentException("File must be a .bmp, .jpg, .png, or .ppm file.");
     }
     Image i = ImageUtil.loadImage(imagePath);
@@ -63,7 +62,7 @@ public class PPMModel implements Model {
     Image i = images.get(imageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
-              + "\" not in memory.");
+          + "\" not in memory.");
     }
     if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IOException("File must be a .bmp, .jpg, .png, or .ppm file.");
@@ -86,7 +85,7 @@ public class PPMModel implements Model {
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-              + " not in memory.");
+          + " not in memory.");
     }
   }
 
@@ -105,7 +104,7 @@ public class PPMModel implements Model {
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-              + " not in memory.");
+          + " not in memory.");
     }
   }
 
@@ -124,7 +123,7 @@ public class PPMModel implements Model {
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-              + " not in memory.");
+          + " not in memory.");
     }
   }
 
@@ -140,7 +139,7 @@ public class PPMModel implements Model {
     Image i = images.get(currentImageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-              + " not in memory.");
+          + " not in memory.");
     }
     int[][] red = flipArrayHorizontal(i, i.getRedComponent());
     int[][] green = flipArrayHorizontal(i, i.getGreenComponent());
@@ -161,7 +160,7 @@ public class PPMModel implements Model {
     Image i = images.get(currentImageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-              + " not in memory.");
+          + " not in memory.");
     }
     int[][] red = flipArrayVertical(i, i.getRedComponent());
     int[][] green = flipArrayVertical(i, i.getGreenComponent());
@@ -183,7 +182,7 @@ public class PPMModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-              + " not in memory.");
+          + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -215,7 +214,7 @@ public class PPMModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-              + " not in memory.");
+          + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -251,7 +250,7 @@ public class PPMModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-              + " not in memory.");
+          + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -402,21 +401,6 @@ public class PPMModel implements Model {
   }
 
   @Override
-  public void dither(String imageName, String newImageName) {
-    Image img = images.get(imageName);
-    if (img == null) {
-      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
-              + "\" not in memory.");
-    }
-    int[][] r = img.getRedComponent();
-    int[][] g = img.getGreenComponent();
-    int[][] b = img.getBlueComponent();
-    int height = img.getHeight();
-    int width = img.getWidth();
-
-  }
-
-  @Override
   public void sepia(String imageName, String newImageName) {
     Image img = images.get(imageName);
     if (img == null) {
@@ -424,52 +408,29 @@ public class PPMModel implements Model {
               + "\" not in memory.");
     }
 
-    int[][] red = img.getRedComponent();
-    int[][] green = img.getGreenComponent();
-    int[][] blue = img.getBlueComponent();
+    int[][] r = img.getRedComponent();
+    int[][] g = img.getGreenComponent();
+    int[][] b = img.getBlueComponent();
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] r = new int[width][height];
-    int[][] g = new int[width][height];
-    int[][] b = new int[width][height];
+    double[][] sepiaFilter = new double[3][];
+    sepiaFilter[0] = new double[]{0.393, 0.769, 0.189};
+    sepiaFilter[1] = new double[]{0.349, 0.686, 0.168};
+    sepiaFilter[2] = new double[]{0.272, 0.534, 0.131};
 
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        int redVal = (int) Math.rint(0.393 * red[i][j]
-                + (0.769 * green[i][j])
-                + (0.189 * blue[i][j]));
-        int greenVal = (int) Math.rint((0.349 * red[i][j])
-                + (0.686 * green[i][j])
-                + (0.168 * blue[i][j]));
-        int blueVal = (int) Math.rint((0.272 * red[i][j])
-                + (0.534 * green[i][j])
-                + (0.131 * blue[i][j]));
-        r[i][j] = redVal;
-        g[i][j] = greenVal;
-        b[i][j] = blueVal;
 
-        if (r[i][j] > 255) {
-          r[i][j] = 255;
-        }
-        if (g[i][j] > 255) {
-          g[i][j] = 255;
-        }
-        if (b[i][j] > 255) {
-          b[i][j] = 255;
-        }
 
-        if (b[i][j] < 0) {
-          b[i][j] = 0;
-        }
-
-        if (g[i][j] < 0) {
-          g[i][j] = 0;
-        }
-
-        if (r[i][j] < 0) {
-          r[i][j] = 0;
-        }
-
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        r[i][j] = (int) Math.rint(sepiaFilter[0][0] * r[i][j]
+                + sepiaFilter[0][1] * g[i][j]
+                + sepiaFilter[0][2] * b[i][j]);
+        g[i][j] = (int) Math.rint(sepiaFilter[1][0] * r[i][j]
+                + sepiaFilter[1][1] * g[i][j]
+                + sepiaFilter[1][2] * b[i][j]);
+        b[i][j] = (int) Math.rint(sepiaFilter[2][0] * r[i][j]
+                + sepiaFilter[2][1] * g[i][j]
+                + sepiaFilter[2][2] * b[i][j]);
       }
     }
 
@@ -490,11 +451,11 @@ public class PPMModel implements Model {
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] sharpenFilter = new double[5][];
-    sharpenFilter[0] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
-    sharpenFilter[1] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0};
-    sharpenFilter[2] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0, 1.0 / 4.0, -1.0 / 8.0};
-    sharpenFilter[3] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
-    sharpenFilter[4] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+    sharpenFilter[0] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+    sharpenFilter[1] = new double[]{-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0};
+    sharpenFilter[2] = new double[]{-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0};
+    sharpenFilter[3] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+    sharpenFilter[4] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
 
   }
 
@@ -508,12 +469,175 @@ public class PPMModel implements Model {
     int[][] r = img.getRedComponent();
     int[][] g = img.getGreenComponent();
     int[][] b = img.getBlueComponent();
+    int[][] newR = img.getRedComponent();
+    int[][] newB = img.getBlueComponent();
+    int[][] newG = img.getGreenComponent();
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] blurFilter = new double[3][];
-    blurFilter[0] = new double[]{1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0};
-    blurFilter[1] = new double[]{1.0 / 8.0, 1.0 / 4.0, 1.0 / 8.0};
-    blurFilter[2] = new double[]{1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0};
+    blurFilter[0] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
+    blurFilter[1] = new double[]{1.0/8.0, 1.0/4.0, 1.0/8.0};
+    blurFilter[2] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
+    for (int i = 0; i < width; i++) {  //[height][width] [i][j]
+      for (int j = 0; j < height; j++) {
+        double redSum = 0;
+        double blueSum = 0;
+        double greenSum = 0;
+        // Get and operate on top left [i-1][j-1]
+        if ((i - 1) >= 0 && (j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i - 1][j - 1] * blurFilter[0][0]);
+            // blue
+            blueSum += (b[i - 1][j - 1] * blurFilter[0][0]);
+            // green
+            greenSum += (g[i - 1][j - 1] * blurFilter[0][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at top left");
+          }
+        }
+        // Get and operate on above [i-1][j]
+        if ((i - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i - 1][j] * blurFilter[0][1]);
+            // blue
+            blueSum += (b[i - 1][j] * blurFilter[0][1]);
+            // green
+            greenSum += (g[i - 1][j] * blurFilter[0][1]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at above.");
+          }
+        }
+        // Get and operate on top right [i-1][j+1]
+        if ((i - 1) >= 0 && (j + 1) < height) {
+          try {
+            // red
+            redSum += (r[i - 1][j + 1] * blurFilter[0][2]);
+            // blue
+            blueSum += (b[i - 1][j + 1] * blurFilter[0][2]);
+            // green
+            greenSum += (g[i - 1][j + 1] * blurFilter[0][2]);
+          }catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds top right");
+          }
+        }
+        // Get and operate on left [i][j-1]
+        if ((j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i][j - 1] * blurFilter[1][0]);
+            // blue
+            blueSum += (b[i][j - 1] * blurFilter[1][0]);
+            // green
+            greenSum += (g[i][j - 1] * blurFilter[1][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at left");
+          }
+        }
+        // Get and operate on center [i][j]
+
+
+
+        // red
+        redSum += (r[i][j] * blurFilter[1][1]);
+        // blue
+        blueSum += (b[i][j] * blurFilter[1][1]);
+        // green
+        greenSum += (g[i][j] * blurFilter[1][1]);
+
+
+        // Get and operate on right [i][j+1]
+        if (height > j+1) {
+          try {
+            // red
+            redSum += (r[i][j + 1] * blurFilter[1][2]);
+            // blue
+            blueSum += (b[i][j + 1] * blurFilter[1][2]);
+            // green
+            greenSum += (g[i][j + 1] * blurFilter[1][2]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at right i = " + i + " j = " + j + "width " + width + "height " + height);
+          }
+        }
+        // Get and operate on bottom left [i+1][j-1]  [2][0]
+        if ((i + 1) < width && (j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i + 1][j - 1] * blurFilter[2][0]);
+            // blue
+            blueSum += (b[i + 1][j - 1] * blurFilter[2][0]);
+            // green
+            greenSum += (g[i + 1][j - 1] * blurFilter[2][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds bottom left");
+          }
+        }
+        // Get and operate on below [i+1][j] [2][1]
+        if ((i + 1) < width) {
+          try {
+            // red
+            redSum += (r[i + 1][j] * blurFilter[2][1]);
+            // blue
+            blueSum += (b[i + 1][j] * blurFilter[2][1]);
+            // green
+            greenSum += (g[i + 1][j] * blurFilter[2][1]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds below");
+          }
+        }
+        // Get and operate on bottom right [i+1][j+1] [2][2]
+        if ((i + 1) < width && (j + 1) < height) {
+          try {
+            // red
+            redSum += (r[i + 1][j + 1] * blurFilter[2][2]);
+            // blue
+            blueSum += (b[i + 1][j + 1] * blurFilter[2][2]);
+            // green
+            greenSum += (g[i + 1][j + 1] * blurFilter[2][2]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds bottom right");
+          }
+        }
+        // Check for floor and ceiling
+          // red
+        if(redSum < 0){
+          redSum = 0;
+        }
+
+        if(redSum > 255){
+          redSum = 255;
+        }
+          // blue
+        if(blueSum < 0) {
+          blueSum = 0;
+        }
+
+        if(blueSum > 255) {
+          blueSum = 255;
+        }
+          // green
+        if(greenSum < 0) {
+          greenSum = 0;
+        }
+
+        if(greenSum > 255) {
+          greenSum = 255;
+        }
+
+        // Store [i][j]
+        //red
+        newR[i][j] = (int) Math.round(redSum);
+        //blue
+        newB[i][j] = (int) Math.round(blueSum);
+        // green
+        newG[i][j] = (int) Math.round(greenSum);
+
+
+      }
+    }
+    Image blurredImage = new PPMImage(width, height,newR, newB, newG);
+    images.put(newImageName, blurredImage);
 
   }
 
@@ -526,6 +650,66 @@ public class PPMModel implements Model {
               + "\" not in memory.");
     }
     getLumaImage(imageName, newImageName);
+  }
+
+  @Override
+  public void dither(String imageName, String newImageName) {
+    Image img = images.get(imageName);
+    if (img == null) {
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+              + "\" not in memory.");
+    }
+    getLumaImage(imageName, "dither greyscale");
+    Image greyscale = images.get("dither greyscale");
+    int height = greyscale.getHeight();
+    int width = greyscale.getWidth();
+    int[][] redComp = greyscale.getRedComponent();
+    int[][] newRed = greyscale.getRedComponent();
+    int[][] newBlue = greyscale.getBlueComponent();
+    int[][] newGreen = greyscale.getGreenComponent();
+    int oldColor;
+    int newColor;
+    int error;
+    for (int i = 0; i < height; i++ ) { //[height][width]   [i][j]
+      for (int j = 0; j < width; j++) {
+        oldColor = redComp[i][j];
+        //TODO: is this the correct floor or ceiling?
+        if (oldColor >= 128) {
+          newColor = 255;
+        } else {
+          newColor = 0;
+        }
+        // Calculating error
+        error = oldColor - newColor;
+
+        // Setting pixel to new color
+        newRed[i][j] = newColor;
+        newBlue[i][j] = newColor;
+        newGreen[i][j] = newColor;
+
+
+        //[height][width]   [i][j]
+        // Setting pixels besides it by the error
+        // Pixel on the right [i][j+1]
+        if(j + 1 < width) {
+          redComp[i][j + 1] = Math.round (redComp[i][j + 1] + (int) Math.rint(7.0 / 16.0 * (double) error));
+        }
+        // Next row left image (bottom left) [i-1][j-1]
+        if(i + 1 < height && j - 1 >= 0) {
+          redComp[i + 1][j - 1] = Math.round (redComp[i+1][j-1] + (int) Math.rint(3.0 / 16.0 * (double) error));
+        }
+        // below image [i+1][j]
+        if(i + 1 < height) {
+          redComp[i + 1][j] = Math.round (redComp[i+1][j] + (int) Math.rint(5.0 / 16.0 * (double) error));
+        }
+        // bottom right [i-1][j+1]
+        if(i + 1 < height && j + 1 < width) {
+          redComp[i + 1][j + 1] = Math.round (redComp[i + 1][j + 1] + (int) Math.rint(1.0/16.0 * (double) error));
+        }
+      }
+    }
+    Image dither = new PPMImage(width, height, newRed, newBlue, newGreen);
+    images.put(newImageName, dither);
   }
 
   private boolean compareDimensions(Image firstImage, Image secondImage) {
@@ -584,68 +768,13 @@ public class PPMModel implements Model {
   }
 
 
-  public static int[][] applyFilter(double[][] filter, double[][] arr) {
-    int vals = 0;
-    int height =arr.length;
-    int width = arr[0].length;
-    int middleI = (int) Math.ceil((double)filter[0].length/2);
-    int middleJ = (int) Math.ceil((double)filter.length/2);
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-          int distTowardsUpperEdge = j;
-          int distTowardsLowerEdge = height - j;
-          int distTowardsLeftEdge = i;
-          int distTowardsRightEdge = width - i;
-          int distRight = filter[0].length - middleI;
-          int distLeft = middleI;
-          int distUp = middleJ;
-          int distDown = filter.length - middleJ;
-
-        System.out.println(distTowardsUpperEdge);
-        System.out.println(distTowardsLowerEdge);
-        System.out.println(distTowardsRightEdge);
-        System.out.println(distTowardsLeftEdge);
-
-        System.out.println();
-        System.out.println(distUp);
-        System.out.println(distDown);
-        System.out.println(distRight);
-        System.out.println(distLeft);
-
-          if(!(distTowardsUpperEdge < distUp)) {
-            //dont calculate up
-            boolean canGoUp = true;
-          }
-
-          if(!(distTowardsLowerEdge < distDown)) {
-            boolean canGoDown = true;
-          }
-
-          if(!(distTowardsLeftEdge < distLeft)) {
-            boolean canGoLeft = true;
-          }
-
-
-
-      }
-    }
+  private int[][] applyFilter(int[][] filter, int[][] arr) {
+    //TODO basically what this helper is supposed to do is apply a filter to a given r,g, or b component
+    // the filter array will have odd dimensions, and basically we apply the filter to array with some
+    // linear algebra(not entirely sure how) and once we reach the edges we zero-fill(this is probably confusing too)
+    // but it will make sense. this method will basically be used by all the new tranformations, the filter passed in
+    // is basically like the ones he describes in the homework. so the only difference is the filter.
     return new int[1][1];
-  }
-
-  public static void main(String[] args) {
-    double[][] sharpenFilter = new double[5][];
-    sharpenFilter[0] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
-    sharpenFilter[1] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0};
-    sharpenFilter[2] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0, 1.0 / 4.0, -1.0 / 8.0};
-    sharpenFilter[3] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
-    sharpenFilter[4] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
-
-    double[][] test = new double[8][6];
-
-    for (double[] row: test)
-      Arrays.fill(row, 1.0);
-
-    applyFilter(sharpenFilter, test);
   }
 
 

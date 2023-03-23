@@ -187,4 +187,80 @@ public class ModelControllerTest {
         log.toString());
   }
 
+  /**
+   * Method to test the controller to dither method.
+   */
+  @Test
+  public void testDither() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("dither koala dither-koala");
+    Controller controllerTest = new ImageController(in, out);
+    StringBuilder log = new StringBuilder();
+    controllerTest.run(new MockModel(log, 645));
+    assertEquals("dither: imageName = koala newImageName " +
+            "= dither-koala uniqueCode = 645\n", log.toString());
+
+  }
+
+  /**
+   * Method to test the controller to sepia method.
+   */
+  @Test
+  public void testSepia() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("sepia koala sepia-koala");
+    Controller controllerTest = new ImageController(in, out);
+    StringBuilder log = new StringBuilder();
+    controllerTest.run(new MockModel(log, 64));
+    assertEquals("sepia: imageName = koala newImageName " +
+            "= sepia-koala uniqueCode = 64\n", log.toString());
+
+  }
+
+
+  /**
+   * Method to test the controller to blur method.
+   */
+  @Test
+  public void testBlur() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("blur koala blur-koala");
+    Controller controllerTest = new ImageController(in, out);
+    StringBuilder log = new StringBuilder();
+    controllerTest.run(new MockModel(log, 99));
+    assertEquals("blur: imageName = koala newImageName " +
+            "= blur-koala uniqueCode = 99\n", log.toString());
+
+  }
+
+  /**
+   * Method to test the controller to sharpen method.
+   */
+  @Test
+  public void testSharpen() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("sharpen koala sharpen-koala");
+    Controller controllerTest = new ImageController(in, out);
+    StringBuilder log = new StringBuilder();
+    controllerTest.run(new MockModel(log, 346324));
+    assertEquals("sharpen: imageName = koala newImageName " +
+            "= sharpen-koala uniqueCode = 346324\n", log.toString());
+
+  }
+
+  /**
+   * Method to test the controller to matrixGreyscale method.
+   */
+  @Test
+  public void testMatrixGreyscale() throws IOException {
+    StringBuffer out = new StringBuffer();
+    Reader in = new StringReader("greyscale koala matrixGreyscale-koala");
+    Controller controllerTest = new ImageController(in, out);
+    StringBuilder log = new StringBuilder();
+    controllerTest.run(new MockModel(log, 3241));
+    assertEquals("matrixGreyscale: imageName = koala newImageName " +
+            "= matrixGreyscale-koala uniqueCode = 3241\n", log.toString());
+
+  }
+
 }
