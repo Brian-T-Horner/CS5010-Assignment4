@@ -400,6 +400,110 @@ public class PPMModel implements Model {
     }
   }
 
+  @Override
+  public void dither(String imageName, String newImageName) {
+    Image img = images.get(imageName);
+    if (img == null) {
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+              + "\" not in memory.");
+    }
+    int[][] r = img.getRedComponent();
+    int[][] g = img.getGreenComponent();
+    int[][] b = img.getBlueComponent();
+    int height = img.getHeight();
+    int width = img.getWidth();
+
+  }
+
+  @Override
+  public void sepia(String imageName, String newImageName) {
+    Image img = images.get(imageName);
+    if (img == null) {
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+              + "\" not in memory.");
+    }
+
+    int[][] r = img.getRedComponent();
+    int[][] g = img.getGreenComponent();
+    int[][] b = img.getBlueComponent();
+    int height = img.getHeight();
+    int width = img.getWidth();
+    double[][] sepiaFilter = new double[3][];
+    sepiaFilter[0] = new double[]{0.393, 0.769, 0.189};
+    sepiaFilter[1] = new double[]{0.349, 0.686, 0.168};
+    sepiaFilter[2] = new double[]{0.272, 0.534, 0.131};
+
+
+
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        r[i][j] = (int) Math.ceil(sepiaFilter[0][0] * r[i][j]
+                + sepiaFilter[0][1] * g[i][j]
+                + sepiaFilter[0][2] * b[i][j]);
+        g[i][j] = (int) Math.ceil(sepiaFilter[1][0] * r[i][j]
+                + sepiaFilter[1][1] * g[i][j]
+                + sepiaFilter[1][2] * b[i][j]);
+        b[i][j] = (int) Math.ceil(sepiaFilter[2][0] * r[i][j]
+                + sepiaFilter[2][1] * g[i][j]
+                + sepiaFilter[2][2] * b[i][j]);
+      }
+    }
+
+    Image sepiaImg = new PPMImage(width, height, r, b, g);
+    images.put(newImageName, sepiaImg);
+  }
+
+  @Override
+  public void sharpen(String imageName, String newImageName) {
+    Image img = images.get(imageName);
+    if (img == null) {
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+              + "\" not in memory.");
+    }
+    int[][] r = img.getRedComponent();
+    int[][] g = img.getGreenComponent();
+    int[][] b = img.getBlueComponent();
+    int height = img.getHeight();
+    int width = img.getWidth();
+    double[][] sharpenFilter = new double[5][];
+    sharpenFilter[0] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+    sharpenFilter[1] = new double[]{-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0};
+    sharpenFilter[2] = new double[]{-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0};
+    sharpenFilter[3] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+    sharpenFilter[4] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+
+  }
+
+  @Override
+  public void blur(String imageName, String newImageName) {
+    Image img = images.get(imageName);
+    if (img == null) {
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+              + "\" not in memory.");
+    }
+    int[][] r = img.getRedComponent();
+    int[][] g = img.getGreenComponent();
+    int[][] b = img.getBlueComponent();
+    int height = img.getHeight();
+    int width = img.getWidth();
+    double[][] blurFilter = new double[3][];
+    blurFilter[0] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
+    blurFilter[1] = new double[]{1.0/8.0, 1.0/4.0, 1.0/8.0};
+    blurFilter[2] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
+
+  }
+
+
+  @Override
+  public void matrixGreyscale(String imageName, String newImageName) {
+    Image img = images.get(imageName);
+    if (img == null) {
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+              + "\" not in memory.");
+    }
+    getLumaImage(imageName, newImageName);
+  }
+
   private boolean compareDimensions(Image firstImage, Image secondImage) {
     return (firstImage.getHeight() == secondImage.getHeight()
             && firstImage.getWidth() == secondImage.getWidth());

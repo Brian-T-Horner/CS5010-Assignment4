@@ -148,4 +148,6 @@ public interface Model {
   void sharpen(String imageName, String newImageName);
   void blur(String imageName, String newImageName);
 
+  void matrixGreyscale(String imageName, String newImageName);
+
 }

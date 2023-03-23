@@ -26,14 +26,18 @@ public class Greyscale implements Command {
    */
   @Override
   public void run(Model m) throws NoSuchElementException {
-    if(commands.length != 3) {
-      throw new IllegalArgumentException("Invalid number of arguments for command \"greyscale\"."
-          + " 4 required.");
+    if (commands.length == 3) {
+      String greyScaleComponent = commands[0];
+      String currentImageName = commands[1];
+      String destImageName = commands[2];
+      m.greyscale(greyScaleComponent, currentImageName, destImageName);
+    } else if (commands.length == 2) {
+      String imageName = commands[0];
+      String newImageName = commands[1];
+      m.matrixGreyscale(imageName, newImageName);
+    } else {
+      throw new IllegalArgumentException("Invalid number of arguments for command \"greyscale\". "
+              + "2 required for matrix greyscale 3 required for greyscale with source image.");
     }
-    String greyScaleComponent = commands[0];
-    String currentImageName = commands[1];
-    String destImageName = commands[2];
-    m.greyscale(greyScaleComponent, currentImageName, destImageName);
-
   }
 }

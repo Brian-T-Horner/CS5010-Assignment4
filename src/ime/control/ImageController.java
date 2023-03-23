@@ -1,20 +1,6 @@
 package ime.control;
 
-import ime.control.commands.Bluescale;
-import ime.control.commands.Brighten;
-import ime.control.commands.Command;
-import ime.control.commands.Greenscale;
-import ime.control.commands.Greyscale;
-import ime.control.commands.HorizontalFlip;
-import ime.control.commands.Intensity;
-import ime.control.commands.Load;
-import ime.control.commands.Luma;
-import ime.control.commands.RGBCombine;
-import ime.control.commands.RGBSplit;
-import ime.control.commands.Redscale;
-import ime.control.commands.Save;
-import ime.control.commands.Value;
-import ime.control.commands.VerticalFlip;
+import ime.control.commands.*;
 import ime.model.Model;
 import ime.model.PPMModel;
 
@@ -112,6 +98,10 @@ public class ImageController implements Controller {
     knownCommands.put("brighten", s -> new Brighten(s.nextLine().trim().split(" ")));
     knownCommands.put("rgb-split", s -> new RGBSplit(s.nextLine().trim().split(" ")));
     knownCommands.put("rgb-combine", s -> new RGBCombine(s.nextLine().trim().split(" ")));
+    knownCommands.put("blur", s -> new Blur(s.nextLine().trim().split(" ")));
+    knownCommands.put("sharpen", s -> new Sharpen(s.nextLine().trim().split(" ")));
+    knownCommands.put("sepia", s -> new Sepia(s.nextLine().trim().split(" ")));
+    knownCommands.put("dither", s -> new Dither(s.nextLine().trim().split(" ")));
 
 
 
