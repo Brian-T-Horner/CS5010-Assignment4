@@ -401,21 +401,6 @@ public class PPMModel implements Model {
   }
 
   @Override
-  public void dither(String imageName, String newImageName) {
-    Image img = images.get(imageName);
-    if (img == null) {
-      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
-              + "\" not in memory.");
-    }
-    int[][] r = img.getRedComponent();
-    int[][] g = img.getGreenComponent();
-    int[][] b = img.getBlueComponent();
-    int height = img.getHeight();
-    int width = img.getWidth();
-
-  }
-
-  @Override
   public void sepia(String imageName, String newImageName) {
     Image img = images.get(imageName);
     if (img == null) {
@@ -502,6 +487,62 @@ public class PPMModel implements Model {
               + "\" not in memory.");
     }
     getLumaImage(imageName, newImageName);
+  }
+
+  @Override
+  public void dither(String imageName, String newImageName) {
+    Image img = images.get(imageName);
+    if (img == null) {
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+              + "\" not in memory.");
+    }
+    getLumaImage(imageName, "dither greyscale");
+    Image greyscale = images.get("dither greyscale");
+    int height = greyscale.getHeight();
+    int width = greyscale.getWidth();
+    int[][] redComp = greyscale.getRedComponent();
+    int[][] newRed = greyscale.getRedComponent();
+    int[][] newBlue = greyscale.getBlueComponent();
+    int[][] newGreen = greyscale.getGreenComponent();
+    int oldColor;
+    int newColor;
+    int error;
+    for (int i = 0; i < width; i++ ) {
+      for (int j = 0; j < height; j++) {
+        oldColor = redComp[i][j];
+        //TODO: is this the correct floor or ceiling?
+        if (oldColor >= 128) {
+          newColor = 255;
+        } else {
+          newColor = 0;
+        }
+        // Calculating error
+        error = oldColor - newColor;
+
+        // Setting pixel to new color
+        newRed[i][j] = newColor;
+        newBlue[i][j] = newColor;
+        newGreen[i][j] = newColor;
+
+        // Setting pixels besides it by the error
+        if(j + 1 < height) {
+          redComp[i][j + 1] = redComp[i][j + 1] + (int) Math.ceil(7.0 / 16.0 * (double) error);
+        }
+        if(i + 1 < width && j - 1 >= 0) {
+          redComp[i + 1][j - 1] = redComp[i+1][j-1] + (int) Math.ceil(3.0 / 16.0 * (double) error);
+        }
+
+        if(i + 1 < width) {
+          redComp[i + 1][j] = redComp[i+1][j] + (int) Math.ceil(5.0 / 16.0 * (double) error);
+        }
+
+        if(i + 1 < width && j + 1 < height) {
+          redComp[i + 1][j + 1] = redComp[i + 1][j + 1] + (int) Math.ceil(1.0/16.0 * (double) error);
+        }
+      }
+    }
+    Image dither = new PPMImage(width, height, newRed, newBlue, newGreen);
+    images.put(newImageName, dither);
   }
 
   private boolean compareDimensions(Image firstImage, Image secondImage) {

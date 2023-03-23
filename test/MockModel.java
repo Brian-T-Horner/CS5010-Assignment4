@@ -27,6 +27,11 @@ public class MockModel implements Model {
     this.uniqueCode = newUniqueCode;
   }
 
+  /**
+   * Method to test the constructor load image command.
+   * @param imageName Image name to get from memory.
+   * @return An image gotten from memory.
+   */
   @Override
   public Image getImage(String imageName) {
     log.append("getting image: imageName = ");
@@ -38,7 +43,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to loadPPMImage method.
+  * Method to test the controller to loadPPMImage command.
   * @param imagePath Path to the image to load into the model.
   * @param newImageName Name to assign to the image loaded into the model.
   */
@@ -54,7 +59,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to savePPMImage method.
+  * Method to test the controller to savePPMImage command.
   * @param imagePath Path to save the image stored in the model.
   * @param imageName IME.model.Image to save to the imagePath.
   */
@@ -70,7 +75,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to getRedComponent method.
+  * Method to test the controller to getRedComponent command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the redComponent of the
   *                   currentImage.
@@ -87,7 +92,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to getGreenComponent method.
+  * Method to test the controller to getGreenComponent command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the greenComponent of the
   *                     currentImage.
@@ -104,7 +109,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to getBlueComponent method.
+  * Method to test the controller to getBlueComponent command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the blueComponent of the
   *                     currentImage.
@@ -121,7 +126,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to flipHorizontal method.
+  * Method to test the controller to flipHorizontal command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the flipHorizontal
   *                     transformation of the currentImage.
@@ -138,7 +143,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to flipVertical method.
+  * Method to test the controller to flipVertical command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the flipVertical
   *                     transformation of the currentImage.
@@ -155,7 +160,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to getValueImage method.
+  * Method to test the controller to getValueImage command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the getValueImage
   *                     transformation of the currentImage.
@@ -172,7 +177,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to the getIntensityImage method.
+  * Method to test the controller to the getIntensityImage command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the getIntensityImage
   *                     transformation of the currentImage.
@@ -189,7 +194,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to the getLumaImage method.
+  * Method to test the controller to the getLumaImage command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the getLumaImage
   *                     transformation of the currentImage.
@@ -206,7 +211,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to the brighten method.
+  * Method to test the controller to the brighten command.
   * @param currentImageName String that is the name of the current image.
   * @param newImageName String that is the new name of the new image from the brighten
   *                     transformation of the currentImage.
@@ -227,7 +232,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to rgbSplit method.
+  * Method to test the controller to rgbSplit command.
   * @param currentImageName String that is the name of the current image.
   * @param redImageName String that is the new name of the redComponent of the currentImage.
   * @param greenImageName String that is the new name of the greenComponent of the currentImage.
@@ -250,7 +255,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to rgbCombine method.
+  * Method to test the controller to rgbCombine command.
   * @param newImageName String that is the new name of the combined image from the rgb components.
   * @param rImageName String that is the name of the red component image.
   * @param gImageName String that is the name of the green component image.
@@ -273,7 +278,7 @@ public class MockModel implements Model {
   }
 
   /**
-  * Method to test the controller to greyscale method.
+  * Method to test the controller to greyscale command.
   * @param greyScaleComponent Method of greyscale transformation.
   * @param imageName String that is the image name to do the greyscale transformation on.
   * @param newImageName String that is the new name of the new greyscale image.
@@ -283,6 +288,93 @@ public class MockModel implements Model {
     log.append("greyscale: greyScaleComponent = ");
     log.append(greyScaleComponent);
     log.append(" imageName = ");
+    log.append(imageName);
+    log.append(" newImageName = ");
+    log.append(newImageName);
+    log.append(" uniqueCode = ");
+    log.append(this.uniqueCode);
+    log.append("\n");
+  }
+
+  /**
+   * Method to test the controller dither command.
+   * @param imageName Image name to get from memory.
+   * @param newImageName Name to write the new image to.
+   */
+  @Override
+  public void dither(String imageName, String newImageName) {
+    log.append("dither: ");
+    log.append("imageName = ");
+    log.append(imageName);
+    log.append(" newImageName = ");
+    log.append(newImageName);
+    log.append(" uniqueCode = ");
+    log.append(this.uniqueCode);
+    log.append("\n");
+  }
+
+  /**
+   * Method to test the controller sepia command.
+   * @param imageName Image name to get from memory.
+   * @param newImageName Name to write the new image to.
+   */
+  @Override
+  public void sepia(String imageName, String newImageName) {
+    log.append("sepia: ");
+    log.append("imageName = ");
+    log.append(imageName);
+    log.append(" newImageName = ");
+    log.append(newImageName);
+    log.append(" uniqueCode = ");
+    log.append(this.uniqueCode);
+    log.append("\n");
+  }
+
+  /**
+   * Method to test the controller sharpen command.
+   * @param imageName Image name to get from memory.
+   * @param newImageName Name to write the new image to.
+   */
+  @Override
+  public void sharpen(String imageName, String newImageName) {
+    log.append("sharpen: ");
+    log.append("imageName = ");
+    log.append(imageName);
+    log.append(" newImageName = ");
+    log.append(newImageName);
+    log.append(" uniqueCode = ");
+    log.append(this.uniqueCode);
+    log.append("\n");
+
+  }
+
+  /**
+   * Method to test the controller blur command.
+   * @param imageName Image name to get from memory.
+   * @param newImageName Name to write the new iamge to.
+   */
+  @Override
+  public void blur(String imageName, String newImageName) {
+    log.append("blur: ");
+    log.append("imageName = ");
+    log.append(imageName);
+    log.append(" newImageName = ");
+    log.append(newImageName);
+    log.append(" uniqueCode = ");
+    log.append(this.uniqueCode);
+    log.append("\n");
+
+  }
+
+  /**
+   * Method to test the controller greyscale from matrix command.
+   * @param imageName Image to load from memory.
+   * @param newImageName Name to save new image as.
+   */
+  @Override
+  public void matrixGreyscale(String imageName, String newImageName) {
+    log.append("matrixGreyscale: ");
+    log.append("imageName = ");
     log.append(imageName);
     log.append(" newImageName = ");
     log.append(newImageName);
