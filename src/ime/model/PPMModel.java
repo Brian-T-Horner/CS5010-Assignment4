@@ -420,15 +420,15 @@ public class PPMModel implements Model {
 
 
 
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        r[i][j] = (int) Math.ceil(sepiaFilter[0][0] * r[i][j]
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        r[i][j] = (int) Math.rint(sepiaFilter[0][0] * r[i][j]
                 + sepiaFilter[0][1] * g[i][j]
                 + sepiaFilter[0][2] * b[i][j]);
-        g[i][j] = (int) Math.ceil(sepiaFilter[1][0] * r[i][j]
+        g[i][j] = (int) Math.rint(sepiaFilter[1][0] * r[i][j]
                 + sepiaFilter[1][1] * g[i][j]
                 + sepiaFilter[1][2] * b[i][j]);
-        b[i][j] = (int) Math.ceil(sepiaFilter[2][0] * r[i][j]
+        b[i][j] = (int) Math.rint(sepiaFilter[2][0] * r[i][j]
                 + sepiaFilter[2][1] * g[i][j]
                 + sepiaFilter[2][2] * b[i][j]);
       }
@@ -469,12 +469,140 @@ public class PPMModel implements Model {
     int[][] r = img.getRedComponent();
     int[][] g = img.getGreenComponent();
     int[][] b = img.getBlueComponent();
+    int[][] newR = img.getRedComponent();
+    int[][] newB = img.getBlueComponent();
+    int[][] newG = img.getGreenComponent();
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] blurFilter = new double[3][];
     blurFilter[0] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
     blurFilter[1] = new double[]{1.0/8.0, 1.0/4.0, 1.0/8.0};
     blurFilter[2] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
+    for (int i = 0; i < height; i++) {  //[height][width] [i][j]
+      for (int j = 0; j < width; j++) {
+        double redSum = 0;
+        double blueSum = 0;
+        double greenSum = 0;
+        // Get and operate on top left [i-1][j-1]
+        if (i - 1 >= 0 && j - 1 >= 0) {
+          // red
+          redSum += (r[i - 1][j - 1] * blurFilter[0][0]);
+          // blue
+          blueSum += (b[i - 1][j - 1] * blurFilter[0][0]);
+          // green
+          greenSum += (g[i - 1][j - 1] * blurFilter[0][0]);
+        }
+        // Get and operate on above [i-1][j]
+        if (i - 1 >= 0) {
+          // red
+          redSum += (r[i - 1][j] * blurFilter[0][1]);
+          // blue
+          blueSum += (b[i - 1][j] * blurFilter[0][1]);
+          // green
+          greenSum += (g[i - 1][j] * blurFilter[0][1]);
+        }
+        // Get and operate on top right [i-1][j+1]
+        if (i - 1 >= 0 && j + 1 < width) {
+          // red
+          redSum += (r[i - 1][j + 1] * blurFilter[0][2]);
+          // blue
+          blueSum += (b[i - 1][j + 1] * blurFilter[0][2]);
+          // green
+          greenSum += (g[i - 1][j + 1] * blurFilter[0][2]);
+        }
+        // Get and operate on left [i][j-1]
+        if (j - 1 >= 0) {
+          // red
+          redSum += (r[i][j - 1] * blurFilter[1][0]);
+          // blue
+          blueSum += (b[i][j - 1] * blurFilter[1][0]);
+          // green
+          greenSum += (g[i][j -1] * blurFilter[1][0]);
+        }
+        // Get and operate on center [i][j]
+
+        // red
+        redSum += (r[i][j] * blurFilter[1][1]);
+        // blue
+        blueSum += (b[i][j] * blurFilter[1][1]);
+        // green
+        greenSum += (g[i][j] * blurFilter[1][1]);
+
+        // Get and operate on right [i][j+1]
+        if (j + 1 < width) {
+          // red
+          redSum += (r[i][j + 1] * blurFilter[1][2]);
+          // blue
+          blueSum += (b[i][j + 1] * blurFilter[1][2]);
+          // green
+          greenSum += (g[i][j + 1] * blurFilter[1][2]);
+        }
+        // Get and operate on bottom left [i+1][j-1]  [2][0]
+        if (i + 1 < height && j - 1 >= 0) {
+          // red
+          redSum += (r[i + 1][j - 1] * blurFilter[2][0]);
+          // blue
+          blueSum += (b[i + 1][j - 1] * blurFilter[2][0]);
+          // green
+          greenSum += (g[i + 1][j - 1] * blurFilter[2][0]);
+        }
+        // Get and operate on below [i+1][j] [2][1]
+        if (i + 1 < height) {
+          // red
+          redSum += (r[i + 1][j] * blurFilter[2][1]);
+          // blue
+          blueSum += (b[i + 1][j] * blurFilter[2][1]);
+          // green
+          greenSum += (g[i + 1][j] * blurFilter[2][1]);
+        }
+        // Get and operate on bottom right [i+1][j+1] [2][2]
+        if (i + 1 < height && j + 1 < width) {
+          // red
+          redSum += (r[i + 1][j + 1] * blurFilter[2][2]);
+          // blue
+          blueSum += (b[i + 1][j + 1] * blurFilter[2][2]);
+          // green
+          greenSum += (g[i + 1][j + 1] * blurFilter[2][2]);
+        }
+        // Check for floor and ceiling
+          // red
+        if(redSum < 0){
+          redSum = 0;
+        }
+
+        if(redSum > 255){
+          redSum = 255;
+        }
+          // blue
+        if(blueSum < 0) {
+          blueSum = 0;
+        }
+
+        if(blueSum > 255) {
+          blueSum = 255;
+        }
+          // green
+        if(greenSum < 0) {
+          greenSum = 0;
+        }
+
+        if(greenSum > 255) {
+          greenSum = 255;
+        }
+
+        // Store [i][j]
+        //red
+        newR[i][j] = (int) Math.rint(redSum);
+        //blue
+        newB[i][j] = (int) Math.rint(blueSum);
+        // green
+        newG[i][j] = (int) Math.rint(greenSum);
+
+
+      }
+    }
+    Image blurredImage = new PPMImage(width, height,newR, newB, newG);
+    images.put(newImageName, blurredImage);
 
   }
 
@@ -507,8 +635,8 @@ public class PPMModel implements Model {
     int oldColor;
     int newColor;
     int error;
-    for (int i = 0; i < width; i++ ) {
-      for (int j = 0; j < height; j++) {
+    for (int i = 0; i < height; i++ ) { //[height][width]   [i][j]
+      for (int j = 0; j < width; j++) {
         oldColor = redComp[i][j];
         //TODO: is this the correct floor or ceiling?
         if (oldColor >= 128) {
@@ -524,20 +652,24 @@ public class PPMModel implements Model {
         newBlue[i][j] = newColor;
         newGreen[i][j] = newColor;
 
+
+        //[height][width]   [i][j]
         // Setting pixels besides it by the error
-        if(j + 1 < height) {
-          redComp[i][j + 1] = redComp[i][j + 1] + (int) Math.ceil(7.0 / 16.0 * (double) error);
+        // Pixel on the right [i][j+1]
+        if(j + 1 < width) {
+          redComp[i][j + 1] = Math.round (redComp[i][j + 1] + (int) Math.rint(7.0 / 16.0 * (double) error));
         }
-        if(i + 1 < width && j - 1 >= 0) {
-          redComp[i + 1][j - 1] = redComp[i+1][j-1] + (int) Math.ceil(3.0 / 16.0 * (double) error);
+        // Next row left image (bottom left) [i-1][j-1]
+        if(i + 1 < height && j - 1 >= 0) {
+          redComp[i + 1][j - 1] = Math.round (redComp[i+1][j-1] + (int) Math.rint(3.0 / 16.0 * (double) error));
         }
-
-        if(i + 1 < width) {
-          redComp[i + 1][j] = redComp[i+1][j] + (int) Math.ceil(5.0 / 16.0 * (double) error);
+        // below image [i+1][j]
+        if(i + 1 < height) {
+          redComp[i + 1][j] = Math.round (redComp[i+1][j] + (int) Math.rint(5.0 / 16.0 * (double) error));
         }
-
-        if(i + 1 < width && j + 1 < height) {
-          redComp[i + 1][j + 1] = redComp[i + 1][j + 1] + (int) Math.ceil(1.0/16.0 * (double) error);
+        // bottom right [i-1][j+1]
+        if(i + 1 < height && j + 1 < width) {
+          redComp[i + 1][j + 1] = Math.round (redComp[i + 1][j + 1] + (int) Math.rint(1.0/16.0 * (double) error));
         }
       }
     }
