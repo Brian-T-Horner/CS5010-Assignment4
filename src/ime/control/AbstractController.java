@@ -75,8 +75,7 @@ public abstract class AbstractController implements Controller {
       }
       // if run command
       if (in.equalsIgnoreCase("run")) {
-        String commandString = scan.nextLine().trim();
-        String[] commands = commandString.split(" ");
+        String[] commands = scan.nextLine().trim().split(" ");
         if (commands.length != 1) {
           throw new IllegalArgumentException(
                   "Invalid number of arguments for command \"run\". 1 required.");
@@ -117,19 +116,19 @@ public abstract class AbstractController implements Controller {
   }
 
 
-  protected static void runFile(String fileIn,Model currentModel) {
+  protected static void runFile(String fileIn,Model currentModel) throws IOException {
     String file;
     try {
       file = readFile(fileIn);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new IOException(e.getMessage());
     }
     Reader newIn = new StringReader(file);
     Controller fileController = new FileController(newIn, System.out);
     try {
       fileController.run(currentModel);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new IOException(e.getMessage());
     }
   }
 }

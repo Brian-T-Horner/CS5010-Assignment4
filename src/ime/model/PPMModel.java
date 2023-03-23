@@ -2,6 +2,7 @@ package ime.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -27,7 +28,7 @@ public class PPMModel implements Model {
     Image i = images.get(imageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
-          + "\" not in memory.");
+              + "\" not in memory.");
     }
     return i;
   }
@@ -40,7 +41,7 @@ public class PPMModel implements Model {
    */
   @Override
   public void loadImage(String imagePath, String newImageName) throws FileNotFoundException, IllegalArgumentException {
-    if(!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+    if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IllegalArgumentException("File must be a .bmp, .jpg, .png, or .ppm file.");
     }
     Image i = ImageUtil.loadImage(imagePath);
@@ -62,7 +63,7 @@ public class PPMModel implements Model {
     Image i = images.get(imageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
-          + "\" not in memory.");
+              + "\" not in memory.");
     }
     if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IOException("File must be a .bmp, .jpg, .png, or .ppm file.");
@@ -85,7 +86,7 @@ public class PPMModel implements Model {
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
   }
 
@@ -104,7 +105,7 @@ public class PPMModel implements Model {
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
   }
 
@@ -123,7 +124,7 @@ public class PPMModel implements Model {
       images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
   }
 
@@ -139,7 +140,7 @@ public class PPMModel implements Model {
     Image i = images.get(currentImageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int[][] red = flipArrayHorizontal(i, i.getRedComponent());
     int[][] green = flipArrayHorizontal(i, i.getGreenComponent());
@@ -160,7 +161,7 @@ public class PPMModel implements Model {
     Image i = images.get(currentImageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int[][] red = flipArrayVertical(i, i.getRedComponent());
     int[][] green = flipArrayVertical(i, i.getGreenComponent());
@@ -182,7 +183,7 @@ public class PPMModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -214,7 +215,7 @@ public class PPMModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -250,7 +251,7 @@ public class PPMModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -423,29 +424,52 @@ public class PPMModel implements Model {
               + "\" not in memory.");
     }
 
-    int[][] r = img.getRedComponent();
-    int[][] g = img.getGreenComponent();
-    int[][] b = img.getBlueComponent();
+    int[][] red = img.getRedComponent();
+    int[][] green = img.getGreenComponent();
+    int[][] blue = img.getBlueComponent();
     int height = img.getHeight();
     int width = img.getWidth();
-    double[][] sepiaFilter = new double[3][];
-    sepiaFilter[0] = new double[]{0.393, 0.769, 0.189};
-    sepiaFilter[1] = new double[]{0.349, 0.686, 0.168};
-    sepiaFilter[2] = new double[]{0.272, 0.534, 0.131};
-
-
+    int[][] r = new int[width][height];
+    int[][] g = new int[width][height];
+    int[][] b = new int[width][height];
 
     for (int i = 0; i < width; i++) {
       for (int j = 0; j < height; j++) {
-        r[i][j] = (int) Math.ceil(sepiaFilter[0][0] * r[i][j]
-                + sepiaFilter[0][1] * g[i][j]
-                + sepiaFilter[0][2] * b[i][j]);
-        g[i][j] = (int) Math.ceil(sepiaFilter[1][0] * r[i][j]
-                + sepiaFilter[1][1] * g[i][j]
-                + sepiaFilter[1][2] * b[i][j]);
-        b[i][j] = (int) Math.ceil(sepiaFilter[2][0] * r[i][j]
-                + sepiaFilter[2][1] * g[i][j]
-                + sepiaFilter[2][2] * b[i][j]);
+        int redVal = (int) Math.rint(0.393 * red[i][j]
+                + (0.769 * green[i][j])
+                + (0.189 * blue[i][j]));
+        int greenVal = (int) Math.rint((0.349 * red[i][j])
+                + (0.686 * green[i][j])
+                + (0.168 * blue[i][j]));
+        int blueVal = (int) Math.rint((0.272 * red[i][j])
+                + (0.534 * green[i][j])
+                + (0.131 * blue[i][j]));
+        r[i][j] = redVal;
+        g[i][j] = greenVal;
+        b[i][j] = blueVal;
+
+        if (r[i][j] > 255) {
+          r[i][j] = 255;
+        }
+        if (g[i][j] > 255) {
+          g[i][j] = 255;
+        }
+        if (b[i][j] > 255) {
+          b[i][j] = 255;
+        }
+
+        if (b[i][j] < 0) {
+          b[i][j] = 0;
+        }
+
+        if (g[i][j] < 0) {
+          g[i][j] = 0;
+        }
+
+        if (r[i][j] < 0) {
+          r[i][j] = 0;
+        }
+
       }
     }
 
@@ -466,11 +490,11 @@ public class PPMModel implements Model {
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] sharpenFilter = new double[5][];
-    sharpenFilter[0] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
-    sharpenFilter[1] = new double[]{-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0};
-    sharpenFilter[2] = new double[]{-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0};
-    sharpenFilter[3] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
-    sharpenFilter[4] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+    sharpenFilter[0] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+    sharpenFilter[1] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0};
+    sharpenFilter[2] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0, 1.0 / 4.0, -1.0 / 8.0};
+    sharpenFilter[3] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+    sharpenFilter[4] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
 
   }
 
@@ -487,9 +511,9 @@ public class PPMModel implements Model {
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] blurFilter = new double[3][];
-    blurFilter[0] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
-    blurFilter[1] = new double[]{1.0/8.0, 1.0/4.0, 1.0/8.0};
-    blurFilter[2] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
+    blurFilter[0] = new double[]{1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0};
+    blurFilter[1] = new double[]{1.0 / 8.0, 1.0 / 4.0, 1.0 / 8.0};
+    blurFilter[2] = new double[]{1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0};
 
   }
 
@@ -560,13 +584,68 @@ public class PPMModel implements Model {
   }
 
 
-  private int[][] applyFilter(int[][] filter, int[][] arr) {
-    //TODO basically what this helper is supposed to do is apply a filter to a given r,g, or b component
-    // the filter array will have odd dimensions, and basically we apply the filter to array with some
-    // linear algebra(not entirely sure how) and once we reach the edges we zero-fill(this is probably confusing too)
-    // but it will make sense. this method will basically be used by all the new tranformations, the filter passed in
-    // is basically like the ones he describes in the homework. so the only difference is the filter.
+  public static int[][] applyFilter(double[][] filter, double[][] arr) {
+    int vals = 0;
+    int height =arr.length;
+    int width = arr[0].length;
+    int middleI = (int) Math.ceil((double)filter[0].length/2);
+    int middleJ = (int) Math.ceil((double)filter.length/2);
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+          int distTowardsUpperEdge = j;
+          int distTowardsLowerEdge = height - j;
+          int distTowardsLeftEdge = i;
+          int distTowardsRightEdge = width - i;
+          int distRight = filter[0].length - middleI;
+          int distLeft = middleI;
+          int distUp = middleJ;
+          int distDown = filter.length - middleJ;
+
+        System.out.println(distTowardsUpperEdge);
+        System.out.println(distTowardsLowerEdge);
+        System.out.println(distTowardsRightEdge);
+        System.out.println(distTowardsLeftEdge);
+
+        System.out.println();
+        System.out.println(distUp);
+        System.out.println(distDown);
+        System.out.println(distRight);
+        System.out.println(distLeft);
+
+          if(!(distTowardsUpperEdge < distUp)) {
+            //dont calculate up
+            boolean canGoUp = true;
+          }
+
+          if(!(distTowardsLowerEdge < distDown)) {
+            boolean canGoDown = true;
+          }
+
+          if(!(distTowardsLeftEdge < distLeft)) {
+            boolean canGoLeft = true;
+          }
+
+
+
+      }
+    }
     return new int[1][1];
+  }
+
+  public static void main(String[] args) {
+    double[][] sharpenFilter = new double[5][];
+    sharpenFilter[0] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+    sharpenFilter[1] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0};
+    sharpenFilter[2] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0, 1.0 / 4.0, -1.0 / 8.0};
+    sharpenFilter[3] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+    sharpenFilter[4] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+
+    double[][] test = new double[8][6];
+
+    for (double[] row: test)
+      Arrays.fill(row, 1.0);
+
+    applyFilter(sharpenFilter, test);
   }
 
 

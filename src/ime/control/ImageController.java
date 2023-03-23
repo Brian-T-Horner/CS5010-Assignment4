@@ -51,7 +51,7 @@ public class ImageController extends AbstractController {
   public static void main(String[] args) throws IOException {
     Model newModel = new PPMModel();
     if (args.length > 0) {
-      if (args[0].equals("-file")) {
+      if (args[0].equals("-file") && args.length == 2) {
         runFile(args[1],newModel);
       } else {
         System.out.println("To run a text file please input \"-file file-path\" as command line arguments.");
