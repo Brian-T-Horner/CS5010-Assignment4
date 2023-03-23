@@ -478,48 +478,66 @@ public class PPMModel implements Model {
     blurFilter[0] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
     blurFilter[1] = new double[]{1.0/8.0, 1.0/4.0, 1.0/8.0};
     blurFilter[2] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
-    for (int i = 0; i < height; i++) {  //[height][width] [i][j]
-      for (int j = 0; j < width; j++) {
+    for (int i = 0; i < width; i++) {  //[height][width] [i][j]
+      for (int j = 0; j < height; j++) {
         double redSum = 0;
         double blueSum = 0;
         double greenSum = 0;
         // Get and operate on top left [i-1][j-1]
-        if (i - 1 >= 0 && j - 1 >= 0) {
-          // red
-          redSum += (r[i - 1][j - 1] * blurFilter[0][0]);
-          // blue
-          blueSum += (b[i - 1][j - 1] * blurFilter[0][0]);
-          // green
-          greenSum += (g[i - 1][j - 1] * blurFilter[0][0]);
+        if ((i - 1) >= 0 && (j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i - 1][j - 1] * blurFilter[0][0]);
+            // blue
+            blueSum += (b[i - 1][j - 1] * blurFilter[0][0]);
+            // green
+            greenSum += (g[i - 1][j - 1] * blurFilter[0][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at top left");
+          }
         }
         // Get and operate on above [i-1][j]
-        if (i - 1 >= 0) {
-          // red
-          redSum += (r[i - 1][j] * blurFilter[0][1]);
-          // blue
-          blueSum += (b[i - 1][j] * blurFilter[0][1]);
-          // green
-          greenSum += (g[i - 1][j] * blurFilter[0][1]);
+        if ((i - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i - 1][j] * blurFilter[0][1]);
+            // blue
+            blueSum += (b[i - 1][j] * blurFilter[0][1]);
+            // green
+            greenSum += (g[i - 1][j] * blurFilter[0][1]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at above.");
+          }
         }
         // Get and operate on top right [i-1][j+1]
-        if (i - 1 >= 0 && j + 1 < width) {
-          // red
-          redSum += (r[i - 1][j + 1] * blurFilter[0][2]);
-          // blue
-          blueSum += (b[i - 1][j + 1] * blurFilter[0][2]);
-          // green
-          greenSum += (g[i - 1][j + 1] * blurFilter[0][2]);
+        if ((i - 1) >= 0 && (j + 1) < height) {
+          try {
+            // red
+            redSum += (r[i - 1][j + 1] * blurFilter[0][2]);
+            // blue
+            blueSum += (b[i - 1][j + 1] * blurFilter[0][2]);
+            // green
+            greenSum += (g[i - 1][j + 1] * blurFilter[0][2]);
+          }catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds top right");
+          }
         }
         // Get and operate on left [i][j-1]
-        if (j - 1 >= 0) {
-          // red
-          redSum += (r[i][j - 1] * blurFilter[1][0]);
-          // blue
-          blueSum += (b[i][j - 1] * blurFilter[1][0]);
-          // green
-          greenSum += (g[i][j -1] * blurFilter[1][0]);
+        if ((j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i][j - 1] * blurFilter[1][0]);
+            // blue
+            blueSum += (b[i][j - 1] * blurFilter[1][0]);
+            // green
+            greenSum += (g[i][j - 1] * blurFilter[1][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at left");
+          }
         }
         // Get and operate on center [i][j]
+
+
 
         // red
         redSum += (r[i][j] * blurFilter[1][1]);
@@ -528,41 +546,58 @@ public class PPMModel implements Model {
         // green
         greenSum += (g[i][j] * blurFilter[1][1]);
 
+
         // Get and operate on right [i][j+1]
-        if (j + 1 < width) {
-          // red
-          redSum += (r[i][j + 1] * blurFilter[1][2]);
-          // blue
-          blueSum += (b[i][j + 1] * blurFilter[1][2]);
-          // green
-          greenSum += (g[i][j + 1] * blurFilter[1][2]);
+        if (height > j+1) {
+          try {
+            // red
+            redSum += (r[i][j + 1] * blurFilter[1][2]);
+            // blue
+            blueSum += (b[i][j + 1] * blurFilter[1][2]);
+            // green
+            greenSum += (g[i][j + 1] * blurFilter[1][2]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at right i = " + i + " j = " + j + "width " + width + "height " + height);
+          }
         }
         // Get and operate on bottom left [i+1][j-1]  [2][0]
-        if (i + 1 < height && j - 1 >= 0) {
-          // red
-          redSum += (r[i + 1][j - 1] * blurFilter[2][0]);
-          // blue
-          blueSum += (b[i + 1][j - 1] * blurFilter[2][0]);
-          // green
-          greenSum += (g[i + 1][j - 1] * blurFilter[2][0]);
+        if ((i + 1) < width && (j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i + 1][j - 1] * blurFilter[2][0]);
+            // blue
+            blueSum += (b[i + 1][j - 1] * blurFilter[2][0]);
+            // green
+            greenSum += (g[i + 1][j - 1] * blurFilter[2][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds bottom left");
+          }
         }
         // Get and operate on below [i+1][j] [2][1]
-        if (i + 1 < height) {
-          // red
-          redSum += (r[i + 1][j] * blurFilter[2][1]);
-          // blue
-          blueSum += (b[i + 1][j] * blurFilter[2][1]);
-          // green
-          greenSum += (g[i + 1][j] * blurFilter[2][1]);
+        if ((i + 1) < width) {
+          try {
+            // red
+            redSum += (r[i + 1][j] * blurFilter[2][1]);
+            // blue
+            blueSum += (b[i + 1][j] * blurFilter[2][1]);
+            // green
+            greenSum += (g[i + 1][j] * blurFilter[2][1]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds below");
+          }
         }
         // Get and operate on bottom right [i+1][j+1] [2][2]
-        if (i + 1 < height && j + 1 < width) {
-          // red
-          redSum += (r[i + 1][j + 1] * blurFilter[2][2]);
-          // blue
-          blueSum += (b[i + 1][j + 1] * blurFilter[2][2]);
-          // green
-          greenSum += (g[i + 1][j + 1] * blurFilter[2][2]);
+        if ((i + 1) < width && (j + 1) < height) {
+          try {
+            // red
+            redSum += (r[i + 1][j + 1] * blurFilter[2][2]);
+            // blue
+            blueSum += (b[i + 1][j + 1] * blurFilter[2][2]);
+            // green
+            greenSum += (g[i + 1][j + 1] * blurFilter[2][2]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds bottom right");
+          }
         }
         // Check for floor and ceiling
           // red
@@ -592,11 +627,11 @@ public class PPMModel implements Model {
 
         // Store [i][j]
         //red
-        newR[i][j] = (int) Math.rint(redSum);
+        newR[i][j] = (int) Math.round(redSum);
         //blue
-        newB[i][j] = (int) Math.rint(blueSum);
+        newB[i][j] = (int) Math.round(blueSum);
         // green
-        newG[i][j] = (int) Math.rint(greenSum);
+        newG[i][j] = (int) Math.round(greenSum);
 
 
       }
