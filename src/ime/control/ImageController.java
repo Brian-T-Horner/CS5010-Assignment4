@@ -113,28 +113,28 @@ public class ImageController implements Controller {
     knownCommands.put("rgb-split", s -> new RGBSplit(s.nextLine().trim().split(" ")));
     knownCommands.put("rgb-combine", s -> new RGBCombine(s.nextLine().trim().split(" ")));
 
+
+
     while (scan.hasNext()) {
       Command c;
+
       String in = scan.next();
-      if(in == ""){
-        out.append("$: ");
-        break;
-      }
+
 
       // If quit command
       if (in.equalsIgnoreCase("q") || in.equalsIgnoreCase("quit")) {
         return;
       }
+
+
       // if run command
       if (in.equalsIgnoreCase("run")) {
-        String commandString = scan.nextLine().trim();
-        String[] commands = commandString.split(" ");
-        if (commands.length != 2) {
+        if (!scan.hasNext()) {
           throw new IllegalArgumentException(
                   "Invalid number of arguments for command \"run\". 1 required.");
         }
         String fileIn;
-        fileIn = readFile(commands[1]);
+        fileIn = readFile(scan.next());
         Reader newIn = new StringReader(fileIn);
         Controller fileController = new ImageController(newIn, System.out);
         fileController.run(currentModel);
@@ -154,6 +154,7 @@ public class ImageController implements Controller {
       if (cmd == null) {
         throw new IllegalArgumentException("Unrecognized command");
       } else {
+        // apply lambda function and run the command
         c = cmd.apply(scan);
         c.run(currentModel);
       }
