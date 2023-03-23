@@ -18,14 +18,11 @@ import ime.control.commands.VerticalFlip;
 import ime.model.Model;
 import ime.model.PPMModel;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,7 +42,6 @@ public class ImageController implements Controller {
   static Map<String, Function<Scanner, Command>> knownCommands;
 
   private boolean quit = false;
-
 
 
   /**
@@ -73,7 +69,7 @@ public class ImageController implements Controller {
         try {
           fileIn = readFile(args[1]);
           Reader in = new StringReader(fileIn);
-          Controller fileController = new ImageController(in,System.out);
+          Controller fileController = new ImageController(in, System.out);
           fileController.run(newModel);
         } catch (IOException e) {
           System.out.println(e.getMessage());
@@ -102,35 +98,40 @@ public class ImageController implements Controller {
     Objects.requireNonNull(currentModel);
     Scanner scan = new Scanner(this.in);
     out.append("$ ");
-    knownCommands.put("bluescale", s->new Bluescale(s.nextLine().trim().split(" ")));
-    knownCommands.put("redscale", s-> new Redscale(s.nextLine().trim().split(" ")));
-    knownCommands.put("greenscale", s->new Greenscale(s.nextLine().trim().split(" ")));
-    knownCommands.put("horizontal-flip", s-> new HorizontalFlip(s.nextLine().trim().split(" ")));
-    knownCommands.put("vertical-flip", s->new VerticalFlip(s.nextLine().trim().split(" ")));
-    knownCommands.put("load", s-> new Load(s.nextLine().trim().split(" ")));
-    knownCommands.put("save", s->new Save(s.nextLine().trim().split(" ")));
-    knownCommands.put("greyscale", s-> new Greyscale(s.nextLine().trim().split(" ")));
-    knownCommands.put("luma", s-> new Luma(s.nextLine().trim().split(" ")));
-    knownCommands.put("value", s->new Value(s.nextLine().trim().split(" ")));
-    knownCommands.put("intensity", s-> new Intensity(s.nextLine().trim().split(" ")));
-    knownCommands.put("brighten", s->new Brighten(s.nextLine().trim().split(" ")));
-    knownCommands.put("rgb-split", s-> new RGBSplit(s.nextLine().trim().split(" ")));
-    knownCommands.put("rgb-combine", s->new RGBCombine(s.nextLine().trim().split(" ")));
+    knownCommands.put("bluescale", s -> new Bluescale(s.nextLine().trim().split(" ")));
+    knownCommands.put("redscale", s -> new Redscale(s.nextLine().trim().split(" ")));
+    knownCommands.put("greenscale", s -> new Greenscale(s.nextLine().trim().split(" ")));
+    knownCommands.put("horizontal-flip", s -> new HorizontalFlip(s.nextLine().trim().split(" ")));
+    knownCommands.put("vertical-flip", s -> new VerticalFlip(s.nextLine().trim().split(" ")));
+    knownCommands.put("load", s -> new Load(s.nextLine().trim().split(" ")));
+    knownCommands.put("save", s -> new Save(s.nextLine().trim().split(" ")));
+    knownCommands.put("greyscale", s -> new Greyscale(s.nextLine().trim().split(" ")));
+    knownCommands.put("luma", s -> new Luma(s.nextLine().trim().split(" ")));
+    knownCommands.put("value", s -> new Value(s.nextLine().trim().split(" ")));
+    knownCommands.put("intensity", s -> new Intensity(s.nextLine().trim().split(" ")));
+    knownCommands.put("brighten", s -> new Brighten(s.nextLine().trim().split(" ")));
+    knownCommands.put("rgb-split", s -> new RGBSplit(s.nextLine().trim().split(" ")));
+    knownCommands.put("rgb-combine", s -> new RGBCombine(s.nextLine().trim().split(" ")));
 
-    while(scan.hasNext()) {
+    while (scan.hasNext()) {
       Command c;
       String in = scan.next();
+      if(in == ""){
+        out.append("$: ");
+        break;
+      }
+
       // If quit command
-      if(in.equalsIgnoreCase("q") || in.equalsIgnoreCase("quit")) {
+      if (in.equalsIgnoreCase("q") || in.equalsIgnoreCase("quit")) {
         return;
       }
       // if run command
-      if(in.equalsIgnoreCase("run")) {
+      if (in.equalsIgnoreCase("run")) {
         String commandString = scan.nextLine().trim();
         String[] commands = commandString.split(" ");
         if (commands.length != 2) {
           throw new IllegalArgumentException(
-              "Invalid number of arguments for command \"run\". 1 required.");
+                  "Invalid number of arguments for command \"run\". 1 required.");
         }
         String fileIn;
         fileIn = readFile(commands[1]);
@@ -141,16 +142,16 @@ public class ImageController implements Controller {
       }
 
       // If command is empty of pound sign provided
-      if(in.isEmpty() || in.equals('#')) {
-        out.append(String.format("Unknown command \"%s\"\n", in));
-        return;
+      if (in.isEmpty() || in.charAt(0) == '#' ) {
+        out.append("$ ");
+        continue;
       }
 
 
       // If looking for command in hashmap
       Function<Scanner, Command> cmd = knownCommands.getOrDefault(in, null);
       // If command is not recognized
-      if(cmd == null) {
+      if (cmd == null) {
         throw new IllegalArgumentException("Unrecognized command");
       } else {
         c = cmd.apply(scan);
@@ -162,177 +163,17 @@ public class ImageController implements Controller {
 
 
   private static String readFile(String path)
-          throws IOException
-  {
+          throws IOException {
     byte[] encoded = Files.readAllBytes(Paths.get(path));
     return new String(encoded, StandardCharsets.UTF_8);
   }
 
-
-
-
-
-  private void runFromFile(String filepath, Model currentModel) throws IOException {
-
-    BufferedReader br;
-    File f = new File(filepath);
-    br = new BufferedReader(new FileReader(f));
-
-    String line;
-    while ((line = br.readLine()) != null) {
-      String[] commands = line.split(" ");
-      executeCommands(commands, currentModel);
-    }
-  }
-
-  /**
-   * Method to execute all other commands but save and load.
-   *
-   * @param commands     String array of current commands to be executed.
-   * @param currentModel Current model the controller is communicating with.
-   */
-  private void executeCommands(String[] commands, Model currentModel) throws IOException {
-    Command cmd = null;
-    try {
-      switch (commands[0]) {
-        case "load":
-          cmd = new Load(commands);
-          break;
-        case "save":
-          cmd = new Save(commands);
-          break;
-        case "brighten":
-          try {
-            Integer.parseInt(commands[1]);
-          } catch (Exception e) {
-            out.append("Second argument of \"brighten\" must be a valid integer.\n");
-            break;
-          }
-          cmd = new Brighten(commands);
-          break;
-        case "redscale":
-          cmd = new Redscale(commands);
-          break;
-        case "greenscale":
-          cmd = new Greenscale(commands);
-          break;
-        case "bluescale":
-          cmd = new Bluescale(commands);
-          break;
-        case "vertical-flip":
-          cmd = new VerticalFlip(commands);
-          break;
-        case "horizontal-flip":
-          cmd = new HorizontalFlip(commands);
-          break;
-        case "value":
-          cmd = new Value(commands);
-          break;
-        case "intensity":
-          cmd = new Intensity(commands);
-          break;
-        case "luma":
-          cmd = new Luma(commands);
-          break;
-        case "greyscale":
-          cmd = new Greyscale(commands);
-          break;
-        case "rgb-split":
-          cmd = new RGBSplit(commands);
-          break;
-        case "rgb-combine":
-          cmd = new RGBCombine(commands);
-          break;
-        case "quit":
-          quit = true;
-          break;
-        case "run":
-          if (commands.length != 2) {
-            throw new IllegalArgumentException("Invalid number of arguments for command \"run\". 1 required.");
-          }
-          String fileIn; fileIn = readFile(commands[1]);
-          Reader in = new StringReader(fileIn);
-          Controller fileController = new ImageController(in,System.out);
-          fileController.run(currentModel);
-          break;
-        default:
-          if (commands[0].isEmpty() || commands[0].charAt(0) == '#') {
-            break;
-          }
-          out.append(String.format("Unknown command \"%s\"\n", commands[0]));
-          break;
-      }
-      if (cmd != null) {
-        cmd.run(currentModel);
-      }
-    } catch (Exception e) {
-      out.append(e.getMessage()).append("\n");
-    }
-  }
-
-
-
-
-//  /**
-//   * Main method of the program.
-//   *
-//   * @param args commands.Command line arguments to be passed to the program.
-//   */
-//  public static void main(String[] args) {
-//    Model newModel = new PPMModel();
-//    if (args.length > 0) {
-//      if (args.length == 2) {
-//        String fileIn;
-//        try {
-//          fileIn = readFile(args[1]);
-//          Reader in = new StringReader(fileIn);
-//          Controller fileController = new ImageController(in,System.out);
-//          fileController.run(newModel);
-//        } catch (IOException e) {
-//          System.out.println(e.getMessage());
-//        }
-//        //TODO need to abstract this i wrote this in a super hack-y way
-//      } else {
-//        System.out.println("To run a text file please input \"-file file-path\" as command line arguments.");
-//      }
-//      System.exit(0);
-//    }
-//    Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
-//    try {
-//      controller.run(newModel);
-//    } catch (IOException e) {
-//      System.out.println("IO error: output cannot be appended.");
-//    }
-//    System.exit(0);
-//
-//  }
-
-//  /**
-//   * Method to run the program, accept inputs and pass load, save images to IME.model.Model.
-//   *
-//   * @param currentModel The model the controller object is instructing.
-//   */
-//  @Override
-//  public void run(Model currentModel) throws IOException {
-//    Objects.requireNonNull(currentModel);
-//
-//    Scanner scan = new Scanner(this.in);
-//    out.append("$ ");
-//    while (scan.hasNextLine()) {
-//      String commandString = scan.nextLine().trim();
-//      String[] commands = commandString.split(" ");
-//
-//      executeCommands(commands, currentModel);
-//
-//      if (quit) {
-//        out.append("Exiting application...");
-//        return;
-//      }
-//      out.append("$ ");
-//    }
-//  }
-
-
-
-
 }
+
+
+
+
+
+
+
+
