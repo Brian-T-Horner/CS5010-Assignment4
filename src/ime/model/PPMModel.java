@@ -448,6 +448,9 @@ public class PPMModel implements Model {
     int[][] r = img.getRedComponent();
     int[][] g = img.getGreenComponent();
     int[][] b = img.getBlueComponent();
+    int[][] newR = img.getRedComponent();
+    int[][] newB = img.getBlueComponent();
+    int[][] newG = img.getGreenComponent();
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] sharpenFilter = new double[5][];
@@ -456,6 +459,245 @@ public class PPMModel implements Model {
     sharpenFilter[2] = new double[]{-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0};
     sharpenFilter[3] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
     sharpenFilter[4] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        double redSum = 0;
+        double blueSum = 0;
+        double greenSum = 0;
+
+        //TODO: Implement this way
+//        int rowIndex = 0;
+//        int colIndex = 0;
+//        for (int row = i-2; row  < i+2; row++) {
+//          for (int column = j-2; column < j+2; column++) {
+//            if(row < width && row >= 0 && j < height && j >= 0) {
+
+
+        //TODO: Add try catches
+
+        // -------- First Row Operations ---------------='
+        if (i - 2 >= 0) {
+
+          // [0][0] - row 0 column 0 -  (i-2, j-2)
+          if (j - 2 >= 0){
+            redSum += (r[i-2][j-2] * sharpenFilter[0][0]);
+            blueSum += (b[i-2][j-2] * sharpenFilter[0][0]);
+            greenSum += (g[i-2][j-2] * sharpenFilter[0][0]);
+          }
+
+          // [0][1] - row 0 column 1    (i-2, j-1)
+          if (j - 1 >= 0){
+            redSum += (r[i-2][j-1] * sharpenFilter[0][1]);
+            blueSum += (b[i-2][j-1] * sharpenFilter[0][1]);
+            greenSum += (g[i-2][j-1] * sharpenFilter[0][1]);
+          }
+
+          // [0][2] - row 0 column 2    (i-2, j)
+          redSum += (r[i-2][j] * sharpenFilter[0][2]);
+          blueSum += (b[i-2][j] * sharpenFilter[0][2]);
+          greenSum += (g[i-2][j] * sharpenFilter[0][2]);
+
+          // [0][3] - row 0 column 3    (i-2, j+1)
+          if ((j + 1) < height){
+            redSum += (r[i-2][j+1] * sharpenFilter[0][3]);
+            blueSum += (b[i-2][j+1] * sharpenFilter[0][3]);
+            greenSum += (g[i-2][j+1] * sharpenFilter[0][3]);
+          }
+
+          // [0][4] - row 0 column 4    (i-2, j+2)
+          if ((j + 2) < height){
+            redSum += (r[i-2][j+2] * sharpenFilter[0][4]);
+            blueSum += (b[i-2][j+2] * sharpenFilter[0][4]);
+            greenSum += (g[i-2][j+2] * sharpenFilter[0][4]);
+          }
+        }
+
+
+        // -----------Second Row Operations ---------------
+        if (i - 1 >= 0) {
+
+          // [1][0] - row 1 column 0  (i-1, j-2)
+          if (j - 2 >= 0){
+            redSum += (r[i-1][j-2] * sharpenFilter[1][0]);
+            blueSum += (b[i-1][j-2] * sharpenFilter[1][0]);
+            greenSum += (g[i-1][j-2] * sharpenFilter[1][0]);
+          }
+
+          // [1][1] - row 1 column 1  (i-1, j-1)
+          if (j - 1 >= 0){
+            redSum += (r[i-1][j-1] * sharpenFilter[1][1]);
+            blueSum += (b[i-1][j-1] * sharpenFilter[1][1]);
+            greenSum += (g[i-1][j-1] * sharpenFilter[1][1]);
+          }
+
+          // [1][2] - row 1 column 2  (i-1, j)
+          redSum += (r[i-1][j] * sharpenFilter[1][2]);
+          blueSum += (b[i-1][j] * sharpenFilter[1][2]);
+          greenSum += (g[i-1][j] * sharpenFilter[1][2]);
+
+          // [1][3] - row 1 column 3  (i-1, j+1)
+          if ((j + 1) < height){
+            redSum += (r[i-1][j+1] * sharpenFilter[1][3]);
+            blueSum += (b[i-1][j+1] * sharpenFilter[1][3]);
+            greenSum += (g[i-1][j+1] * sharpenFilter[1][3]);
+          }
+
+          // [1][4] - row 1 column 4  (i-1, j+2)
+          if ((j + 2) < height){
+            redSum += (r[i-1][j+2] * sharpenFilter[1][4]);
+            blueSum += (b[i-1][j+2] * sharpenFilter[1][4]);
+            greenSum += (g[i-1][j+2] * sharpenFilter[1][4]);
+          }
+        }
+
+
+        // -------------Pixel Row Operations -------------------
+        // [2][0] - row 2 column 0  (i, j-2)
+        if (j - 2 >= 0){
+          redSum += (r[i][j-2] * sharpenFilter[2][0]);
+          blueSum += (b[i][j-2] * sharpenFilter[2][0]);
+          greenSum += (g[i][j-2] * sharpenFilter[2][0]);
+        }
+
+        // [2][1] - row 2 column 1  (i, j-1)
+        if (j - 1 >= 0){
+          redSum += (r[i][j-1] * sharpenFilter[2][1]);
+          blueSum += (b[i][j-1] * sharpenFilter[2][1]);
+          greenSum += (g[i][j-1] * sharpenFilter[2][1]);
+        }
+
+        // [2][2] - row 2 column 2  (i, j)
+        redSum += (r[i][j] * sharpenFilter[2][2]);
+        blueSum += (b[i][j] * sharpenFilter[2][2]);
+        greenSum += (g[i][j] * sharpenFilter[2][2]);
+
+        // [2][3] - row 2 column 3  (i, j+1)
+        if ((j + 1) < height){
+          redSum += (r[i][j+1] * sharpenFilter[2][3]);
+          blueSum += (b[i][j+1] * sharpenFilter[2][3]);
+          greenSum += (g[i][j+1] * sharpenFilter[2][3]);
+        }
+
+        // [2][4] - row 2 column 4  (i, j+2)
+        if ((j + 2) < height){
+          redSum += (r[i][j+2] * sharpenFilter[2][4]);
+          blueSum += (b[i][j+2] * sharpenFilter[2][4]);
+          greenSum += (g[i][j+2] * sharpenFilter[2][4]);
+        }
+
+        // -----------Fourth Row Operations ---------------
+        if ((i + 1) < width) {
+
+          // [3][0] - row 4 column 0  (i+1, j-2)
+          if (j - 2 >= 0){
+            redSum += (r[i+1][j-2] * sharpenFilter[3][0]);
+            blueSum += (b[i+1][j-2] * sharpenFilter[3][0]);
+            greenSum += (g[i+1][j-2] * sharpenFilter[3][0]);
+          }
+
+          // [3][1] - row 4 column 1  (i+1, j-1)
+          if (j - 1 >= 0){
+            redSum += (r[i+1][j-1] * sharpenFilter[3][1]);
+            blueSum += (b[i+1][j-1] * sharpenFilter[3][1]);
+            greenSum += (g[i+1][j-1] * sharpenFilter[3][1]);
+          }
+
+          // [3][2] - row 4 column 2  (i+1, j)
+          redSum += (r[i+1][j] * sharpenFilter[3][2]);
+          blueSum += (b[i+1][j] * sharpenFilter[3][2]);
+          greenSum += (g[i+1][j] * sharpenFilter[3][2]);
+
+          // [3][3] - row 4 column 3  (i+1, j+1)
+          if ((j + 1) < height){
+            redSum += (r[i+1][j+1] * sharpenFilter[3][3]);
+            blueSum += (b[i+1][j+1] * sharpenFilter[3][3]);
+            greenSum += (g[i+1][j+1] * sharpenFilter[3][3]);
+          }
+
+          // [3][4] - row 4 column 4  (i+1, j+2)
+          if ((j + 2) < height){
+            redSum += (r[i+1][j+2] * sharpenFilter[3][4]);
+            blueSum += (b[i+1][j+2] * sharpenFilter[3][4]);
+            greenSum += (g[i+1][j+2] * sharpenFilter[3][4]);
+          }
+        }
+        // -----------Fifth Row Operations ---------------
+        if ((i + 2) < width) {
+
+          // [4][0] - row 5 column 0  (i+2, j-2)
+          if (j - 2 >= 0){
+            redSum += (r[i+2][j-2] * sharpenFilter[4][0]);
+            blueSum += (b[i+2][j-2] * sharpenFilter[4][0]);
+            greenSum += (g[i+2][j-2] * sharpenFilter[4][0]);
+          }
+
+          // [4][1] - row 5 column 1  (i+2, j-1)
+          if (j - 1 >= 0){
+            redSum += (r[i+2][j-1] * sharpenFilter[4][1]);
+            blueSum += (b[i+2][j-1] * sharpenFilter[4][1]);
+            greenSum += (g[i+2][j-1] * sharpenFilter[4][1]);
+          }
+
+          // [4][2] - row 5 column 2  (i+2, j)
+          redSum += (r[i+2][j] * sharpenFilter[4][2]);
+          blueSum += (b[i+2][j] * sharpenFilter[4][2]);
+          greenSum += (g[i+2][j] * sharpenFilter[4][2]);
+
+          // [4][3] - row 5 column 3  (i+2, j+1)
+          if ((j + 1) < height){
+            redSum += (r[i+2][j+1] * sharpenFilter[4][3]);
+            blueSum += (b[i+2][j+1] * sharpenFilter[4][3]);
+            greenSum += (g[i+2][j+1] * sharpenFilter[4][3]);
+          }
+
+          // [4][4] - row 5 column 4  (i+2, j+2)
+          if ((j + 2) < height){
+            redSum += (r[i+2][j+2] * sharpenFilter[4][4]);
+            blueSum += (b[i+2][j+2] * sharpenFilter[4][4]);
+            greenSum += (g[i+2][j+2] * sharpenFilter[4][4]);
+          }
+        }
+
+        //-------------------Check floor and ceiling------------------
+
+        // red
+        if(redSum < 0){
+          redSum = 0;
+        }
+
+        if(redSum > 255){
+          redSum = 255;
+        }
+        // blue
+        if(blueSum < 0) {
+          blueSum = 0;
+        }
+
+        if(blueSum > 255) {
+          blueSum = 255;
+        }
+        // green
+        if(greenSum < 0) {
+          greenSum = 0;
+        }
+
+        if(greenSum > 255) {
+          greenSum = 255;
+        }
+
+        //-------------------Store the red blue and green values ---------------
+
+        // red
+        newR[i][j] = (int) Math.round(redSum);
+        //blue
+        newB[i][j] = (int) Math.round(blueSum);
+        // green
+        newG[i][j] = (int) Math.round(greenSum);
+      }
+    }
+    Image sharpenedImage = new PPMImage(width, height,newR, newB, newG);
+    images.put(newImageName, sharpenedImage);
 
   }
 
