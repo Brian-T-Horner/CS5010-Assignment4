@@ -457,7 +457,7 @@ public class PPMModel implements Model {
     sharpenFilter[0] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
     sharpenFilter[1] = new double[]{-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0};
     sharpenFilter[2] = new double[]{-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0};
-    sharpenFilter[3] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+    sharpenFilter[3] = new double[]{-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0};
     sharpenFilter[4] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
 
     for (int i = 0; i < width; i++) {
@@ -662,38 +662,38 @@ public class PPMModel implements Model {
         //-------------------Check floor and ceiling------------------
 
         // red
-        if(redSum < 0){
+        if (redSum < 0){
           redSum = 0;
         }
 
-        if(redSum > 255){
+        if (redSum > 255){
           redSum = 255;
         }
         // blue
-        if(blueSum < 0) {
+        if (blueSum < 0) {
           blueSum = 0;
         }
 
-        if(blueSum > 255) {
+        if (blueSum > 255) {
           blueSum = 255;
         }
         // green
-        if(greenSum < 0) {
+        if (greenSum < 0) {
           greenSum = 0;
         }
 
-        if(greenSum > 255) {
+        if (greenSum > 255) {
           greenSum = 255;
         }
 
         //-------------------Store the red blue and green values ---------------
 
         // red
-        newR[i][j] = (int) Math.round(redSum);
+        newR[i][j] = (int) Math.rint(redSum);
         //blue
-        newB[i][j] = (int) Math.round(blueSum);
+        newB[i][j] = (int) Math.rint(blueSum);
         // green
-        newG[i][j] = (int) Math.round(greenSum);
+        newG[i][j] = (int) Math.rint(greenSum);
       }
     }
     Image sharpenedImage = new PPMImage(width, height,newR, newB, newG);
