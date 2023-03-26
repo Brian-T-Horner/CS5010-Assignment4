@@ -1,31 +1,9 @@
 package ime.control;
 
-import ime.control.commands.Bluescale;
-import ime.control.commands.Brighten;
-import ime.control.commands.Command;
-import ime.control.commands.Greenscale;
-import ime.control.commands.Greyscale;
-import ime.control.commands.HorizontalFlip;
-import ime.control.commands.Intensity;
-import ime.control.commands.Load;
-import ime.control.commands.Luma;
-import ime.control.commands.RGBCombine;
-import ime.control.commands.RGBSplit;
-import ime.control.commands.Redscale;
-import ime.control.commands.Save;
-import ime.control.commands.Value;
-import ime.control.commands.VerticalFlip;
 import ime.model.Model;
 import ime.model.PPMModel;
-
-
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.function.Function;
 
 /**
  * Class that is the IME.control.Controller of our MVC model.
