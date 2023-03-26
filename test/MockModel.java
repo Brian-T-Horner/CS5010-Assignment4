@@ -12,10 +12,6 @@ public class MockModel implements Model {
   private StringBuilder log;
   private final int uniqueCode;
 
-  Set<String> commands = new HashSet<>(Arrays.asList("vertical-flip", "horizontal-flip",
-      "greyscale", "brighten", "rgb-split", "rgb-combine", "value", "intensity", "luma",
-      "load", "save", "darken"));
-
 
   /**
   * Constructor for MockModel object.
