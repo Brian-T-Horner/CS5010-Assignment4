@@ -98,9 +98,9 @@ public abstract class AbstractImage implements Image {
     PPMModel.PPMImage c = (PPMModel.PPMImage) o;
 
     return c.getWidth() == this.getWidth() && c.getHeight() == this.getHeight()
-        && Arrays.equals(c.blueComponent,blueComponent)
-        && Arrays.equals(c.greenComponent,greenComponent)
-        && Arrays.equals(c.redComponent,redComponent);
+        && Arrays.deepEquals(c.blueComponent, blueComponent)
+        && Arrays.deepEquals(c.greenComponent, greenComponent)
+        && Arrays.deepEquals(c.redComponent, redComponent);
 
   }
 

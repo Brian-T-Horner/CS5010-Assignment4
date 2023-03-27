@@ -149,18 +149,20 @@ public class ImageUtil {
     return readBufferedImage(buf);
   }
 
-  public static void saveImage(Image image, String fileName) throws IOException {
+  public static void saveImage(Image image, String fileName) throws IOException, IllegalArgumentException {
     if (fileName.endsWith(".ppm")) {
       writeToPPMFile(image, fileName);
       return;
     }
-    String filetype = "";
+    String filetype;
     if (fileName.endsWith(".bmp")) {
       filetype = "bmp";
     } else if (fileName.endsWith(".png")) {
       filetype = "png";
     } else if (fileName.endsWith(".jpg")) {
       filetype = "jpg";
+    } else {
+      throw new IllegalArgumentException("File must be saved as a .ppm, .bmp, .png, .jpg file");
     }
     BufferedImage buf = writeBufferedImage(image);
     File outputfile = new File(fileName);

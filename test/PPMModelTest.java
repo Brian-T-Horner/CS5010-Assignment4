@@ -1,6 +1,7 @@
 import ime.model.Image;
 import ime.model.Model;
 import ime.model.PPMModel;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,8 +10,10 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Class to test the IME.model.PPMModel.
@@ -42,7 +45,7 @@ public class PPMModelTest {
     assertArrayEquals(flipArrayHorizontal(orig, orig.getBlueComponent()), i.getBlueComponent());
     assertArrayEquals(flipArrayHorizontal(orig, orig.getGreenComponent()), i.getGreenComponent());
     assertThrows(NoSuchElementException.class, ()
-        -> m.flipHorizontal("invalid-donuts", "donuts-hflipped"));
+            -> m.flipHorizontal("invalid-donuts", "donuts-hflipped"));
   }
 
   @Test
@@ -54,7 +57,7 @@ public class PPMModelTest {
     assertArrayEquals(flipArrayVertical(orig, orig.getBlueComponent()), i.getBlueComponent());
     assertArrayEquals(flipArrayVertical(orig, orig.getGreenComponent()), i.getGreenComponent());
     assertThrows(NoSuchElementException.class, ()
-        -> m.flipVertical("invalid-donuts", "donuts-vflipped"));
+            -> m.flipVertical("invalid-donuts", "donuts-vflipped"));
   }
 
   @Test
@@ -65,7 +68,7 @@ public class PPMModelTest {
     assertArrayEquals(valueArray(m.getImage("donuts")), i.getGreenComponent());
     assertArrayEquals(valueArray(m.getImage("donuts")), i.getRedComponent());
     assertThrows(NoSuchElementException.class, ()
-        -> m.getValueImage("invalid-donuts", "donuts-value"));
+            -> m.getValueImage("invalid-donuts", "donuts-value"));
     assertTrue(checkCeilAndFloorVals(i.getGreenComponent()));
   }
 
@@ -77,7 +80,7 @@ public class PPMModelTest {
     assertArrayEquals(intensityArray(m.getImage("donuts")), i.getGreenComponent());
     assertArrayEquals(intensityArray(m.getImage("donuts")), i.getRedComponent());
     assertThrows(NoSuchElementException.class, ()
-        -> m.getIntensityImage("invalid-donuts", "donuts-intensity"));
+            -> m.getIntensityImage("invalid-donuts", "donuts-intensity"));
     assertTrue(checkCeilAndFloorVals(i.getGreenComponent()));
   }
 
@@ -89,7 +92,7 @@ public class PPMModelTest {
     assertArrayEquals(lumaArray(m.getImage("donuts")), i.getGreenComponent());
     assertArrayEquals(lumaArray(m.getImage("donuts")), i.getRedComponent());
     assertThrows(NoSuchElementException.class, ()
-        -> m.getLumaImage("invalid-donuts", "donuts-luma"));
+            -> m.getLumaImage("invalid-donuts", "donuts-luma"));
     assertTrue(checkCeilAndFloorVals(i.getGreenComponent()));
   }
 
@@ -102,32 +105,35 @@ public class PPMModelTest {
     assertArrayEquals(brightenArray(orig, orig.getBlueComponent(), 10), i.getBlueComponent());
     assertArrayEquals(brightenArray(orig, orig.getGreenComponent(), 10), i.getGreenComponent());
     assertThrows(NoSuchElementException.class, ()
-        -> m.flipVertical("invalid-donuts", "donuts-vflipped"));
+            -> m.flipVertical("invalid-donuts", "donuts-vflipped"));
     //TODO add test for inputting NotANumber
+    assertTrue(checkCeilAndFloorVals(i.getGreenComponent()));
+    assertTrue(checkCeilAndFloorVals(i.getRedComponent()));
+    assertTrue(checkCeilAndFloorVals(i.getBlueComponent()));
   }
 
   @Test
   public void testGetRedComponent() {
     assertThrows(NoSuchElementException.class, ()
-        -> m.getRedComponent("invalid-donuts", "donuts-red"));
+            -> m.getRedComponent("invalid-donuts", "donuts-red"));
   }
 
   @Test
   public void testGetGreenComponent() {
     assertThrows(NoSuchElementException.class, ()
-        -> m.getGreenComponent("invalid-donuts", "donuts-red"));
+            -> m.getGreenComponent("invalid-donuts", "donuts-red"));
   }
 
   @Test
   public void testGetBlueComponent() {
     assertThrows(NoSuchElementException.class, ()
-        -> m.getBlueComponent("invalid-donuts", "donuts-red"));
+            -> m.getBlueComponent("invalid-donuts", "donuts-red"));
   }
 
   @Test
   public void testRgbSplit() {
     m.rgbSplit("donuts", "donuts-red",
-        "donuts-green", "donuts-blue");
+            "donuts-green", "donuts-blue");
     Image red = m.getImage("donuts-red");
     Image green = m.getImage("donuts-green");
     Image blue = m.getImage("donuts-blue");
@@ -144,19 +150,19 @@ public class PPMModelTest {
     assertArrayEquals(orig.getBlueComponent(), blue.getGreenComponent());
     assertArrayEquals(orig.getBlueComponent(), blue.getBlueComponent());
     assertThrows(NoSuchElementException.class, () -> m.rgbSplit("invalid-donuts",
-        "donuts-red", "donuts-green", "donuts-blue"));
+            "donuts-red", "donuts-green", "donuts-blue"));
   }
 
   @Test
   public void testRgbCombine() {
     m.rgbSplit("donuts", "donuts-red",
-        "donuts-green", "donuts-blue");
+            "donuts-green", "donuts-blue");
     Image red = m.getImage("donuts-red");
     Image green = m.getImage("donuts-green");
     Image blue = m.getImage("donuts-blue");
 
     m.rgbCombine("donuts-new", "donuts-red",
-        "donuts-green", "donuts-blue");
+            "donuts-green", "donuts-blue");
 
     Image newImg = m.getImage("donuts-new");
 
@@ -164,28 +170,28 @@ public class PPMModelTest {
     assertArrayEquals(green.getGreenComponent(), newImg.getGreenComponent());
     assertArrayEquals(blue.getBlueComponent(), newImg.getBlueComponent());
     assertThrows(NoSuchElementException.class, () -> m.rgbCombine("donuts-new",
-        "invalid-donuts-red", "donuts-green", "donuts-blue"));
+            "invalid-donuts-red", "donuts-green", "donuts-blue"));
     assertThrows(NoSuchElementException.class, () -> m.rgbCombine("donuts-new",
-        "donuts-red", "invalid-donuts-green", "donuts-blue"));
+            "donuts-red", "invalid-donuts-green", "donuts-blue"));
     assertThrows(NoSuchElementException.class, () -> m.rgbCombine("donuts-new",
-        "donuts-red", "donuts-green", "invalid-donuts-blue"));
+            "donuts-red", "donuts-green", "invalid-donuts-blue"));
   }
 
   @Test
   public void testGreyscale() {
     m.greyscale("red-component", "donuts",
-        "donuts-red");
+            "donuts-red");
     m.greyscale("green-component", "donuts",
-        "donuts-green");
+            "donuts-green");
     m.greyscale("blue-component", "donuts",
-        "donuts-blue");
+            "donuts-blue");
 
     m.greyscale("value-component", "donuts",
-        "donuts-value");
+            "donuts-value");
     m.greyscale("intensity-component", "donuts",
-        "donuts-intensity");
+            "donuts-intensity");
     m.greyscale("luma-component", "donuts",
-        "donuts-luma");
+            "donuts-luma");
 
     Image red = m.getImage("donuts-red");
     Image green = m.getImage("donuts-green");
@@ -214,32 +220,82 @@ public class PPMModelTest {
     assertArrayEquals(valueExpected.getGreenComponent(), value.getGreenComponent());
     assertArrayEquals(intensityExpected.getGreenComponent(), intensity.getGreenComponent());
     assertThrows(IllegalArgumentException.class, ()
-        -> m.greyscale("invalid-component", "donuts",
-        "invalid-greyscale"));
+            -> m.greyscale("invalid-component", "donuts",
+            "invalid-greyscale"));
   }
 
   @Test
   public void testLoadImage() {
-    //TODO add tests for input of .png, .jpg, .bmp
     try {
-      m.loadImage("test/donut.ppm", "donut-2");
-    } catch (Exception ignored) {
+      m.loadImage("test/donut.ppm", "donut-1");
+    } catch (Exception e) {
+      fail("ppm file could not be loaded");
     }
+
+    try {
+      m.loadImage("test/donut.png", "donut-2");
+    } catch (Exception e) {
+      fail("png file could not be loaded");
+    }
+
+    try {
+      m.loadImage("test/donut.bmp", "donut-3");
+    } catch (Exception e) {
+      fail("bmp file could not be loaded");
+    }
+
+    try {
+      m.loadImage("test/donut.jpg", "donut-4");
+    } catch (Exception e) {
+      fail("jpg file could not be loaded");
+    }
+
+    assertNotNull(m.getImage("donut-1"));
+    assertNotNull(m.getImage("donut-2"));
+    assertNotNull(m.getImage("donut-3"));
+    assertNotNull(m.getImage("donut-4"));
+    assertThrows(IllegalArgumentException.class, ()
+            -> m.loadImage("invalid/path", "donut"));
     assertThrows(FileNotFoundException.class, ()
-        -> m.loadImage("invalid/path", "donut-2"));
+            -> m.loadImage("invalid/path.ppm", "donut"));
   }
 
   @Test
   public void testSaveImage() {
-    //TODO add tests for input of .png, .jpg, .bmp
     try {
-      m.loadImage("test/donut.ppm", "donut-2");
-    } catch (Exception ignored) {
+      m.loadImage("test/donut.ppm", "donut-1");
+    } catch (Exception e) {
+      fail("Error in testSaveImage because loadImage fails");
     }
+
+    try {
+      m.saveImage("test/donut.ppm", "donut-1");
+    } catch (Exception e) {
+      fail("ppm file could not be saved");
+    }
+
+    try {
+      m.saveImage("test/donut.png", "donut-1");
+    } catch (Exception e) {
+      fail("png file could not be saved");
+    }
+
+    try {
+      m.saveImage("test/donut.bmp", "donut-1");
+    } catch (Exception e) {
+      fail("bmp file could not be saved");
+    }
+
+    try {
+      m.saveImage("test/donut.jpg", "donut-1");
+    } catch (Exception e) {
+      fail("jpg file could not be saved");
+    }
+
     assertThrows(IOException.class, ()
-        -> m.saveImage("invalid-path","donut-2"));
+            -> m.saveImage("invalid-path", "donut-1"));
     assertThrows(NoSuchElementException.class, ()
-        -> m.saveImage("test/test.ppm","invalid-donut"));
+            -> m.saveImage("test/test.ppm", "invalid-donut"));
   }
 
   private int[][] flipArrayHorizontal(Image img, int[][] arr) {
@@ -339,8 +395,8 @@ public class PPMModelTest {
         int redValue = img.getRedComponent()[i][j];
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];
-        int lumaValue = (int) Math.ceil((double) 0.2126 * redValue + 0.7152
-            * greenValue + 0.0722 * blueValue);
+        int lumaValue = (int) Math.ceil(0.2126 * redValue + 0.7152
+                * greenValue + 0.0722 * blueValue);
         if (lumaValue > 255) {
           lumaValue = 255;
         } else if (lumaValue < 0) {
