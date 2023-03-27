@@ -159,20 +159,20 @@ public class ImageUtilTest {
     int height = sc.nextInt();
     int maxValue = sc.nextInt();
 
-    int[][] red = new int[width][height];
+    int[][] red = new int[height][width];
 
-    int[][] green = new int[width][height];
+    int[][] green = new int[height][width];
 
-    int[][] blue = new int[width][height];
+    int[][] blue = new int[height][width];
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         int r = sc.nextInt();
         int g = sc.nextInt();
         int b = sc.nextInt();
-        red[j][i] = r;
-        green[j][i] = g;
-        blue[j][i] = b;
+        red[i][j] = r;
+        green[i][j] = g;
+        blue[i][j] = b;
       }
     }
     return new PPMModel.PPMImage(width, height, red, blue, green);
@@ -185,13 +185,13 @@ public class ImageUtilTest {
     int g;
     int b;
     int pixel;
-    for (int i = 0; i < image.getWidth(); i++) {
-      for (int j = 0; j < image.getHeight(); j++) {
+    for (int i = 0; i < image.getHeight(); i++) {
+      for (int j = 0; j < image.getWidth(); j++) {
         r = image.getRedComponent()[i][j];
         g = image.getGreenComponent()[i][j];
         b = image.getBlueComponent()[i][j];
         pixel = 0xFF000000 + (r << 16) + (g << 8) + b;
-        buffImage.setRGB(i, j, pixel);
+        buffImage.setRGB(j, i, pixel);
       }
     }
     return buffImage;

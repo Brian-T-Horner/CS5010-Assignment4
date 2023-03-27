@@ -186,9 +186,9 @@ public class PPMModel implements Model {
     }
     int width = img.getWidth();
     int height = img.getHeight();
-    int[][] value = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    int[][] value = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int redValue = img.getRedComponent()[i][j];
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];
@@ -218,9 +218,9 @@ public class PPMModel implements Model {
     }
     int width = img.getWidth();
     int height = img.getHeight();
-    int[][] intensity = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    int[][] intensity = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int redValue = img.getRedComponent()[i][j];
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];
@@ -254,9 +254,9 @@ public class PPMModel implements Model {
     }
     int width = img.getWidth();
     int height = img.getHeight();
-    int[][] luma = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    int[][] luma = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int redValue = img.getRedComponent()[i][j];
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];
@@ -411,14 +411,14 @@ public class PPMModel implements Model {
     int height = img.getHeight();
     int width = img.getWidth();
     int[][] redComp = img.getRedComponent();
-    int[][] newRed = new int[width][height];
-    int[][] newBlue = new int[width][height];
-    int[][] newGreen = new int[width][height];
+    int[][] newRed = new int[height][width];
+    int[][] newBlue = new int[height][width];
+    int[][] newGreen = new int[height][width];
     int oldColor;
     int newColor;
     double error;
-    for (int i = 0; i < width; i++ ) {
-      for (int j = 0; j < height; j++) {
+    for (int i = 0; i < height; i++ ) {
+      for (int j = 0; j < width; j++) {
         oldColor = redComp[i][j];
         if (oldColor >= 128) {
           newColor = 255;
@@ -434,19 +434,19 @@ public class PPMModel implements Model {
         newGreen[i][j] = newColor;
 
         // Setting pixels besides it by the error
-        if(j + 1 < height) {
-          redComp[i][j + 1] = redComp[i][j + 1] + (int) Math.ceil((7.0 / 16.0) * error);
+        if(j + 1 < width) {
+          redComp[i][j + 1] = redComp[i][j + 1] + (int) Math.rint((7.0 / 16.0) * error);
         }
-        if(i + 1 < width && j - 1 >= 0) {
-          redComp[i + 1][j - 1] = redComp[i+1][j-1] + (int) Math.ceil((3.0 / 16.0) * error);
-        }
-
-        if(i + 1 < width) {
-          redComp[i + 1][j] = redComp[i+1][j] + (int) Math.ceil((5.0 / 16.0) * error);
+        if(i + 1 < height && j - 1 >= 0) {
+          redComp[i + 1][j - 1] = redComp[i+1][j-1] + (int) Math.rint((3.0 / 16.0) * error);
         }
 
-        if(i + 1 < width && j + 1 < height) {
-          redComp[i + 1][j + 1] = redComp[i + 1][j + 1] + (int) Math.ceil((1.0/16.0) * error);
+        if(i + 1 < height) {
+          redComp[i + 1][j] = redComp[i+1][j] + (int) Math.rint((5.0 / 16.0) * error);
+        }
+
+        if(i + 1 < height && j + 1 < width) {
+          redComp[i + 1][j + 1] = redComp[i + 1][j + 1] + (int) Math.rint((1.0/16.0) * error);
         }
       }
     }
@@ -467,12 +467,12 @@ public class PPMModel implements Model {
     int[][] blue = img.getBlueComponent();
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] r = new int[width][height];
-    int[][] g = new int[width][height];
-    int[][] b = new int[width][height];
+    int[][] r = new int[height][width];
+    int[][] g = new int[height][width];
+    int[][] b = new int[height][width];
 
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int redVal = (int) Math.rint(0.393 * red[i][j]
                 + (0.769 * green[i][j])
                 + (0.189 * blue[i][j]));
@@ -536,9 +536,11 @@ public class PPMModel implements Model {
     sharpenFilter[2] = new double[]{-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0};
     sharpenFilter[3] = new double[]{-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0};
     sharpenFilter[4] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+    System.out.println(img.getHeight());
+    System.out.println(img.getWidth());
 
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         double redSum = 0;
         double blueSum = 0;
         double greenSum = 0;
@@ -576,14 +578,14 @@ public class PPMModel implements Model {
           greenSum += (g[i-2][j] * sharpenFilter[0][2]);
 
           // [0][3] - row 0 column 3    (i-2, j+1)
-          if ((j + 1) < height){
+          if ((j + 1) < width){
             redSum += (r[i-2][j+1] * sharpenFilter[0][3]);
             blueSum += (b[i-2][j+1] * sharpenFilter[0][3]);
             greenSum += (g[i-2][j+1] * sharpenFilter[0][3]);
           }
 
           // [0][4] - row 0 column 4    (i-2, j+2)
-          if ((j + 2) < height){
+          if ((j + 2) < width){
             redSum += (r[i-2][j+2] * sharpenFilter[0][4]);
             blueSum += (b[i-2][j+2] * sharpenFilter[0][4]);
             greenSum += (g[i-2][j+2] * sharpenFilter[0][4]);
@@ -614,14 +616,14 @@ public class PPMModel implements Model {
           greenSum += (g[i-1][j] * sharpenFilter[1][2]);
 
           // [1][3] - row 1 column 3  (i-1, j+1)
-          if ((j + 1) < height){
+          if ((j + 1) < width){
             redSum += (r[i-1][j+1] * sharpenFilter[1][3]);
             blueSum += (b[i-1][j+1] * sharpenFilter[1][3]);
             greenSum += (g[i-1][j+1] * sharpenFilter[1][3]);
           }
 
           // [1][4] - row 1 column 4  (i-1, j+2)
-          if ((j + 2) < height){
+          if ((j + 2) < width){
             redSum += (r[i-1][j+2] * sharpenFilter[1][4]);
             blueSum += (b[i-1][j+2] * sharpenFilter[1][4]);
             greenSum += (g[i-1][j+2] * sharpenFilter[1][4]);
@@ -650,21 +652,21 @@ public class PPMModel implements Model {
         greenSum += (g[i][j] * sharpenFilter[2][2]);
 
         // [2][3] - row 2 column 3  (i, j+1)
-        if ((j + 1) < height){
+        if ((j + 1) < width){
           redSum += (r[i][j+1] * sharpenFilter[2][3]);
           blueSum += (b[i][j+1] * sharpenFilter[2][3]);
           greenSum += (g[i][j+1] * sharpenFilter[2][3]);
         }
 
         // [2][4] - row 2 column 4  (i, j+2)
-        if ((j + 2) < height){
+        if ((j + 2) < width){
           redSum += (r[i][j+2] * sharpenFilter[2][4]);
           blueSum += (b[i][j+2] * sharpenFilter[2][4]);
           greenSum += (g[i][j+2] * sharpenFilter[2][4]);
         }
 
         // -----------Fourth Row Operations ---------------
-        if ((i + 1) < width) {
+        if ((i + 1) < height) {
 
           // [3][0] - row 4 column 0  (i+1, j-2)
           if (j - 2 >= 0){
@@ -686,21 +688,21 @@ public class PPMModel implements Model {
           greenSum += (g[i+1][j] * sharpenFilter[3][2]);
 
           // [3][3] - row 4 column 3  (i+1, j+1)
-          if ((j + 1) < height){
+          if ((j + 1) < width){
             redSum += (r[i+1][j+1] * sharpenFilter[3][3]);
             blueSum += (b[i+1][j+1] * sharpenFilter[3][3]);
             greenSum += (g[i+1][j+1] * sharpenFilter[3][3]);
           }
 
           // [3][4] - row 4 column 4  (i+1, j+2)
-          if ((j + 2) < height){
+          if ((j + 2) < width){
             redSum += (r[i+1][j+2] * sharpenFilter[3][4]);
             blueSum += (b[i+1][j+2] * sharpenFilter[3][4]);
             greenSum += (g[i+1][j+2] * sharpenFilter[3][4]);
           }
         }
         // -----------Fifth Row Operations ---------------
-        if ((i + 2) < width) {
+        if ((i + 2) < height) {
 
           // [4][0] - row 5 column 0  (i+2, j-2)
           if (j - 2 >= 0){
@@ -722,14 +724,14 @@ public class PPMModel implements Model {
           greenSum += (g[i+2][j] * sharpenFilter[4][2]);
 
           // [4][3] - row 5 column 3  (i+2, j+1)
-          if ((j + 1) < height){
+          if ((j + 1) < width){
             redSum += (r[i+2][j+1] * sharpenFilter[4][3]);
             blueSum += (b[i+2][j+1] * sharpenFilter[4][3]);
             greenSum += (g[i+2][j+1] * sharpenFilter[4][3]);
           }
 
           // [4][4] - row 5 column 4  (i+2, j+2)
-          if ((j + 2) < height){
+          if ((j + 2) < width){
             redSum += (r[i+2][j+2] * sharpenFilter[4][4]);
             blueSum += (b[i+2][j+2] * sharpenFilter[4][4]);
             greenSum += (g[i+2][j+2] * sharpenFilter[4][4]);
@@ -788,12 +790,175 @@ public class PPMModel implements Model {
     int[][] r = img.getRedComponent();
     int[][] g = img.getGreenComponent();
     int[][] b = img.getBlueComponent();
+    int[][] newR = img.getRedComponent();
+    int[][] newB = img.getBlueComponent();
+    int[][] newG = img.getGreenComponent();
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] blurFilter = new double[3][];
     blurFilter[0] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
     blurFilter[1] = new double[]{1.0/8.0, 1.0/4.0, 1.0/8.0};
     blurFilter[2] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
+    for (int i = 0; i < width; i++) {  //[height][width] [i][j]
+      for (int j = 0; j < height; j++) {
+        double redSum = 0;
+        double blueSum = 0;
+        double greenSum = 0;
+        // Get and operate on top left [i-1][j-1]
+        if ((i - 1) >= 0 && (j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i - 1][j - 1] * blurFilter[0][0]);
+            // blue
+            blueSum += (b[i - 1][j - 1] * blurFilter[0][0]);
+            // green
+            greenSum += (g[i - 1][j - 1] * blurFilter[0][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at top left");
+          }
+        }
+        // Get and operate on above [i-1][j]
+        if ((i - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i - 1][j] * blurFilter[0][1]);
+            // blue
+            blueSum += (b[i - 1][j] * blurFilter[0][1]);
+            // green
+            greenSum += (g[i - 1][j] * blurFilter[0][1]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at above.");
+          }
+        }
+        // Get and operate on top right [i-1][j+1]
+        if ((i - 1) >= 0 && (j + 1) < height) {
+          try {
+            // red
+            redSum += (r[i - 1][j + 1] * blurFilter[0][2]);
+            // blue
+            blueSum += (b[i - 1][j + 1] * blurFilter[0][2]);
+            // green
+            greenSum += (g[i - 1][j + 1] * blurFilter[0][2]);
+          }catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds top right");
+          }
+        }
+        // Get and operate on left [i][j-1]
+        if ((j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i][j - 1] * blurFilter[1][0]);
+            // blue
+            blueSum += (b[i][j - 1] * blurFilter[1][0]);
+            // green
+            greenSum += (g[i][j - 1] * blurFilter[1][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at left");
+          }
+        }
+        // Get and operate on center [i][j]
+
+
+
+        // red
+        redSum += (r[i][j] * blurFilter[1][1]);
+        // blue
+        blueSum += (b[i][j] * blurFilter[1][1]);
+        // green
+        greenSum += (g[i][j] * blurFilter[1][1]);
+
+
+        // Get and operate on right [i][j+1]
+        if (height > j+1) {
+          try {
+            // red
+            redSum += (r[i][j + 1] * blurFilter[1][2]);
+            // blue
+            blueSum += (b[i][j + 1] * blurFilter[1][2]);
+            // green
+            greenSum += (g[i][j + 1] * blurFilter[1][2]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds at right i = " + i + " j = " + j + "width " + width + "height " + height);
+          }
+        }
+        // Get and operate on bottom left [i+1][j-1]  [2][0]
+        if ((i + 1) < width && (j - 1) >= 0) {
+          try {
+            // red
+            redSum += (r[i + 1][j - 1] * blurFilter[2][0]);
+            // blue
+            blueSum += (b[i + 1][j - 1] * blurFilter[2][0]);
+            // green
+            greenSum += (g[i + 1][j - 1] * blurFilter[2][0]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds bottom left");
+          }
+        }
+        // Get and operate on below [i+1][j] [2][1]
+        if ((i + 1) < width) {
+          try {
+            // red
+            redSum += (r[i + 1][j] * blurFilter[2][1]);
+            // blue
+            blueSum += (b[i + 1][j] * blurFilter[2][1]);
+            // green
+            greenSum += (g[i + 1][j] * blurFilter[2][1]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds below");
+          }
+        }
+        // Get and operate on bottom right [i+1][j+1] [2][2]
+        if ((i + 1) < width && (j + 1) < height) {
+          try {
+            // red
+            redSum += (r[i + 1][j + 1] * blurFilter[2][2]);
+            // blue
+            blueSum += (b[i + 1][j + 1] * blurFilter[2][2]);
+            // green
+            greenSum += (g[i + 1][j + 1] * blurFilter[2][2]);
+          } catch (Exception e) {
+            throw new IndexOutOfBoundsException("Index out of bounds bottom right");
+          }
+        }
+        // Check for floor and ceiling
+        // red
+        if(redSum < 0){
+          redSum = 0;
+        }
+
+        if(redSum > 255){
+          redSum = 255;
+        }
+        // blue
+        if(blueSum < 0) {
+          blueSum = 0;
+        }
+
+        if(blueSum > 255) {
+          blueSum = 255;
+        }
+        // green
+        if(greenSum < 0) {
+          greenSum = 0;
+        }
+
+        if(greenSum > 255) {
+          greenSum = 255;
+        }
+
+        // Store [i][j]
+        //red
+        newR[i][j] = (int) Math.round(redSum);
+        //blue
+        newB[i][j] = (int) Math.round(blueSum);
+        // green
+        newG[i][j] = (int) Math.round(greenSum);
+
+
+      }
+    }
+    Image blurredImage = new PPMImage(width, height,newR, newB, newG);
+    images.put(newImageName, blurredImage);
 
   }
 
@@ -817,12 +982,12 @@ public class PPMModel implements Model {
     int temp;
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] flippedH = new int[width][height];
+    int[][] flippedH = new int[height][width];
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width / 2; j++) {
-        temp = arr[width - j - 1][i];
-        flippedH[width - j - 1][i] = arr[j][i];
-        flippedH[j][i] = temp;
+        temp = arr[i][width - j - 1];
+        flippedH[i][width - j -1] = arr[i][j];
+        flippedH[i][j] = temp;
       }
     }
 
@@ -833,12 +998,12 @@ public class PPMModel implements Model {
     int temp;
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] flippedV = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height / 2; j++) {
+    int[][] flippedV = new int[height][width];
+    for (int i = 0; i < height / 2; i++) {
+      for (int j = 0; j < width; j++) {
         temp = arr[i][j];
-        flippedV[i][j] = arr[i][height - 1 - j];
-        flippedV[i][height - 1 - j] = temp;
+        flippedV[i][j] = arr[height - 1 - i][j];
+        flippedV[height - 1 - i][j] = temp;
       }
     }
     return flippedV;
@@ -848,9 +1013,9 @@ public class PPMModel implements Model {
   private int[][] brightenArray(Image img, int[][] arr, int scale) {
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] brightened = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    int[][] brightened = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int val = arr[i][j] + scale;
         if (val > 255) {
           val = 255;

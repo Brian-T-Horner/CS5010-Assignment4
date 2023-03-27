@@ -301,12 +301,12 @@ public class PPMModelTest {
     int temp;
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] flippedH = new int[width][height];
+    int[][] flippedH = new int[height][width];
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width / 2; j++) {
-        temp = arr[width - j - 1][i];
-        flippedH[width - j - 1][i] = arr[j][i];
-        flippedH[j][i] = temp;
+        temp = arr[i][width - j - 1];
+        flippedH[i][width - j - 1] = arr[i][j];
+        flippedH[i][j] = temp;
       }
     }
 
@@ -317,12 +317,12 @@ public class PPMModelTest {
     int temp;
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] flippedV = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height / 2; j++) {
+    int[][] flippedV = new int[height][width];
+    for (int i = 0; i < height / 2; i++) {
+      for (int j = 0; j < width; j++) {
         temp = arr[i][j];
-        flippedV[i][j] = arr[i][height - 1 - j];
-        flippedV[i][height - 1 - j] = temp;
+        flippedV[i][j] = arr[height - 1 - i][j];
+        flippedV[height - 1 - i][j] = temp;
       }
     }
     return flippedV;
@@ -332,9 +332,9 @@ public class PPMModelTest {
   private int[][] brightenArray(Image img, int[][] arr, int scale) {
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] brightened = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    int[][] brightened = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int val = arr[i][j] + scale;
         if (val > 255) {
           val = 255;
@@ -350,9 +350,9 @@ public class PPMModelTest {
   private int[][] valueArray(Image img) {
     int width = img.getWidth();
     int height = img.getHeight();
-    int[][] value = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    int[][] value = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int redValue = img.getRedComponent()[i][j];
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];
@@ -367,9 +367,9 @@ public class PPMModelTest {
   private int[][] intensityArray(Image img) {
     int width = img.getWidth();
     int height = img.getHeight();
-    int[][] intensity = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    int[][] intensity = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int redValue = img.getRedComponent()[i][j];
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];
@@ -388,9 +388,9 @@ public class PPMModelTest {
   private int[][] lumaArray(Image img) {
     int width = img.getWidth();
     int height = img.getHeight();
-    int[][] luma = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    int[][] luma = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         int redValue = img.getRedComponent()[i][j];
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];

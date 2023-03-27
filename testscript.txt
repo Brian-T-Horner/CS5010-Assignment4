@@ -8,7 +8,7 @@ load fakeImagepath imagename
 
 #successes
 
-load images/donuts.ppm donut
+load test/donut.ppm donut
 
 #test save
 
@@ -20,7 +20,7 @@ save InvalidImagepath imagename
 
 #successes
 
-save images/donut.ppm donut
+save images/donut.png donut
 
 #test greyscale
 
@@ -119,33 +119,33 @@ abcd ef
 
 #save successes
 
-save images/rgb-donut.ppm rgb-donut
+save images/rgb-donut.png rgb-donut
 
-save images/red-image.ppm red-image
+save images/red-image.png red-image
 
-save images/green-image.ppm green-image
+save images/green-image.png green-image
 
-save images/blue-image.ppm blue-image
+save images/blue-image.png blue-image
 
-save images/brighten-by-50-image.ppm brighten-by-50-image
+save images/brighten-by-50-image.png brighten-by-50-image
 
-save images/vflipped-image.ppm vflipped-image
+save images/vflipped-image.png vflipped-image
 
-save images/hflipped-image.ppm hflipped-image
+save images/hflipped-image.png hflipped-image
 
-save images/red-comp.ppm red-comp
+save images/red-comp.png red-comp
 
-save images/blue-comp.ppm blue-comp
+save images/blue-comp.png blue-comp
 
-save images/green-comp.ppm green-comp
+save images/green-comp.png green-comp
 
-save images/value-comp.ppm value-comp
+save images/value-comp.png value-comp
 
-save images/intensity-comp.ppm intensity-comp
+save images/intensity-comp.png intensity-comp
 
-save images/luma-comp.ppm luma-comp
+save images/luma-comp.png luma-comp
 
-save images/brighten-by-neg-20-image.ppm brighten-by-neg-20-image
+save images/brighten-by-neg-20-image.png brighten-by-neg-20-image
 
 greenscale donut green-donut
 
