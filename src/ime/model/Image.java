@@ -40,8 +40,6 @@ public interface Image {
    */
   int getWidth();
 
-
-
   boolean equals(Object o);
 
 }

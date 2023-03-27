@@ -29,9 +29,8 @@ public class PPMModelTest {
     m = new PPMModel();
 
     try {
-      m.loadImage("images/donuts.ppm", "donuts");
+      m.loadImage("test/donut.ppm", "donuts");
     } catch (Exception ignored) {
-
     }
   }
 
