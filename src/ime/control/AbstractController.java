@@ -21,6 +21,8 @@ public abstract class AbstractController implements Controller {
   final Appendable out;
   static Map<String, Function<Scanner, Command>> knownCommands;
 
+  protected boolean quit;
+
 
   /**
    * Contructor for the creation of a IME.control.Controller object.
@@ -32,9 +34,12 @@ public abstract class AbstractController implements Controller {
     this.in = in;
     this.out = out;
     knownCommands = new HashMap<>();
+    quit = false;
   }
 
-
+  public boolean isQuit() {
+    return quit;
+  }
 
   /**
    * Method to run the program, accept inputs and pass load, save images to IME.model.Model.
@@ -68,11 +73,17 @@ public abstract class AbstractController implements Controller {
     while (scan.hasNext()) {
       Command c;
       String in = scan.next();
+
+
       // If quit command
       if (in.equalsIgnoreCase("q") || in.equalsIgnoreCase("quit")) {
-        out.append("Exiting application...");
+        quit = true;
+      }
+
+      if(isQuit()) {
         return;
       }
+
       // if run command
       if (in.equalsIgnoreCase("run")) {
         String[] commands = scan.nextLine().trim().split(" ");
@@ -80,7 +91,11 @@ public abstract class AbstractController implements Controller {
           throw new IllegalArgumentException(
                   "Invalid number of arguments for command \"run\". 1 required.");
         }
-        runFile(commands[0],currentModel);
+        quit = runFile(commands[0],currentModel);
+
+        if(isQuit()) {
+          return;
+        }
         insertCursor();
         continue;
       }
@@ -116,7 +131,7 @@ public abstract class AbstractController implements Controller {
   }
 
 
-  protected static void runFile(String fileIn,Model currentModel) throws IOException {
+  protected static boolean runFile(String fileIn,Model currentModel) throws IOException {
     String file;
     try {
       file = readFile(fileIn);
@@ -125,11 +140,13 @@ public abstract class AbstractController implements Controller {
     }
     Reader newIn = new StringReader(file);
     Controller fileController = new FileController(newIn, System.out);
+
     try {
       fileController.run(currentModel);
     } catch (IOException e) {
       throw new IOException(e.getMessage());
     }
+    return fileController.isQuit();
   }
 }
 

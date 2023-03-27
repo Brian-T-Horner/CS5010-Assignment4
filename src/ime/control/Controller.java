@@ -16,4 +16,6 @@ public interface Controller {
    */
   void run(Model currentModel) throws IOException;
 
+  boolean isQuit();
+
 }

@@ -39,6 +39,7 @@ public class ImageController extends AbstractController {
     }
     Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
     controller.run(newModel);
+    System.out.println("Exiting application...");
   }
 
   @Override
