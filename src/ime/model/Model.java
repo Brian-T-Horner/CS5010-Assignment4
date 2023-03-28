@@ -9,6 +9,12 @@ import java.util.NoSuchElementException;
  */
 public interface Model {
 
+  /**
+   * Retrieves an image in the model given the image's name.
+   *
+   * @param imageName image to retrieve
+   * @return Image stored in the model
+   */
   Image getImage(String imageName);
 
   /**

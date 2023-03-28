@@ -8,7 +8,7 @@ import java.io.StringReader;
 import org.junit.Test;
 
 /**
- * Class to test the IME.control.Controller in isolation with a MockModel.
+ * Class to test the controller in isolation with a MockModel.
  */
 public class ModelControllerTest {
 

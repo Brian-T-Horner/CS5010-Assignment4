@@ -9,14 +9,14 @@ import java.util.NoSuchElementException;
 import ime.ImageUtil;
 
 /**
- * IME.model.PPMModel that controls the method of a PPMImage.
+ * Implementation of Model that provides a set of operations over a set of Images
  */
 public class ImageModel implements Model {
 
   private final Map<String, Image> images = new HashMap<>();
 
   /**
-   * Constructor for IME.model.PPMModel. No parameters as only one default field.
+   * Constructor for ImageModel. No parameters as only one default field.
    */
   public ImageModel() {
     //only one default field
@@ -32,12 +32,6 @@ public class ImageModel implements Model {
     return i;
   }
 
-  /**
-   * Method to load a PPMImage.
-   *
-   * @param imagePath    The path of the PPMImage to load.
-   * @param newImageName The name to assign to the loaded PPMImage.
-   */
   @Override
   public void loadImage(String imagePath, String newImageName)
       throws FileNotFoundException, IllegalArgumentException {
@@ -52,12 +46,7 @@ public class ImageModel implements Model {
     images.put(newImageName, i);
   }
 
-  /**
-   * Method to save an PPMImage.
-   *
-   * @param imagePath The path of where to save the PPMImage.
-   * @param imageName The name of the PPMImage to save.
-   */
+
   @Override
   public void saveImage(String imagePath, String imageName)
           throws IOException, NoSuchElementException {
@@ -73,12 +62,7 @@ public class ImageModel implements Model {
     ImageUtil.saveImage(i, imagePath);
   }
 
-  /**
-   * Method to get the redscale image of an PPMImage.
-   *
-   * @param currentImageName The name of the PPMImage to get the red component from.
-   * @param newImageName     The name to save the resulting PPMImage as.
-   */
+
   @Override
   public void getRedComponent(String currentImageName, String newImageName)
           throws NoSuchElementException {
@@ -92,12 +76,7 @@ public class ImageModel implements Model {
     }
   }
 
-  /**
-   * Method to get the greenscale image of an PPMImage.
-   *
-   * @param currentImageName The name of the PPMImage to get the green component from.
-   * @param newImageName     The name to save the resulting PPMImage as.
-   */
+
   @Override
   public void getGreenComponent(String currentImageName, String newImageName)
           throws NoSuchElementException {
@@ -111,12 +90,7 @@ public class ImageModel implements Model {
     }
   }
 
-  /**
-   * Method to get the bluescale image of an PPMImage.
-   *
-   * @param currentImageName The name of the PPMImage to get the blue component from.
-   * @param newImageName     The name to save the resulting PPMImage as.
-   */
+
   @Override
   public void getBlueComponent(String currentImageName, String newImageName)
           throws NoSuchElementException {
@@ -130,12 +104,7 @@ public class ImageModel implements Model {
     }
   }
 
-  /**
-   * Method to flip an PPMImage horizontally.
-   *
-   * @param currentImageName The name of the PPMImage to flip horizontally.
-   * @param newImageName     The name to save the resulting PPMImage as.
-   */
+
   @Override
   public void flipHorizontal(String currentImageName, String newImageName)
           throws NoSuchElementException {
@@ -152,12 +121,7 @@ public class ImageModel implements Model {
     images.put(newImageName, horizontal);
   }
 
-  /**
-   * Method to flip an PPMImage vertically.
-   *
-   * @param currentImageName The name of the PPMImage to flip vertically.
-   * @param newImageName     The name to save the resulting PPMImage as.
-   */
+
   @Override
   public void flipVertical(String currentImageName, String newImageName) {
     Image i = images.get(currentImageName);
@@ -173,12 +137,7 @@ public class ImageModel implements Model {
     images.put(newImageName, vertical);
   }
 
-  /**
-   * Method to get the value image of an PPMImage.
-   *
-   * @param currentImageName The name of the PPMImage to get the value image from.
-   * @param newImageName     The name to save the resulting value image as.
-   */
+
   @Override
   public void getValueImage(String currentImageName, String newImageName)
           throws NoSuchElementException {
@@ -205,12 +164,7 @@ public class ImageModel implements Model {
     images.put(newImageName, val);
   }
 
-  /**
-   * Method to get the intensity image of an PPMImage.
-   *
-   * @param currentImageName The name of the PPMImage to get the intensity image from.
-   * @param newImageName     The name to save the resulting intensity image as.
-   */
+
   @Override
   public void getIntensityImage(String currentImageName, String newImageName)
           throws NoSuchElementException {
@@ -241,12 +195,7 @@ public class ImageModel implements Model {
     images.put(newImageName, i);
   }
 
-  /**
-   * Method to get the luma image of an PPMImage.
-   *
-   * @param currentImageName The name of the PPMImage to get the luma image from.
-   * @param newImageName     The name to save the resulting luma image as.
-   */
+
   @Override
   public void getLumaImage(String currentImageName, String newImageName)
           throws NoSuchElementException {
@@ -277,13 +226,7 @@ public class ImageModel implements Model {
     images.put(newImageName, lumaImg);
   }
 
-  /**
-   * Method to brighten or darken an PPMImage.
-   *
-   * @param currentImageName The name of the PPMImage to brighten or darken.
-   * @param newImageName     The name to save the resulting PPMImage as.
-   * @param scale            The scale to brighten or darken the PPMImage.
-   */
+
   @Override
   public void brighten(String currentImageName, String newImageName, int scale)
           throws NoSuchElementException {
@@ -303,14 +246,7 @@ public class ImageModel implements Model {
 
   }
 
-  /**
-   * Method to split an PPMImage into its rgb components.
-   *
-   * @param currentImageName The name of the PPMImage to split into its rgb components.
-   * @param redImageName     The name to save the resulting red component PPMImage as.
-   * @param greenImageName   The name to save the resulting green component PPMImage as.
-   * @param blueImageName    The name to save the resulting blue component PPMImage as.
-   */
+
   @Override
   public void rgbSplit(String currentImageName, String redImageName, String greenImageName,
                        String blueImageName) throws NoSuchElementException {
@@ -332,14 +268,7 @@ public class ImageModel implements Model {
     images.put(blueImageName, blue);
   }
 
-  /**
-   * Method to combine rgb components into one PPMImage.
-   *
-   * @param newImageName The name to save the resulting PPMImage as.
-   * @param rImageName   The name of the red component PPMImage.
-   * @param gImageName   The name of the green component PPMImage.
-   * @param bImageName   The name of the blue component PPMImage.
-   */
+
   @Override
   public void rgbCombine(String newImageName, String rImageName, String gImageName,
                          String bImageName) throws NoSuchElementException {
@@ -368,13 +297,7 @@ public class ImageModel implements Model {
     }
   }
 
-  /**
-   * Method to get the greyscale image of an PPMImage.
-   *
-   * @param greyScaleComponent The method to get the grey scale of the PPMImage.
-   * @param imageName          The PPMImage to get the grey scale image from.
-   * @param newImageName       The name to save the resulting grey scale image as.
-   */
+
   @Override
   public void greyscale(String greyScaleComponent, String imageName, String newImageName)
           throws IllegalArgumentException {
@@ -1023,8 +946,6 @@ public class ImageModel implements Model {
     }
     return brightened;
   }
-
-
 
 
   /**
