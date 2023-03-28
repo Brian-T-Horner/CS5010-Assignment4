@@ -39,8 +39,10 @@ public class ImageModel implements Model {
    * @param newImageName The name to assign to the loaded PPMImage.
    */
   @Override
-  public void loadImage(String imagePath, String newImageName) throws FileNotFoundException, IllegalArgumentException {
-    if(!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+  public void loadImage(String imagePath, String newImageName)
+      throws FileNotFoundException, IllegalArgumentException {
+    if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp")
+        || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IllegalArgumentException("File must be a .bmp, .jpg, .png, or .ppm file.");
     }
     Image i = ImageUtil.loadImage(imagePath);
@@ -64,7 +66,8 @@ public class ImageModel implements Model {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
           + "\" not in memory.");
     }
-    if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+    if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp")
+        || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IOException("File must be a .bmp, .jpg, .png, or .ppm file.");
     }
     ImageUtil.saveImage(i, imagePath);
@@ -434,19 +437,19 @@ public class ImageModel implements Model {
         newGreen[i][j] = newColor;
 
         // Setting pixels besides it by the error
-        if(j + 1 < width) {
+        if (j + 1 < width) {
           redComp[i][j + 1] = redComp[i][j + 1] + (int) Math.ceil((7.0 / 16.0) * error);
         }
-        if(i + 1 < height && j - 1 >= 0) {
+        if (i + 1 < height && j - 1 >= 0) {
           redComp[i + 1][j - 1] = redComp[i + 1][j - 1] + (int) Math.ceil((3.0 / 16.0) * error);
         }
 
-        if(i + 1 < height) {
-          redComp[i + 1][j] = redComp[i+1][j] + (int) Math.ceil((5.0 / 16.0) * error);
+        if (i + 1 < height) {
+          redComp[i + 1][j] = redComp[i + 1][j] + (int) Math.ceil((5.0 / 16.0) * error);
         }
 
-        if(i + 1 < height && j + 1 < width) {
-          redComp[i + 1][j + 1] = redComp[i + 1][j + 1] + (int) Math.ceil((1.0/16.0) * error);
+        if (i + 1 < height && j + 1 < width) {
+          redComp[i + 1][j + 1] = redComp[i + 1][j + 1] + (int) Math.ceil((1.0 / 16.0) * error);
         }
       }
     }
@@ -531,11 +534,11 @@ public class ImageModel implements Model {
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] sharpenFilter = new double[5][];
-    sharpenFilter[0] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
-    sharpenFilter[1] = new double[]{-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0};
-    sharpenFilter[2] = new double[]{-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0};
-    sharpenFilter[3] = new double[]{-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0};
-    sharpenFilter[4] = new double[]{-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0};
+    sharpenFilter[0] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+    sharpenFilter[1] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0};
+    sharpenFilter[2] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0, 1.0 / 4.0, -1.0 / 8.0};
+    sharpenFilter[3] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0};
+    sharpenFilter[4] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
 
 
     for (int i = 0; i < height; i++) {
@@ -549,14 +552,14 @@ public class ImageModel implements Model {
         if (i - 2 >= 0) {
 
           // [0][0] - row 0 column 0 -  (i-2, j-2)
-          if (j - 2 >= 0){
+          if (j - 2 >= 0) {
             redSum += Math.ceil((double) r[i - 2][j - 2] * sharpenFilter[0][0]);
             blueSum += Math.ceil((double) b[i - 2][j - 2] * sharpenFilter[0][0]);
             greenSum += Math.ceil((double) g[i - 2][j - 2] * sharpenFilter[0][0]);
           }
 
           // [0][1] - row 0 column 1    (i-2, j-1)
-          if (j - 1 >= 0){
+          if (j - 1 >= 0) {
             redSum += Math.ceil((double) r[i - 2][j - 1] * sharpenFilter[0][1]);
             blueSum += Math.ceil((double) b[i - 2][j - 1] * sharpenFilter[0][1]);
             greenSum += Math.ceil((double) g[i - 2][j - 1] * sharpenFilter[0][1]);
@@ -568,14 +571,14 @@ public class ImageModel implements Model {
           greenSum += Math.ceil((double) g[i - 2][j] * sharpenFilter[0][2]);
 
           // [0][3] - row 0 column 3    (i-2, j+1)
-          if ((j + 1) < width){
+          if ((j + 1) < width) {
             redSum += Math.ceil((double) r[i - 2][j + 1] * sharpenFilter[0][3]);
             blueSum += Math.ceil((double) b[i - 2][j + 1] * sharpenFilter[0][3]);
             greenSum += Math.ceil((double) g[i - 2][j + 1] * sharpenFilter[0][3]);
           }
 
           // [0][4] - row 0 column 4    (i-2, j+2)
-          if ((j + 2) < width){
+          if ((j + 2) < width) {
             redSum += Math.ceil((double) r[i - 2][j + 2] * sharpenFilter[0][4]);
             blueSum += Math.ceil((double) b[i - 2][j + 2] * sharpenFilter[0][4]);
             greenSum += Math.ceil((double) g[i - 2][j + 2] * sharpenFilter[0][4]);
@@ -587,14 +590,14 @@ public class ImageModel implements Model {
         if (i - 1 >= 0) {
 
           // [1][0] - row 1 column 0  (i-1, j-2)
-          if (j - 2 >= 0){
+          if (j - 2 >= 0) {
             redSum += Math.ceil((double) r[i - 1][j - 2] * sharpenFilter[1][0]);
             blueSum += Math.ceil((double) b[i - 1][j - 2] * sharpenFilter[1][0]);
             greenSum += Math.ceil((double) g[i - 1][j - 2] * sharpenFilter[1][0]);
           }
 
           // [1][1] - row 1 column 1  (i-1, j-1)
-          if (j - 1 >= 0){
+          if (j - 1 >= 0) {
             redSum += Math.ceil((double) r[i - 1][j - 1] * sharpenFilter[1][1]);
             blueSum += Math.ceil((double) b[i - 1][j - 1] * sharpenFilter[1][1]);
             greenSum += Math.ceil((double) g[i - 1][j - 1] * sharpenFilter[1][1]);
@@ -606,14 +609,14 @@ public class ImageModel implements Model {
           greenSum += Math.ceil((double) g[i - 1][j] * sharpenFilter[1][2]);
 
           // [1][3] - row 1 column 3  (i-1, j+1)
-          if ((j + 1) < width){
+          if ((j + 1) < width) {
             redSum += Math.ceil((double) r[i - 1][j + 1] * sharpenFilter[1][3]);
             blueSum += Math.ceil((double) b[i - 1][j + 1] * sharpenFilter[1][3]);
             greenSum += Math.ceil((double) g[i - 1][j + 1] * sharpenFilter[1][3]);
           }
 
           // [1][4] - row 1 column 4  (i-1, j+2)
-          if ((j + 2) < width){
+          if ((j + 2) < width) {
             redSum += Math.ceil((double) r[i - 1][j + 2] * sharpenFilter[1][4]);
             blueSum += Math.ceil((double) b[i - 1][j + 2] * sharpenFilter[1][4]);
             greenSum += Math.ceil((double) g[i - 1][j + 2] * sharpenFilter[1][4]);
@@ -623,14 +626,14 @@ public class ImageModel implements Model {
 
         // -------------Pixel Row Operations -------------------
         // [2][0] - row 2 column 0  (i, j-2)
-        if (j - 2 >= 0){
+        if (j - 2 >= 0) {
           redSum += Math.ceil((double) r[i][j - 2] * sharpenFilter[2][0]);
           blueSum += Math.ceil((double) b[i][j - 2] * sharpenFilter[2][0]);
           greenSum += Math.ceil((double) g[i][j - 2] * sharpenFilter[2][0]);
         }
 
         // [2][1] - row 2 column 1  (i, j-1)
-        if (j - 1 >= 0){
+        if (j - 1 >= 0) {
           redSum += Math.ceil((double) r[i][j - 1] * sharpenFilter[2][1]);
           blueSum += Math.ceil((double) b[i][j - 1] * sharpenFilter[2][1]);
           greenSum += Math.ceil((double) g[i][j - 1] * sharpenFilter[2][1]);
@@ -642,14 +645,14 @@ public class ImageModel implements Model {
         greenSum += Math.ceil((double) g[i][j] * sharpenFilter[2][2]);
 
         // [2][3] - row 2 column 3  (i, j+1)
-        if ((j + 1) < width){
+        if ((j + 1) < width) {
           redSum += Math.ceil((double) r[i][j + 1] * sharpenFilter[2][3]);
           blueSum += Math.ceil((double) b[i][j + 1] * sharpenFilter[2][3]);
           greenSum += Math.ceil((double) g[i][j + 1] * sharpenFilter[2][3]);
         }
 
         // [2][4] - row 2 column 4  (i, j+2)
-        if ((j + 2) < width){
+        if ((j + 2) < width) {
           redSum += Math.ceil((double) r[i][j + 2] * sharpenFilter[2][4]);
           blueSum += Math.ceil((double) b[i][j + 2] * sharpenFilter[2][4]);
           greenSum += Math.ceil((double) g[i][j + 2] * sharpenFilter[2][4]);
@@ -659,14 +662,14 @@ public class ImageModel implements Model {
         if ((i + 1) < height) {
 
           // [3][0] - row 4 column 0  (i+1, j-2)
-          if (j - 2 >= 0){
+          if (j - 2 >= 0) {
             redSum += Math.ceil((double) r[i + 1][j - 2] * sharpenFilter[3][0]);
             blueSum += Math.ceil((double) b[i + 1][j - 2] * sharpenFilter[3][0]);
             greenSum += Math.ceil((double) g[i + 1][j - 2] * sharpenFilter[3][0]);
           }
 
           // [3][1] - row 4 column 1  (i+1, j-1)
-          if (j - 1 >= 0){
+          if (j - 1 >= 0) {
             redSum += Math.ceil((double) r[i + 1][j - 1] * sharpenFilter[3][1]);
             blueSum += Math.ceil((double) b[i + 1][j - 1] * sharpenFilter[3][1]);
             greenSum += Math.ceil((double) g[i + 1][j - 1] * sharpenFilter[3][1]);
@@ -678,14 +681,14 @@ public class ImageModel implements Model {
           greenSum += Math.ceil((double) g[i + 1][j] * sharpenFilter[3][2]);
 
           // [3][3] - row 4 column 3  (i+1, j+1)
-          if ((j + 1) < width){
+          if ((j + 1) < width) {
             redSum += Math.ceil((double) r[i + 1][j + 1] * sharpenFilter[3][3]);
             blueSum += Math.ceil((double) b[i + 1][j + 1] * sharpenFilter[3][3]);
             greenSum += Math.ceil((double) g[i + 1][j + 1] * sharpenFilter[3][3]);
           }
 
           // [3][4] - row 4 column 4  (i+1, j+2)
-          if ((j + 2) < width){
+          if ((j + 2) < width) {
             redSum += Math.ceil((double) r[i + 1][j + 2] * sharpenFilter[3][4]);
             blueSum += Math.ceil((double) b[i + 1][j + 2] * sharpenFilter[3][4]);
             greenSum += Math.ceil((double) g[i + 1][j + 2] * sharpenFilter[3][4]);
@@ -695,14 +698,14 @@ public class ImageModel implements Model {
         if ((i + 2) < height) {
 
           // [4][0] - row 5 column 0  (i+2, j-2)
-          if (j - 2 >= 0){
+          if (j - 2 >= 0) {
             redSum += Math.ceil((double) r[i + 2][j - 2] * sharpenFilter[4][0]);
             blueSum += Math.ceil((double) b[i + 2][j - 2] * sharpenFilter[4][0]);
             greenSum += Math.ceil((double) g[i + 2][j - 2] * sharpenFilter[4][0]);
           }
 
           // [4][1] - row 5 column 1  (i+2, j-1)
-          if (j - 1 >= 0){
+          if (j - 1 >= 0) {
             redSum += Math.ceil((double) r[i + 2][j - 1] * sharpenFilter[4][1]);
             blueSum += Math.ceil((double) b[i + 2][j - 1] * sharpenFilter[4][1]);
             greenSum += Math.ceil((double) g[i + 2][j - 1] * sharpenFilter[4][1]);
@@ -714,14 +717,14 @@ public class ImageModel implements Model {
           greenSum += Math.ceil((double) g[i + 2][j] * sharpenFilter[4][2]);
 
           // [4][3] - row 5 column 3  (i+2, j+1)
-          if ((j + 1) < width){
+          if ((j + 1) < width) {
             redSum += Math.ceil((double) r[i + 2][j + 1] * sharpenFilter[4][3]);
             blueSum += Math.ceil((double) b[i + 2][j + 1] * sharpenFilter[4][3]);
             greenSum += Math.ceil((double) g[i + 2][j + 1] * sharpenFilter[4][3]);
           }
 
           // [4][4] - row 5 column 4  (i+2, j+2)
-          if ((j + 2) < width){
+          if ((j + 2) < width) {
             redSum += Math.ceil((double) r[i + 2][j + 2] * sharpenFilter[4][4]);
             blueSum += Math.ceil((double) b[i + 2][j + 2] * sharpenFilter[4][4]);
             greenSum += Math.ceil((double) g[i + 2][j + 2] * sharpenFilter[4][4]);
@@ -786,9 +789,9 @@ public class ImageModel implements Model {
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] blurFilter = new double[3][];
-    blurFilter[0] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
-    blurFilter[1] = new double[]{1.0/8.0, 1.0/4.0, 1.0/8.0};
-    blurFilter[2] = new double[]{1.0/16.0, 1.0/8.0, 1.0/16.0};
+    blurFilter[0] = new double[]{1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0};
+    blurFilter[1] = new double[]{1.0 / 8.0, 1.0 / 4.0, 1.0 / 8.0};
+    blurFilter[2] = new double[]{1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0};
 
     for (int i = 0; i < height; i++) {  //[height][width] [i][j]
       for (int j = 0; j < width; j++) {
@@ -830,7 +833,7 @@ public class ImageModel implements Model {
             blueSum += (b[i - 1][j + 1] * blurFilter[0][2]);
             // green
             greenSum += (g[i - 1][j + 1] * blurFilter[0][2]);
-          }catch (Exception e) {
+          } catch (Exception e) {
             throw new IndexOutOfBoundsException("Index out of bounds top right");
           }
         }
@@ -860,7 +863,7 @@ public class ImageModel implements Model {
 
 
         // Get and operate on right [i][j+1]
-        if (j+1 < width) {
+        if (j + 1 < width) {
           try {
             // red
             redSum += (r[i][j + 1] * blurFilter[1][2]);
@@ -869,7 +872,8 @@ public class ImageModel implements Model {
             // green
             greenSum += (g[i][j + 1] * blurFilter[1][2]);
           } catch (Exception e) {
-            throw new IndexOutOfBoundsException("Index out of bounds at right i = " + i + " j = " + j + "width " + width + "height " + height);
+            throw new IndexOutOfBoundsException("Index out of bounds at right i = "
+                + i + " j = " + j + "width " + width + "height " + height);
           }
         }
         // Get and operate on bottom left [i+1][j-1]  [2][0]
@@ -913,27 +917,27 @@ public class ImageModel implements Model {
         }
         // Check for floor and ceiling
         // red
-        if(redSum < 0) {
+        if (redSum < 0) {
           redSum = 0;
         }
 
-        if(redSum > 255) {
+        if (redSum > 255) {
           redSum = 255;
         }
         // blue
-        if(blueSum < 0) {
+        if (blueSum < 0) {
           blueSum = 0;
         }
 
-        if(blueSum > 255) {
+        if (blueSum > 255) {
           blueSum = 255;
         }
         // green
-        if(greenSum < 0) {
+        if (greenSum < 0) {
           greenSum = 0;
         }
 
-        if(greenSum > 255) {
+        if (greenSum > 255) {
           greenSum = 255;
         }
 
@@ -978,7 +982,7 @@ public class ImageModel implements Model {
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width / 2; j++) {
         temp = arr[i][width - j - 1];
-        flippedH[i][width - j -1] = arr[i][j];
+        flippedH[i][width - j - 1] = arr[i][j];
         flippedH[i][j] = temp;
       }
     }

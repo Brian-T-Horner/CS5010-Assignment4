@@ -147,7 +147,15 @@ public class ImageUtil {
     return readBufferedImage(buf);
   }
 
-  public static void saveImage(Image image, String fileName) throws IOException, IllegalArgumentException {
+  /**
+   * Method to save an image.
+   * @param image The name of the image to save.
+   * @param fileName The place to save the image to disk.
+   * @throws IOException If the path is not found.
+   * @throws IllegalArgumentException If the type of image to be saved is not supported.
+   */
+  public static void saveImage(Image image, String fileName)
+      throws IOException, IllegalArgumentException {
     if (fileName.endsWith(".ppm")) {
       writeToPPMFile(image, fileName);
       return;
