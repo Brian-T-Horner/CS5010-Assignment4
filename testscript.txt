@@ -84,6 +84,7 @@ brighten 50 donut brighten-by-50-image
 
 brighten -20 donut brighten-by-neg-20-image
 
+
 # test rgb-split
 
 rgb-split donut dest-image-name-red dest-image-name-green dest-image-name-blue garbage
@@ -95,6 +96,10 @@ rgb-split invalid-donut dest-donut-red dest-donut-green
 #successes
 
 rgb-split donut red-image green-image blue-image
+
+save red-image.png red-image
+save green-image.png green-image
+save blue-image.png blue-image
 
 #test rgb-combine
 
@@ -111,6 +116,8 @@ rgb-combine donut red-image green-image invalid-blue-image
 #successes
 
 rgb-combine rgb-donut red-image green-image blue-image
+
+save rgb-donut.png rgb-donut
 
 
 #unknown command
@@ -147,17 +154,6 @@ save images/luma-comp.png luma-comp
 
 save images/brighten-by-neg-20-image.png brighten-by-neg-20-image
 
-greenscale donut green-donut
-
-redscale donut green-donut
-
-bluescale donut green-donut
-
-luma donut green-donut
-
-value donut green-donut
-
-intensity donut green-donut
 
 
 

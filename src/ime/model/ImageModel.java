@@ -413,7 +413,12 @@ public class ImageModel implements Model {
 
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] redComp = img.getRedComponent();
+    int[][] redComp = new int [height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        redComp[i][j] = img.getRedComponent()[i][j];
+      }
+    }
     int[][] newRed = new int[height][width];
     int[][] newBlue = new int[height][width];
     int[][] newGreen = new int[height][width];

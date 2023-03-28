@@ -238,7 +238,7 @@ public class ImageUtil {
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         int rgb = buf.getRGB(j, i);
-        r[i][j] = rgb >> 16 & 0xff;
+        r[i][j] = (rgb >> 16) & 0xff;
         g[i][j] = rgb >> 8 & 0xff;
         b[i][j] = rgb & 0xff;
       }

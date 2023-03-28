@@ -5,9 +5,11 @@ import ime.model.Model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
@@ -132,7 +134,7 @@ public class ImageModelTest {
   @Test
   public void testRgbSplit() {
     m.rgbSplit("donuts", "donuts-red",
-            "donuts-green", "donuts-blue");
+        "donuts-green", "donuts-blue");
     Image red = m.getImage("donuts-red");
     Image green = m.getImage("donuts-green");
     Image blue = m.getImage("donuts-blue");
@@ -149,19 +151,19 @@ public class ImageModelTest {
     assertArrayEquals(orig.getBlueComponent(), blue.getGreenComponent());
     assertArrayEquals(orig.getBlueComponent(), blue.getBlueComponent());
     assertThrows(NoSuchElementException.class, () -> m.rgbSplit("invalid-donuts",
-            "donuts-red", "donuts-green", "donuts-blue"));
+        "donuts-red", "donuts-green", "donuts-blue"));
   }
 
   @Test
   public void testRgbCombine() {
     m.rgbSplit("donuts", "donuts-red",
-            "donuts-green", "donuts-blue");
+        "donuts-green", "donuts-blue");
     Image red = m.getImage("donuts-red");
     Image green = m.getImage("donuts-green");
     Image blue = m.getImage("donuts-blue");
 
     m.rgbCombine("donuts-new", "donuts-red",
-            "donuts-green", "donuts-blue");
+        "donuts-green", "donuts-blue");
 
     Image newImg = m.getImage("donuts-new");
 
@@ -169,28 +171,28 @@ public class ImageModelTest {
     assertArrayEquals(green.getGreenComponent(), newImg.getGreenComponent());
     assertArrayEquals(blue.getBlueComponent(), newImg.getBlueComponent());
     assertThrows(NoSuchElementException.class, () -> m.rgbCombine("donuts-new",
-            "invalid-donuts-red", "donuts-green", "donuts-blue"));
+        "invalid-donuts-red", "donuts-green", "donuts-blue"));
     assertThrows(NoSuchElementException.class, () -> m.rgbCombine("donuts-new",
-            "donuts-red", "invalid-donuts-green", "donuts-blue"));
+        "donuts-red", "invalid-donuts-green", "donuts-blue"));
     assertThrows(NoSuchElementException.class, () -> m.rgbCombine("donuts-new",
-            "donuts-red", "donuts-green", "invalid-donuts-blue"));
+        "donuts-red", "donuts-green", "invalid-donuts-blue"));
   }
 
   @Test
   public void testGreyscale() {
     m.greyscale("red-component", "donuts",
-            "donuts-red");
+        "donuts-red");
     m.greyscale("green-component", "donuts",
-            "donuts-green");
+        "donuts-green");
     m.greyscale("blue-component", "donuts",
-            "donuts-blue");
+        "donuts-blue");
 
     m.greyscale("value-component", "donuts",
-            "donuts-value");
+        "donuts-value");
     m.greyscale("intensity-component", "donuts",
-            "donuts-intensity");
+        "donuts-intensity");
     m.greyscale("luma-component", "donuts",
-            "donuts-luma");
+        "donuts-luma");
 
     Image red = m.getImage("donuts-red");
     Image green = m.getImage("donuts-green");
@@ -395,7 +397,7 @@ public class ImageModelTest {
         int greenValue = img.getGreenComponent()[i][j];
         int blueValue = img.getBlueComponent()[i][j];
         int lumaValue = (int) Math.ceil(0.2126 * redValue + 0.7152
-                * greenValue + 0.0722 * blueValue);
+            * greenValue + 0.0722 * blueValue);
         if (lumaValue > 255) {
           lumaValue = 255;
         } else if (lumaValue < 0) {
@@ -416,5 +418,309 @@ public class ImageModelTest {
       }
     }
     return true;
+  }
+
+  @Test
+  public void testSharpen(){
+    sharpenArray(m.getImage("donuts"));
+  }
+
+  private int[][] sharpenArray(Image img) {
+      int[][] r = img.getRedComponent();
+      int[][] g = img.getGreenComponent();
+      int[][] b = img.getBlueComponent();
+      int[][] newR = new int[r.length][r[0].length];
+      int[][] newB = new int[b.length][b[0].length];
+      int[][] newG = new int [g.length][g[0].length];
+      int height = img.getHeight();
+      int width = img.getWidth();
+      double[][] sharpenFilter = new double[5][];
+      sharpenFilter[0] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+      sharpenFilter[1] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0};
+      sharpenFilter[2] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0, 1.0 / 4.0, -1.0 / 8.0};
+      sharpenFilter[3] = new double[]{-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0};
+      sharpenFilter[4] = new double[]{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0};
+
+
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+          double redSum = 0;
+          double blueSum = 0;
+          double greenSum = 0;
+
+
+          // -------- First Row Operations ---------------='
+          if (i - 2 >= 0) {
+
+            // [0][0] - row 0 column 0 -  (i-2, j-2)
+            if (j - 2 >= 0) {
+              redSum += Math.ceil((double) r[i - 2][j - 2] * sharpenFilter[0][0]);
+              blueSum += Math.ceil((double) b[i - 2][j - 2] * sharpenFilter[0][0]);
+              greenSum += Math.ceil((double) g[i - 2][j - 2] * sharpenFilter[0][0]);
+            }
+
+            // [0][1] - row 0 column 1    (i-2, j-1)
+            if (j - 1 >= 0) {
+              redSum += Math.ceil((double) r[i - 2][j - 1] * sharpenFilter[0][1]);
+              blueSum += Math.ceil((double) b[i - 2][j - 1] * sharpenFilter[0][1]);
+              greenSum += Math.ceil((double) g[i - 2][j - 1] * sharpenFilter[0][1]);
+            }
+
+            // [0][2] - row 0 column 2    (i-2, j)
+            redSum += Math.ceil((double) r[i - 2][j] * sharpenFilter[0][2]);
+            blueSum += Math.ceil((double) b[i - 2][j] * sharpenFilter[0][2]);
+            greenSum += Math.ceil((double) g[i - 2][j] * sharpenFilter[0][2]);
+
+            // [0][3] - row 0 column 3    (i-2, j+1)
+            if ((j + 1) < width) {
+              redSum += Math.ceil((double) r[i - 2][j + 1] * sharpenFilter[0][3]);
+              blueSum += Math.ceil((double) b[i - 2][j + 1] * sharpenFilter[0][3]);
+              greenSum += Math.ceil((double) g[i - 2][j + 1] * sharpenFilter[0][3]);
+            }
+
+            // [0][4] - row 0 column 4    (i-2, j+2)
+            if ((j + 2) < width) {
+              redSum += Math.ceil((double) r[i - 2][j + 2] * sharpenFilter[0][4]);
+              blueSum += Math.ceil((double) b[i - 2][j + 2] * sharpenFilter[0][4]);
+              greenSum += Math.ceil((double) g[i - 2][j + 2] * sharpenFilter[0][4]);
+            }
+          }
+
+
+          // -----------Second Row Operations ---------------
+          if (i - 1 >= 0) {
+
+            // [1][0] - row 1 column 0  (i-1, j-2)
+            if (j - 2 >= 0) {
+              redSum += Math.ceil((double) r[i - 1][j - 2] * sharpenFilter[1][0]);
+              blueSum += Math.ceil((double) b[i - 1][j - 2] * sharpenFilter[1][0]);
+              greenSum += Math.ceil((double) g[i - 1][j - 2] * sharpenFilter[1][0]);
+            }
+
+            // [1][1] - row 1 column 1  (i-1, j-1)
+            if (j - 1 >= 0) {
+              redSum += Math.ceil((double) r[i - 1][j - 1] * sharpenFilter[1][1]);
+              blueSum += Math.ceil((double) b[i - 1][j - 1] * sharpenFilter[1][1]);
+              greenSum += Math.ceil((double) g[i - 1][j - 1] * sharpenFilter[1][1]);
+            }
+
+            // [1][2] - row 1 column 2  (i-1, j)
+            redSum += Math.ceil((double) r[i - 1][j] * sharpenFilter[1][2]);
+            blueSum += Math.ceil((double) b[i - 1][j] * sharpenFilter[1][2]);
+            greenSum += Math.ceil((double) g[i - 1][j] * sharpenFilter[1][2]);
+
+            // [1][3] - row 1 column 3  (i-1, j+1)
+            if ((j + 1) < width) {
+              redSum += Math.ceil((double) r[i - 1][j + 1] * sharpenFilter[1][3]);
+              blueSum += Math.ceil((double) b[i - 1][j + 1] * sharpenFilter[1][3]);
+              greenSum += Math.ceil((double) g[i - 1][j + 1] * sharpenFilter[1][3]);
+            }
+
+            // [1][4] - row 1 column 4  (i-1, j+2)
+            if ((j + 2) < width) {
+              redSum += Math.ceil((double) r[i - 1][j + 2] * sharpenFilter[1][4]);
+              blueSum += Math.ceil((double) b[i - 1][j + 2] * sharpenFilter[1][4]);
+              greenSum += Math.ceil((double) g[i - 1][j + 2] * sharpenFilter[1][4]);
+            }
+          }
+
+
+          // -------------Pixel Row Operations -------------------
+          // [2][0] - row 2 column 0  (i, j-2)
+          if (j - 2 >= 0) {
+            redSum += Math.ceil((double) r[i][j - 2] * sharpenFilter[2][0]);
+            blueSum += Math.ceil((double) b[i][j - 2] * sharpenFilter[2][0]);
+            greenSum += Math.ceil((double) g[i][j - 2] * sharpenFilter[2][0]);
+          }
+
+          // [2][1] - row 2 column 1  (i, j-1)
+          if (j - 1 >= 0) {
+            redSum += Math.ceil((double) r[i][j - 1] * sharpenFilter[2][1]);
+            blueSum += Math.ceil((double) b[i][j - 1] * sharpenFilter[2][1]);
+            greenSum += Math.ceil((double) g[i][j - 1] * sharpenFilter[2][1]);
+          }
+
+          // [2][2] - row 2 column 2  (i, j)
+          redSum += Math.ceil((double) r[i][j] * sharpenFilter[2][2]);
+          blueSum += Math.ceil((double) b[i][j] * sharpenFilter[2][2]);
+          greenSum += Math.ceil((double) g[i][j] * sharpenFilter[2][2]);
+
+          // [2][3] - row 2 column 3  (i, j+1)
+          if ((j + 1) < width) {
+            redSum += Math.ceil((double) r[i][j + 1] * sharpenFilter[2][3]);
+            blueSum += Math.ceil((double) b[i][j + 1] * sharpenFilter[2][3]);
+            greenSum += Math.ceil((double) g[i][j + 1] * sharpenFilter[2][3]);
+          }
+
+          // [2][4] - row 2 column 4  (i, j+2)
+          if ((j + 2) < width) {
+            redSum += Math.ceil((double) r[i][j + 2] * sharpenFilter[2][4]);
+            blueSum += Math.ceil((double) b[i][j + 2] * sharpenFilter[2][4]);
+            greenSum += Math.ceil((double) g[i][j + 2] * sharpenFilter[2][4]);
+          }
+
+          // -----------Fourth Row Operations ---------------
+          if ((i + 1) < height) {
+
+            // [3][0] - row 4 column 0  (i+1, j-2)
+            if (j - 2 >= 0) {
+              redSum += Math.ceil((double) r[i + 1][j - 2] * sharpenFilter[3][0]);
+              blueSum += Math.ceil((double) b[i + 1][j - 2] * sharpenFilter[3][0]);
+              greenSum += Math.ceil((double) g[i + 1][j - 2] * sharpenFilter[3][0]);
+            }
+
+            // [3][1] - row 4 column 1  (i+1, j-1)
+            if (j - 1 >= 0) {
+              redSum += Math.ceil((double) r[i + 1][j - 1] * sharpenFilter[3][1]);
+              blueSum += Math.ceil((double) b[i + 1][j - 1] * sharpenFilter[3][1]);
+              greenSum += Math.ceil((double) g[i + 1][j - 1] * sharpenFilter[3][1]);
+            }
+
+            // [3][2] - row 4 column 2  (i+1, j)
+            redSum += Math.ceil((double) r[i + 1][j] * sharpenFilter[3][2]);
+            blueSum += Math.ceil((double) b[i + 1][j] * sharpenFilter[3][2]);
+            greenSum += Math.ceil((double) g[i + 1][j] * sharpenFilter[3][2]);
+
+            // [3][3] - row 4 column 3  (i+1, j+1)
+            if ((j + 1) < width) {
+              redSum += Math.ceil((double) r[i + 1][j + 1] * sharpenFilter[3][3]);
+              blueSum += Math.ceil((double) b[i + 1][j + 1] * sharpenFilter[3][3]);
+              greenSum += Math.ceil((double) g[i + 1][j + 1] * sharpenFilter[3][3]);
+            }
+
+            // [3][4] - row 4 column 4  (i+1, j+2)
+            if ((j + 2) < width) {
+              redSum += Math.ceil((double) r[i + 1][j + 2] * sharpenFilter[3][4]);
+              blueSum += Math.ceil((double) b[i + 1][j + 2] * sharpenFilter[3][4]);
+              greenSum += Math.ceil((double) g[i + 1][j + 2] * sharpenFilter[3][4]);
+            }
+          }
+          // -----------Fifth Row Operations ---------------
+          if ((i + 2) < height) {
+
+            // [4][0] - row 5 column 0  (i+2, j-2)
+            if (j - 2 >= 0) {
+              redSum += Math.ceil((double) r[i + 2][j - 2] * sharpenFilter[4][0]);
+              blueSum += Math.ceil((double) b[i + 2][j - 2] * sharpenFilter[4][0]);
+              greenSum += Math.ceil((double) g[i + 2][j - 2] * sharpenFilter[4][0]);
+            }
+
+            // [4][1] - row 5 column 1  (i+2, j-1)
+            if (j - 1 >= 0) {
+              redSum += Math.ceil((double) r[i + 2][j - 1] * sharpenFilter[4][1]);
+              blueSum += Math.ceil((double) b[i + 2][j - 1] * sharpenFilter[4][1]);
+              greenSum += Math.ceil((double) g[i + 2][j - 1] * sharpenFilter[4][1]);
+            }
+
+            // [4][2] - row 5 column 2  (i+2, j)
+            redSum += Math.ceil((double) r[i + 2][j] * sharpenFilter[4][2]);
+            blueSum += Math.ceil((double) b[i + 2][j] * sharpenFilter[4][2]);
+            greenSum += Math.ceil((double) g[i + 2][j] * sharpenFilter[4][2]);
+
+            // [4][3] - row 5 column 3  (i+2, j+1)
+            if ((j + 1) < width) {
+              redSum += Math.ceil((double) r[i + 2][j + 1] * sharpenFilter[4][3]);
+              blueSum += Math.ceil((double) b[i + 2][j + 1] * sharpenFilter[4][3]);
+              greenSum += Math.ceil((double) g[i + 2][j + 1] * sharpenFilter[4][3]);
+            }
+
+            // [4][4] - row 5 column 4  (i+2, j+2)
+            if ((j + 2) < width) {
+              redSum += Math.ceil((double) r[i + 2][j + 2] * sharpenFilter[4][4]);
+              blueSum += Math.ceil((double) b[i + 2][j + 2] * sharpenFilter[4][4]);
+              greenSum += Math.ceil((double) g[i + 2][j + 2] * sharpenFilter[4][4]);
+            }
+          }
+
+          //-------------------Check floor and ceiling------------------
+
+          // red
+          if (redSum < 0) {
+            redSum = 0;
+          }
+
+          if (redSum > 255) {
+            redSum = 255;
+          }
+          // blue
+          if (blueSum < 0) {
+            blueSum = 0;
+          }
+
+          if (blueSum > 255) {
+            blueSum = 255;
+          }
+          // green
+          if (greenSum < 0) {
+            greenSum = 0;
+          }
+
+          if (greenSum > 255) {
+            greenSum = 255;
+          }
+
+          //-------------------Store the red blue and green values ---------------
+
+          // red
+          System.out.println((int) Math.rint(redSum));
+
+          //blue
+          newB[i][j] = (int) Math.rint(blueSum);
+          // green
+          newG[i][j] = (int) Math.rint(greenSum);
+        }
+      }
+      return new int[1][1];
+
+    }
+
+
+  private int[][] blurArray(Image img) {
+    return new int[1][1];
+  }
+
+  private int[][] ditherArray(Image img) {
+    return new int[1][1];
+  }
+
+  @Test
+  public void testSepia() throws FileNotFoundException {
+    m.sepia("donuts", "donuts-sepia");
+    Image i = m.getImage("donuts-sepia");
+    Image control = createTestImage("test/sepiaImg.txt");
+    assertArrayEquals(i.getRedComponent(), control.getRedComponent());
+    assertArrayEquals(i.getBlueComponent(), control.getBlueComponent());
+    assertArrayEquals(i.getGreenComponent(), control.getGreenComponent());
+    assertThrows(NoSuchElementException.class, ()
+        -> m.sepia("invalid-donuts", "donuts-sepia"));
+  }
+
+  private Image createTestImage(String pathname) throws FileNotFoundException {
+    int height = 150;
+    int width = 200;
+    Scanner scanner = new Scanner(new File(pathname));
+    int [][] rComponent = new int[height][width];
+    int [][] gComponent = new int[height][width];
+    int [][] bComponent = new int[height][width];
+    for(int i = 0; i < height; i++){
+      for(int j = 0; j < width; j++){
+        rComponent[i][j] = scanner.nextInt();
+      }
+    }
+
+
+    for(int i = 0; i < height; i++){
+      for (int j = 0; j < width; j++){
+        gComponent[i][j] = scanner.nextInt();;
+      }
+    }
+    for(int i = 0; i < height; i++){
+      for (int j = 0; j < width; j++){
+        bComponent[i][j] = scanner.nextInt();;
+      }
+    }
+
+    Image controlImg = new ImageModel.IMEImage(width, height, rComponent, bComponent, gComponent);
+    return controlImg;
   }
 }
