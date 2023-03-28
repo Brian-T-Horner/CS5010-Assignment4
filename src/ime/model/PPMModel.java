@@ -39,8 +39,10 @@ public class PPMModel implements Model {
    * @param newImageName The name to assign to the loaded PPMImage.
    */
   @Override
-  public void loadImage(String imagePath, String newImageName) throws FileNotFoundException, IllegalArgumentException {
-    if(!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp") || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+  public void loadImage(String imagePath, String newImageName)
+      throws FileNotFoundException, IllegalArgumentException {
+    if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp")
+        || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IllegalArgumentException("File must be a .bmp, .jpg, .png, or .ppm file.");
     }
     Image i = ImageUtil.loadImage(imagePath);
