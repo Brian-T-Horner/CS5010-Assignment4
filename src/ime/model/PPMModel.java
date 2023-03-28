@@ -823,7 +823,7 @@ public class PPMModel implements Model {
           }
         }
         // Get and operate on top right [i-1][j+1]
-        if ((i - 1) >= 0 && (j + 1) < height) {
+        if ((i - 1) >= 0 && (j + 1) < width) {
           try {
             // red
             redSum += (r[i - 1][j + 1] * blurFilter[0][2]);
