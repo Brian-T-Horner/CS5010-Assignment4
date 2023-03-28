@@ -2,9 +2,7 @@ package ime;
 
 import ime.model.Image;
 
-import ime.model.PPMModel;
-
-import ime.model.PPMModel.PPMImage;
+import ime.model.ImageModel;
 
 
 import java.awt.image.BufferedImage;
@@ -126,7 +124,7 @@ public class ImageUtil {
         blue[i][j] = b;
       }
     }
-    return new PPMImage(width, height, red, blue, green);
+    return new ImageModel.IMEImage(width, height, red, blue, green);
   }
 
   /**
@@ -237,7 +235,7 @@ public class ImageUtil {
         b[i][j] = rgb & 0xff;
       }
     }
-    return new PPMModel.PPMImage(width, height, r, b, g);
+    return new ImageModel.IMEImage(width, height, r, b, g);
   }
 
 }

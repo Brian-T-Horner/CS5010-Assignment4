@@ -11,14 +11,14 @@ import ime.ImageUtil;
 /**
  * IME.model.PPMModel that controls the method of a PPMImage.
  */
-public class PPMModel implements Model {
+public class ImageModel implements Model {
 
   private final Map<String, Image> images = new HashMap<>();
 
   /**
    * Constructor for IME.model.PPMModel. No parameters as only one default field.
    */
-  public PPMModel() {
+  public ImageModel() {
     //only one default field
   }
 
@@ -82,7 +82,7 @@ public class PPMModel implements Model {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getRedComponent();
-      images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
+      images.put(newImageName, new IMEImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
           + " not in memory.");
@@ -101,7 +101,7 @@ public class PPMModel implements Model {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getGreenComponent();
-      images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
+      images.put(newImageName, new IMEImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
           + " not in memory.");
@@ -120,7 +120,7 @@ public class PPMModel implements Model {
     Image i = images.get(currentImageName);
     if (i != null) {
       int[][] r = i.getBlueComponent();
-      images.put(newImageName, new PPMImage(i.getWidth(), i.getHeight(), r, r, r));
+      images.put(newImageName, new IMEImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
           + " not in memory.");
@@ -144,7 +144,7 @@ public class PPMModel implements Model {
     int[][] red = flipArrayHorizontal(i, i.getRedComponent());
     int[][] green = flipArrayHorizontal(i, i.getGreenComponent());
     int[][] blue = flipArrayHorizontal(i, i.getBlueComponent());
-    Image horizontal = new PPMImage(i.getWidth(), i.getHeight(), red, blue, green);
+    Image horizontal = new IMEImage(i.getWidth(), i.getHeight(), red, blue, green);
 
     images.put(newImageName, horizontal);
   }
@@ -165,7 +165,7 @@ public class PPMModel implements Model {
     int[][] red = flipArrayVertical(i, i.getRedComponent());
     int[][] green = flipArrayVertical(i, i.getGreenComponent());
     int[][] blue = flipArrayVertical(i, i.getBlueComponent());
-    Image vertical = new PPMImage(i.getWidth(), i.getHeight(), red, blue, green);
+    Image vertical = new IMEImage(i.getWidth(), i.getHeight(), red, blue, green);
 
     images.put(newImageName, vertical);
   }
@@ -197,7 +197,7 @@ public class PPMModel implements Model {
         value[i][j] = max;
       }
     }
-    Image val = new PPMImage(width, height, value, value, value);
+    Image val = new IMEImage(width, height, value, value, value);
 
     images.put(newImageName, val);
   }
@@ -233,7 +233,7 @@ public class PPMModel implements Model {
         intensity[i][j] = intensityValue;
       }
     }
-    Image i = new PPMImage(width, height, intensity, intensity, intensity);
+    Image i = new IMEImage(width, height, intensity, intensity, intensity);
 
     images.put(newImageName, i);
   }
@@ -270,7 +270,7 @@ public class PPMModel implements Model {
         luma[i][j] = lumaValue;
       }
     }
-    Image lumaImg = new PPMImage(width, height, luma, luma, luma);
+    Image lumaImg = new IMEImage(width, height, luma, luma, luma);
     images.put(newImageName, lumaImg);
   }
 
@@ -294,7 +294,7 @@ public class PPMModel implements Model {
     int[][] red = brightenArray(img, img.getRedComponent(), scale);
     int[][] green = brightenArray(img, img.getGreenComponent(), scale);
     int[][] blue = brightenArray(img, img.getBlueComponent(), scale);
-    Image brightened = new PPMImage(width, height, red, blue, green);
+    Image brightened = new IMEImage(width, height, red, blue, green);
 
     images.put(newImageName, brightened);
 
@@ -321,11 +321,11 @@ public class PPMModel implements Model {
     int[][] b = i.getBlueComponent();
     int height = i.getHeight();
     int width = i.getWidth();
-    Image red = new PPMImage(width, height, r, r, r);
+    Image red = new IMEImage(width, height, r, r, r);
     images.put(redImageName, red);
-    Image green = new PPMImage(width, height, g, g, g);
+    Image green = new IMEImage(width, height, g, g, g);
     images.put(greenImageName, green);
-    Image blue = new PPMImage(width, height, b, b, b);
+    Image blue = new IMEImage(width, height, b, b, b);
     images.put(blueImageName, blue);
   }
 
@@ -359,7 +359,7 @@ public class PPMModel implements Model {
 
     if (compareDimensions(redImage, greenImage) && compareDimensions(greenImage, blueImage)
             && compareDimensions(blueImage, redImage)) {
-      images.put(newImageName, new PPMImage(redImage.getWidth(), redImage.getHeight(),
+      images.put(newImageName, new IMEImage(redImage.getWidth(), redImage.getHeight(),
               redImage.getRedComponent(), blueImage.getBlueComponent(),
               greenImage.getGreenComponent()));
     }
@@ -450,7 +450,7 @@ public class PPMModel implements Model {
         }
       }
     }
-    Image dither = new PPMImage(width, height, newRed, newBlue, newGreen);
+    Image dither = new IMEImage(width, height, newRed, newBlue, newGreen);
     images.put(newImageName, dither);
   }
 
@@ -511,7 +511,7 @@ public class PPMModel implements Model {
       }
     }
 
-    Image sepiaImg = new PPMImage(width, height, r, b, g);
+    Image sepiaImg = new IMEImage(width, height, r, b, g);
     images.put(newImageName, sepiaImg);
   }
 
@@ -765,7 +765,7 @@ public class PPMModel implements Model {
         newG[i][j] = (int) Math.rint(greenSum);
       }
     }
-    Image sharpenedImage = new PPMImage(width, height,newR, newB, newG);
+    Image sharpenedImage = new IMEImage(width, height,newR, newB, newG);
     images.put(newImageName, sharpenedImage);
 
   }
@@ -948,7 +948,7 @@ public class PPMModel implements Model {
 
       }
     }
-    Image blurredImage = new PPMImage(width, height, newR,
+    Image blurredImage = new IMEImage(width, height, newR,
             newB, newG);
     images.put(newImageName, blurredImage);
 
@@ -1026,7 +1026,7 @@ public class PPMModel implements Model {
   /**
    * A class to represent an image in PPM Format.
    */
-  public static class PPMImage extends AbstractImage {
+  public static class IMEImage extends AbstractImage {
 
     /**
      * Constructor for a PPMImage object.
@@ -1037,7 +1037,7 @@ public class PPMModel implements Model {
      * @param blue   The blue component of the rgb of the image.
      * @param green  The green component of the rgb of the image.
      */
-    public PPMImage(int width, int height, int[][] red,
+    public IMEImage(int width, int height, int[][] red,
                     int[][] blue, int[][] green) {
       super(width, height, red,
               blue, green);

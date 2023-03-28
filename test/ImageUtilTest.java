@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import ime.ImageUtil;
 import ime.model.Image;
-import ime.model.PPMModel;
+import ime.model.ImageModel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -176,7 +176,7 @@ public class ImageUtilTest {
         blue[i][j] = b;
       }
     }
-    return new PPMModel.PPMImage(width, height, red, blue, green);
+    return new ImageModel.IMEImage(width, height, red, blue, green);
   }
 
   private BufferedImage readInTestBufferedImage(Image image) {

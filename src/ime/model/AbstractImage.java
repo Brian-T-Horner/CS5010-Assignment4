@@ -92,10 +92,10 @@ public abstract class AbstractImage implements Image {
     if (o == this) {
       return true;
     }
-    if (!(o instanceof PPMModel.PPMImage)) {
+    if (!(o instanceof ImageModel.IMEImage)) {
       return false;
     }
-    PPMModel.PPMImage c = (PPMModel.PPMImage) o;
+    ImageModel.IMEImage c = (ImageModel.IMEImage) o;
 
     return c.getWidth() == this.getWidth() && c.getHeight() == this.getHeight()
         && Arrays.deepEquals(c.blueComponent, blueComponent)

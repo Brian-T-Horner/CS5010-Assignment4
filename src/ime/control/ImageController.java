@@ -1,7 +1,8 @@
 package ime.control;
 
+import ime.model.ImageModel;
 import ime.model.Model;
-import ime.model.PPMModel;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -27,7 +28,7 @@ public class ImageController extends AbstractController {
    * @param args commands.Command line arguments to be passed to the program.
    */
   public static void main(String[] args) throws IOException {
-    Model newModel = new PPMModel();
+    Model newModel = new ImageModel();
     if (args.length > 0) {
       if (args[0].equals("-file") && args.length == 2) {
         runFile(args[1],newModel);

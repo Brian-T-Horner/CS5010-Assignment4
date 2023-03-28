@@ -1,6 +1,6 @@
 import ime.model.Image;
+import ime.model.ImageModel;
 import ime.model.Model;
-import ime.model.PPMModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.junit.Assert.fail;
 /**
  * Class to test the IME.model.PPMModel.
  */
-public class PPMModelTest {
+public class ImageModelTest {
 
 
   Model m;
@@ -26,7 +26,7 @@ public class PPMModelTest {
 
   @Before
   public void setUp() {
-    m = new PPMModel();
+    m = new ImageModel();
 
     try {
       m.loadImage("test/donut.ppm", "donuts");
