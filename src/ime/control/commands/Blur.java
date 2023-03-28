@@ -4,15 +4,15 @@ import ime.model.Model;
 import java.io.FileNotFoundException;
 
 /**
- * Class to create a Blur command object.
+ * Class for blur command.
  */
 public class Blur implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a blur command object.
-   * @param commands String array of commands for the object.
+   * Constructor for Blur.
+   * @param commands String array of commands.
    */
   public Blur(String[] commands) {
     this.commands = commands;

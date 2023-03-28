@@ -5,14 +5,14 @@ import java.io.FileNotFoundException;
 import ime.model.Model;
 
 /**
- * A commands.Greenscale command object.
+ * Class for greenscale command.
  */
 public class Greenscale implements Command {
 
   String [] commands;
 
   /**
-   * Constructor for a commands.Greenscale command object.
+   * Constructor for Greenscale.
    *
    * @param commands String array of commands for the object.
    */

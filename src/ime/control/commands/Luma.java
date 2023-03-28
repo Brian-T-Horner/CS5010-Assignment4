@@ -5,16 +5,16 @@ import java.util.NoSuchElementException;
 import ime.model.Model;
 
 /**
- * A commands.Luma command object.
+ * Class for luma command.
  */
 public class Luma implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.Luma command object.
+   * Constructor for Luma.
    *
-   * @param commands String array of commands for the object.
+   * @param commands String array of commands.
    */
   public Luma(String[] commands) {
     this.commands = commands;

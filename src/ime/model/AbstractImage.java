@@ -31,51 +31,30 @@ public abstract class AbstractImage implements Image {
     this.blueComponent = blue;
   }
 
-  /**
-   * Method to return the red component of the PPMImage objects rgb.
-   *
-   * @return A matrix representing the red component of the PPMImage.
-   */
+
   @Override
   public int[][] getRedComponent() {
     return redComponent;
   }
 
-  /**
-   * Method to return the green component of the PPMImage objects rgb.
-   *
-   * @return A matrix representing the green component of the PPMImage.
-   */
   @Override
   public int[][] getGreenComponent() {
     return greenComponent;
   }
 
-  /**
-   * Method to return the blue component of the PPMImage objects rgb.
-   *
-   * @return A matrix representing the blue component of the PPMImage.
-   */
+
   @Override
   public int[][] getBlueComponent() {
     return blueComponent;
   }
 
-  /**
-   * Method to return the height of the PPMImage in pixels.
-   *
-   * @return An integer representing the height of the PPMImage in pixels.
-   */
+
   @Override
   public int getHeight() {
     return height;
   }
 
-  /**
-   * Method to return the width of the PPMImage in pixels.
-   *
-   * @return An integer representing the width of the PPMImage in pixels.
-   */
+
   @Override
   public int getWidth() {
     return width;

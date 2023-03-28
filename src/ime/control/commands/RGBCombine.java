@@ -4,16 +4,16 @@ import ime.model.Model;
 import java.util.NoSuchElementException;
 
 /**
- * An commands.RGBCombine command object.
+ * Class for rgb-combine command.
  */
 public class RGBCombine implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.RGBCombine command object.
+   * Constructor for RGBCombine.
    *
-   * @param commands String array of commands for object.
+   * @param commands String array of commands.
    */
   public RGBCombine(String[] commands) {
     this.commands = commands;

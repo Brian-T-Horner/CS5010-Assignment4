@@ -5,14 +5,14 @@ import java.util.NoSuchElementException;
 import ime.model.Model;
 
 /**
- * An commands.Intensity command object.
+ * Class for intensity command.
  */
 public class Intensity implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for an commands.Intensity command object.
+   * Constructor for Intensity.
    *
    * @param commands String array of commands for the object.
    */

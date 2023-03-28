@@ -4,16 +4,16 @@ import ime.model.Model;
 import java.util.NoSuchElementException;
 
 /**
- * An commands.RGBSplit command object.
+ * Class for rgb-split command.
  */
 public class RGBSplit implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for an commands.RGBSplit command object.
+   * Constructor for RGBSplit.
    *
-   * @param commands String array of commands for object.
+   * @param commands String array of commands.
    */
   public RGBSplit(String[] commands) {
     this.commands = commands;

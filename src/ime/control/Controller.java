@@ -16,6 +16,11 @@ public interface Controller {
    */
   void run(Model currentModel) throws IOException;
 
+  /**
+   * Determines whether the program should exit.
+   *
+   * @return true if quit prompted false if not prompted
+   */
   boolean isQuit();
 
 }

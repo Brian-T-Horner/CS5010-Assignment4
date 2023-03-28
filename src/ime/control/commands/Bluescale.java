@@ -5,16 +5,16 @@ import java.io.FileNotFoundException;
 import ime.model.Model;
 
 /**
- * Class for a commands.Bluescale commands.Command object.
+ * Class for bluescale command.
  */
 public class Bluescale implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.Bluescale command object.
+   * Constructor for Bluescale.
    *
-   * @param commands String array of commands for object.
+   * @param commands String array of commands.
    */
   public Bluescale(String[] commands) {
     this.commands = commands;

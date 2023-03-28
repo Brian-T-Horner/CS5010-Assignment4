@@ -4,16 +4,16 @@ import java.io.FileNotFoundException;
 import ime.model.Model;
 
 /**
- * Class for a commands.Dither commands.Command object.
+ * Class for dither command.
  */
 public class Dither implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.Dither command object.
+   * Constructor for Dither.
    *
-   * @param commands String array of commands for object.
+   * @param commands String array of commands.
    */
   public Dither(String[] commands) {
     this.commands = commands;

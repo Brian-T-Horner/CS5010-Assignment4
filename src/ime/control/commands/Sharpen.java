@@ -4,14 +4,14 @@ import ime.model.Model;
 import java.io.FileNotFoundException;
 
 /**
- * Class for a commands.Sharpen commands.Command object.
+ * Class for sharpen command.
  */
 public class Sharpen implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.Sharpen command object.
+   * Constructor for Sharpen.
    *
    * @param commands String array of commands for object.
    */

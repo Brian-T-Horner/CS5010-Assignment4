@@ -4,14 +4,14 @@ import ime.model.Model;
 import java.util.NoSuchElementException;
 
 /**
- * A commands.HorizontalFlip command object.
+ * Class for horizontal-flip command.
  */
 public class HorizontalFlip implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.HorizontalFlip command object.
+   * Constructor for HorizontalFlip.
    *
    * @param commands String array of commands for object.
    */

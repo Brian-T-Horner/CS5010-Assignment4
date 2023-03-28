@@ -4,16 +4,16 @@ import ime.model.Model;
 import java.io.IOException;
 
 /**
- * A commands.Save command object.
+ * Class for save command.
  */
 public class Save implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.Save command object.
+   * Constructor for Save.
    *
-   * @param commands String array of commands for the object.
+   * @param commands String array of commands.
    */
   public Save(String[] commands) {
     this.commands = commands;

@@ -5,15 +5,15 @@ import java.io.FileNotFoundException;
 import ime.model.Model;
 
 /**
- * A commands.Redscale command object.
+ * Class for redscale command.
  */
 public class Redscale implements Command {
   String[] commands;
 
   /**
-   * Constructor for a commands.Redscale command object.
+   * Constructor for Redscale.
    *
-   * @param commands String array of commands for the object.
+   * @param commands String array of commands.
    */
   public Redscale(String[] commands) {
     this.commands = commands;

@@ -4,7 +4,7 @@ import ime.model.Model;
 import java.io.IOException;
 
 /**
- * Interface for commands of the program to implement the commands.Command Design Pattern.
+ * Interface for commands of the program that run their given methods in the model.
  */
 public interface Command {
 

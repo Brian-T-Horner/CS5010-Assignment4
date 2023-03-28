@@ -35,7 +35,7 @@ import ime.model.Model;
 
 
 /**
- * Abstract class to expand on Controller interface.
+ * Abstract class to extending the Controller interface.
  */
 public abstract class AbstractController implements Controller {
 
@@ -47,7 +47,7 @@ public abstract class AbstractController implements Controller {
 
 
   /**
-   * Contructor for the creation of a IME.control.Controller object.
+   * Contructor for AbstractController.
    *
    * @param in  Input stream for the controller.
    * @param out Output stream for the controller.
@@ -63,11 +63,7 @@ public abstract class AbstractController implements Controller {
     return quit;
   }
 
-  /**
-   * Method to run the program, accept inputs and pass load, save images to IME.model.Model.
-   *
-   * @param currentModel The model the controller object is instructing.
-   */
+
   @Override
   public void run(Model currentModel) throws IOException {
     Objects.requireNonNull(currentModel);
@@ -144,8 +140,20 @@ public abstract class AbstractController implements Controller {
     }
   }
 
+  /**
+   * Inserts a cursor to prompt the user to type the next command
+   *
+   * @throws IOException if program encounters an issue writing to the out stream.
+   */
   protected abstract void insertCursor() throws IOException;
 
+  /**
+   * Method to read text files into a String.
+   *
+   * @param path image path
+   * @return String contents of file
+   * @throws IOException thrown if Files.readAllBytes cannot read the file
+   */
   protected static String readFile(String path)
           throws IOException {
     byte[] encoded = Files.readAllBytes(Paths.get(path));
@@ -153,6 +161,14 @@ public abstract class AbstractController implements Controller {
   }
 
 
+  /**
+   * Method to run a script text file using a FileController.
+   *
+   * @param fileIn text file to read from
+   * @param currentModel current model used
+   * @return quit status of FileController
+   * @throws IOException if readFile encounters an IO error
+   */
   protected static boolean runFile(String fileIn,Model currentModel) throws IOException {
     String file;
     try {
