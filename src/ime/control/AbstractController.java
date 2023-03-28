@@ -102,7 +102,7 @@ public abstract class AbstractController implements Controller {
         quit = true;
       }
 
-      if(isQuit()) {
+      if (isQuit()) {
         return;
       }
 
@@ -115,7 +115,7 @@ public abstract class AbstractController implements Controller {
         }
         quit = runFile(commands[0],currentModel);
 
-        if(isQuit()) {
+        if (isQuit()) {
           return;
         }
         insertCursor();

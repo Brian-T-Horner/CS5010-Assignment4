@@ -44,7 +44,7 @@ public class PPMModelTest {
     assertArrayEquals(flipArrayHorizontal(orig, orig.getBlueComponent()), i.getBlueComponent());
     assertArrayEquals(flipArrayHorizontal(orig, orig.getGreenComponent()), i.getGreenComponent());
     assertThrows(NoSuchElementException.class, ()
-          -> m.flipHorizontal("invalid-donuts", "donuts-hflipped"));
+        -> m.flipHorizontal("invalid-donuts", "donuts-hflipped"));
   }
 
   @Test
@@ -56,7 +56,7 @@ public class PPMModelTest {
     assertArrayEquals(flipArrayVertical(orig, orig.getBlueComponent()), i.getBlueComponent());
     assertArrayEquals(flipArrayVertical(orig, orig.getGreenComponent()), i.getGreenComponent());
     assertThrows(NoSuchElementException.class, ()
-          -> m.flipVertical("invalid-donuts", "donuts-vflipped"));
+        -> m.flipVertical("invalid-donuts", "donuts-vflipped"));
   }
 
   @Test
@@ -67,7 +67,7 @@ public class PPMModelTest {
     assertArrayEquals(valueArray(m.getImage("donuts")), i.getGreenComponent());
     assertArrayEquals(valueArray(m.getImage("donuts")), i.getRedComponent());
     assertThrows(NoSuchElementException.class, ()
-          -> m.getValueImage("invalid-donuts", "donuts-value"));
+        -> m.getValueImage("invalid-donuts", "donuts-value"));
     assertTrue(checkCeilAndFloorVals(i.getGreenComponent()));
   }
 
@@ -79,7 +79,7 @@ public class PPMModelTest {
     assertArrayEquals(intensityArray(m.getImage("donuts")), i.getGreenComponent());
     assertArrayEquals(intensityArray(m.getImage("donuts")), i.getRedComponent());
     assertThrows(NoSuchElementException.class, ()
-          -> m.getIntensityImage("invalid-donuts", "donuts-intensity"));
+        -> m.getIntensityImage("invalid-donuts", "donuts-intensity"));
     assertTrue(checkCeilAndFloorVals(i.getGreenComponent()));
   }
 
@@ -114,19 +114,19 @@ public class PPMModelTest {
   @Test
   public void testGetRedComponent() {
     assertThrows(NoSuchElementException.class, ()
-          -> m.getRedComponent("invalid-donuts", "donuts-red"));
+        -> m.getRedComponent("invalid-donuts", "donuts-red"));
   }
 
   @Test
   public void testGetGreenComponent() {
     assertThrows(NoSuchElementException.class, ()
-          -> m.getGreenComponent("invalid-donuts", "donuts-red"));
+        -> m.getGreenComponent("invalid-donuts", "donuts-red"));
   }
 
   @Test
   public void testGetBlueComponent() {
     assertThrows(NoSuchElementException.class, ()
-          -> m.getBlueComponent("invalid-donuts", "donuts-red"));
+        -> m.getBlueComponent("invalid-donuts", "donuts-red"));
   }
 
   @Test
@@ -219,8 +219,8 @@ public class PPMModelTest {
     assertArrayEquals(valueExpected.getGreenComponent(), value.getGreenComponent());
     assertArrayEquals(intensityExpected.getGreenComponent(), intensity.getGreenComponent());
     assertThrows(IllegalArgumentException.class, ()
-          -> m.greyscale("invalid-component", "donuts",
-            "invalid-greyscale"));
+        -> m.greyscale("invalid-component", "donuts",
+        "invalid-greyscale"));
   }
 
   @Test
@@ -254,9 +254,9 @@ public class PPMModelTest {
     assertNotNull(m.getImage("donut-3"));
     assertNotNull(m.getImage("donut-4"));
     assertThrows(IllegalArgumentException.class, ()
-          -> m.loadImage("invalid/path", "donut"));
+        -> m.loadImage("invalid/path", "donut"));
     assertThrows(FileNotFoundException.class, ()
-          -> m.loadImage("invalid/path.ppm", "donut"));
+        -> m.loadImage("invalid/path.ppm", "donut"));
   }
 
   @Test
@@ -292,9 +292,9 @@ public class PPMModelTest {
     }
 
     assertThrows(IOException.class, ()
-          -> m.saveImage("invalid-path", "donut-1"));
+        -> m.saveImage("invalid-path", "donut-1"));
     assertThrows(NoSuchElementException.class, ()
-          -> m.saveImage("test/test.ppm", "invalid-donut"));
+        -> m.saveImage("test/test.ppm", "invalid-donut"));
   }
 
   private int[][] flipArrayHorizontal(Image img, int[][] arr) {
