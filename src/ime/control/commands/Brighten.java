@@ -4,16 +4,16 @@ import ime.model.Model;
 import java.util.NoSuchElementException;
 
 /**
- * A commands.Brighten command object.
+ * Class for brighten command.
  */
 public class Brighten implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.Brighten command object.
+   * Constructor for Brighten.
    *
-   * @param commands String array of commands for object.
+   * @param commands String array of commands.
    */
   public Brighten(String[] commands) {
     this.commands = commands;

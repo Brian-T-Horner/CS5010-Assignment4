@@ -7,14 +7,14 @@ import java.util.NoSuchElementException;
 // He mentioned that we can do color transformations off this gryscale
 
 /**
- * A commands.Greyscale command object.
+ * Class for greyscale command.
  */
 public class Greyscale implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a GreyScale command object.
+   * Constructor for Greyscale.
    *
    * @param commands String array of commands for object.
    */

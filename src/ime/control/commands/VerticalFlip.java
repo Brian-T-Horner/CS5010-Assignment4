@@ -4,16 +4,16 @@ import ime.model.Model;
 import java.util.NoSuchElementException;
 
 /**
- * A commands.VerticalFlip command object.
+ * Class for vertical-flip command.
  */
 public class VerticalFlip implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a verticalFlip command object.
+   * Constructor for VerticalFlip.
    *
-   * @param commands String array of commands for object.
+   * @param commands String array of commands.
    */
   public VerticalFlip(String[] commands) {
     this.commands = commands;

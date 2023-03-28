@@ -25,7 +25,7 @@ public class ImageController extends AbstractController {
   /**
    * Main method of the program.
    *
-   * @param args commands.Command line arguments to be passed to the program.
+   * @param args command line arguments to be passed to the program.
    */
   public static void main(String[] args) throws IOException {
     Model newModel = new ImageModel();

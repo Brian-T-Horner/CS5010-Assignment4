@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Class to test the IME.model.PPMModel.
+ * Test class for ImageModel.
  */
 public class ImageModelTest {
 

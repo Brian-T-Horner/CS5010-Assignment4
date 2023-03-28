@@ -3,7 +3,7 @@ import ime.model.Model;
 
 
 /**
- * MockModel for testing IME.control.Controller in isolation.
+ * MockModel for testing Controller in isolation.
  */
 public class MockModel implements Model {
 

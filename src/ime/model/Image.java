@@ -34,12 +34,27 @@ public interface Image {
   int getHeight();
 
   /**
-   * Method to return the width of the IME.model.Image in pixels.
+   * Method to return the width of the Image in pixels.
    *
    * @return Integer representing the pixel width of the IME.model.Image.
    */
   int getWidth();
 
+
+  /**
+   * Method to determine if two Image objects are equal.
+   *
+   * @param o An object to check if equal to {@code this} PPMImage.
+   * @return True if equal, false if otherwise.
+   */
   boolean equals(Object o);
+
+
+  /**
+   * Method to get a hashCode for an Image.
+   *
+   * @return An integer hashcode for the object.
+   */
+  int hashCode();
 
 }

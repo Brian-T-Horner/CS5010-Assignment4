@@ -1,5 +1,5 @@
 
-load test/donut.png donut
+load ../test/donut.png donut
 
 greyscale red-component donut red-comp
 

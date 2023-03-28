@@ -4,16 +4,16 @@ import ime.model.Model;
 import java.io.FileNotFoundException;
 
 /**
- * A commands.Load command object.
+ * Class for load command.
  */
 public class Load implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.Load command object.
+   * Constructor for Load.
    *
-   * @param commands String array of commands for the object.
+   * @param commands String array of commands.
    */
   public Load(String[] commands) {
     this.commands = commands;

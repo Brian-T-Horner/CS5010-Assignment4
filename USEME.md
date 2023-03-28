@@ -1,36 +1,72 @@
 ## Supported Commands
 
-load image-path image-name: Load an image from the specified path and refer it to henceforth in the program by the given image name.
+**load image-path image-name**: Load a .bmp, .ppm, .png, .jpg file from the specified path and refer it to henceforth in the program by the given image name.
 
-save image-path image-name: Save the image with the given name to the specified path which should include the name of the file.
+ example: load folder/image.png image-name
 
-greyscale red-component image-name dest-image-name: Create a greyscale image with the red-component of the image with the given name, and refer to it henceforth in the program by the given destination name. Similar commands for green, blue, value, luma, intensity components should be supported.
+**save image-path image-name**: Save a .bmp, .ppm, .png, .jpg file with the given name to the specified path which should include the name of the file.
 
-horizontal-flip image-name dest-image-name: Flip an image horizontally to create a new image, referred to henceforth by the given destination name.
+example: save folder/image.jpg image-name
 
-vertical-flip image-name dest-image-name: Flip an image vertically to create a new image, referred to henceforth by the given destination name.
+**greyscale component image-name dest-image-name**: Create a greyscale image using a specified component of an image: red-component, green-component, blue-component, value-component, luma-component, intensity-component.
 
-brighten increment image-name dest-image-name: brighten the image by the given increment to create a new image, referred to henceforth by the given destination name. The increment may be positive (brightening) or negative (darkening).
+example: greyscale luma-component name new-name
 
-rgb-split image-name dest-image-name-red dest-image-name-green dest-image-name-blue: split the given image into three greyscale images containing its red, green and blue components respectively.
+**greyscale image-name dest-image-name**: Create a greyscale image without specifying a component.
 
-rgb-combine image-name red-image green-image blue-image: Combine the three greyscale images into a single image that gets its red, green and blue components from the three images respectively.
+example: greyscale name new-name
 
-run script-file: commands.Load and run the script commands in the specified file
+**horizontal-flip image-name dest-image-name**: Flip an image horizontally to create a new image, referred to henceforth by the given destination name.
 
-luma image-name dest-image-name: Create a greyscale image based on the luma component of an image.
+example: horizontal-flip name new-name
+
+**vertical-flip image-name dest-image-name**: Flip an image vertically to create a new image, referred to henceforth by the given destination name.
+
+example: vertical-flip name new-name
+
+**brighten increment image-name dest-image-name**: brighten the image by the given increment to create a new image, referred to henceforth by the given destination name. The increment may be positive (brightening) or negative (darkening).
+
+example: brighten 10 name new-name, brighten -30 name new-darkened-name
+
+**rgb-split image-name dest-image-name-red dest-image-name-green dest-image-name-blue**: split the given image into three greyscale images containing its red, green and blue components respectively.
+
+example: rgb-split name red-name green-name blue-name
+
+**rgb-combine image-name red-image green-image blue-image**: Combine the three greyscale images into a single image that gets its red, green and blue components from the three images respectively.
+
+example: rgb-combine new-image red green blue
+
+**run script-file**: commands.Load and run the script commands in the specified file
+
+example: run text-file.txt
+
+**luma image-name dest-image-name**: Create a greyscale image based on the luma component of an image.
 This is essentially shorthand for the greyscale command.
 
-value image-name dest-image-name: Create a greyscale image based on the value component of an image.
+example: luma name new-name
+
+**value image-name dest-image-name**: Create a greyscale image based on the value component of an image.
 This is essentially shorthand for the greyscale command.
 
-intensity image-name dest-image-name: Create a greyscale image based on the intensity component of an image.
+example: value name new-name
+
+**intensity image-name dest-image-name**: Create a greyscale image based on the intensity component of an image.
 This is essentially shorthand for the greyscale command.
 
-dither image-name dest-image-name: Create a dithered image from the source image.
+example: intensity name new-name
 
-sharpen image-name dest-image-name: Create a sharpened image from the source image.
+**dither image-name dest-image-name**: Create a dithered image from the source image.
 
-blur image-name dest-image-name: Create a blurred image from the source image.
+example: dither name new-name
 
-sepia image-name dest-image-name: Create a sepia-scaled image from the source image.
+**sharpen image-name dest-image-name**: Create a sharpened image from the source image.
+
+example: sharpen name new-name
+
+**blur image-name dest-image-name**: Create a blurred image from the source image.
+
+example: blur name new-name
+
+**sepia image-name dest-image-name**: Create a sepia-scaled image from the source image.
+
+example: sepia name new-name

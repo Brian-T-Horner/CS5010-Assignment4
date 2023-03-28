@@ -5,15 +5,15 @@ import java.util.NoSuchElementException;
 import ime.model.Model;
 
 /**
- * A commands.Value command object.
+ * Class for value command.
  */
 public class Value implements Command {
   String[] commands;
 
   /**
-   * Constructor for a commands.Value command object.
+   * Constructor for Value.
    *
-   * @param commands String array of commands for the object.
+   * @param commands String array of commands.
    */
   public Value(String[] commands) {
     this.commands = commands;

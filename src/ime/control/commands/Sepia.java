@@ -4,16 +4,16 @@ import java.io.FileNotFoundException;
 import ime.model.Model;
 
 /**
- * Class for a commands.Sepia commands.Command object.
+ * Class for sepia command.
  */
 public class Sepia implements Command {
 
   String[] commands;
 
   /**
-   * Constructor for a commands.Sepia command object.
+   * Constructor for Sepia.
    *
-   * @param commands String array of commands for object.
+   * @param commands String array of commands.
    */
   public Sepia(String[] commands) {
     this.commands = commands;
