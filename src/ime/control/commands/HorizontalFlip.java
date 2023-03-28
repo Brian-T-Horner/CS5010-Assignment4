@@ -26,7 +26,7 @@ public class HorizontalFlip implements Command {
    */
   @Override
   public void run(Model m) throws NoSuchElementException,IllegalArgumentException {
-    if(commands.length != 2) {
+    if (commands.length != 2) {
       throw new IllegalArgumentException("Invalid number of arguments for command "
           + "\"horizontal-flip\". 2 required.");
     }

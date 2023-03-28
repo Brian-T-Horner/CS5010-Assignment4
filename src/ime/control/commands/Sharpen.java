@@ -8,33 +8,33 @@ import java.io.FileNotFoundException;
  */
 public class Sharpen implements Command {
 
-    String[] commands;
+  String[] commands;
 
-    /**
-     * Constructor for a commands.Sharpen command object.
-     *
-     * @param commands String array of commands for object.
-     */
-    public Sharpen(String[] commands) {
-        this.commands = commands;
+  /**
+   * Constructor for a commands.Sharpen command object.
+   *
+   * @param commands String array of commands for object.
+   */
+  public Sharpen(String[] commands) {
+    this.commands = commands;
+  }
+
+  /**
+   * Method to have model m call its sharpen method.
+   *
+   * @param m A model.
+   * @throws FileNotFoundException If imageName is not found in memory.
+   * @throws IllegalArgumentException If commands passed are not of sufficient length.
+   */
+  @Override
+  public void run(Model m) throws FileNotFoundException, IllegalArgumentException {
+    if (commands.length != 2) {
+      throw new IllegalArgumentException("Invalid number of arguments for command \"dither\". "
+          + "2 required.");
     }
+    String imageName = commands[0];
+    String newImageName = commands[1];
+    m.sharpen(imageName, newImageName);
 
-    /**
-     * Method to have model m call its sharpen method.
-     *
-     * @param m A model.
-     * @throws FileNotFoundException If imageName is not found in memory.
-     * @throws IllegalArgumentException If commands passed are not of sufficient length.
-     */
-    @Override
-    public void run(Model m) throws FileNotFoundException, IllegalArgumentException {
-        if (commands.length != 2) {
-            throw new IllegalArgumentException("Invalid number of arguments for command \"dither\". "
-                    + "2 required.");
-        }
-        String imageName = commands[0];
-        String newImageName = commands[1];
-        m.sharpen(imageName, newImageName);
-
-    }
+  }
 }

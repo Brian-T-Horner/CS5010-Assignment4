@@ -197,8 +197,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 645));
-    assertEquals("dither: imageName = koala newImageName " +
-            "= dither-koala uniqueCode = 645\n", log.toString());
+    assertEquals("dither: imageName = koala newImageName "
+            + "= dither-koala uniqueCode = 645\n", log.toString());
 
   }
 
@@ -212,8 +212,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 64));
-    assertEquals("sepia: imageName = koala newImageName " +
-            "= sepia-koala uniqueCode = 64\n", log.toString());
+    assertEquals("sepia: imageName = koala newImageName "
+            + "= sepia-koala uniqueCode = 64\n", log.toString());
 
   }
 
@@ -228,8 +228,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 99));
-    assertEquals("blur: imageName = koala newImageName " +
-            "= blur-koala uniqueCode = 99\n", log.toString());
+    assertEquals("blur: imageName = koala newImageName "
+           + "= blur-koala uniqueCode = 99\n", log.toString());
 
   }
 
@@ -243,8 +243,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 346324));
-    assertEquals("sharpen: imageName = koala newImageName " +
-            "= sharpen-koala uniqueCode = 346324\n", log.toString());
+    assertEquals("sharpen: imageName = koala newImageName "
+           + "= sharpen-koala uniqueCode = 346324\n", log.toString());
 
   }
 
@@ -258,8 +258,8 @@ public class ModelControllerTest {
     Controller controllerTest = new ImageController(in, out);
     StringBuilder log = new StringBuilder();
     controllerTest.run(new MockModel(log, 3241));
-    assertEquals("matrixGreyscale: imageName = koala newImageName " +
-            "= matrixGreyscale-koala uniqueCode = 3241\n", log.toString());
+    assertEquals("matrixGreyscale: imageName = koala newImageName "
+           + "= matrixGreyscale-koala uniqueCode = 3241\n", log.toString());
 
   }
 

@@ -26,7 +26,7 @@ public class Brighten implements Command {
    */
   @Override
   public void run(Model m) throws NoSuchElementException {
-    if(commands.length != 3) {
+    if (commands.length != 3) {
       throw new IllegalArgumentException("Invalid number of arguments for command \"brighten\". "
           + "4 required.");
     }

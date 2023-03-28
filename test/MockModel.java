@@ -1,8 +1,6 @@
 import ime.model.Image;
 import ime.model.Model;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+
 
 /**
  * MockModel for testing IME.control.Controller in isolation.

@@ -217,7 +217,12 @@ public class ImageUtil {
     return buffImage;
   }
 
-
+  /**
+   * Method to read a buffered image from a buffered image object.
+   *
+   * @param buf The buffered image object to read in.
+   * @return A new PPMImage from the buffered image.
+   */
   public static Image readBufferedImage(BufferedImage buf) {
     int height = buf.getHeight();
     int width = buf.getWidth();

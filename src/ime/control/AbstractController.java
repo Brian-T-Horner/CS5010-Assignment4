@@ -12,9 +12,31 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Function;
 
-import ime.control.commands.*;
+import ime.control.commands.Bluescale;
+import ime.control.commands.Blur;
+import ime.control.commands.Brighten;
+import ime.control.commands.Command;
+import ime.control.commands.Dither;
+import ime.control.commands.Greenscale;
+import ime.control.commands.Greyscale;
+import ime.control.commands.HorizontalFlip;
+import ime.control.commands.Intensity;
+import ime.control.commands.Load;
+import ime.control.commands.Luma;
+import ime.control.commands.RGBCombine;
+import ime.control.commands.RGBSplit;
+import ime.control.commands.Redscale;
+import ime.control.commands.Save;
+import ime.control.commands.Sepia;
+import ime.control.commands.Sharpen;
+import ime.control.commands.Value;
+import ime.control.commands.VerticalFlip;
 import ime.model.Model;
 
+
+/**
+ * Abstract class to expand on Controller interface.
+ */
 public abstract class AbstractController implements Controller {
 
   final Readable in;
@@ -112,9 +134,9 @@ public abstract class AbstractController implements Controller {
         out.append("Unrecognized command\n");
       } else {
         c = cmd.apply(scan);
-        try{
+        try {
           c.run(currentModel);
-        } catch(Exception e) {
+        } catch (Exception e) {
           out.append(e.getMessage()).append("\n");
         }
       }

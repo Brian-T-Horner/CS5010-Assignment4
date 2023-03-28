@@ -26,7 +26,7 @@ public class Load implements Command {
    */
   @Override
   public void run(Model m) throws FileNotFoundException {
-    if(commands.length != 2) {
+    if (commands.length != 2) {
       throw new IllegalArgumentException("Invalid number of arguments for command \"load\". "
           + "2 required.");
     }

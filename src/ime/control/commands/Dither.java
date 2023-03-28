@@ -8,32 +8,32 @@ import ime.model.Model;
  */
 public class Dither implements Command {
 
-    String[] commands;
+  String[] commands;
 
-    /**
-     * Constructor for a commands.Dither command object.
-     *
-     * @param commands String array of commands for object.
-     */
-    public Dither(String[] commands) {
-        this.commands = commands;
-    }
+  /**
+   * Constructor for a commands.Dither command object.
+   *
+   * @param commands String array of commands for object.
+   */
+  public Dither(String[] commands) {
+    this.commands = commands;
+  }
 
-    /**
-     * Method to have model m call its dither method.
-     *
-     * @param m A model.
-     * @throws FileNotFoundException If imageName is not found in memory.
-     * @throws IllegalArgumentException If commands passed are not sufficient in length.
-     */
-    @Override
-    public void run(Model m) throws FileNotFoundException, IllegalArgumentException {
-        if (commands.length != 2) {
-            throw new IllegalArgumentException("Invalid number of arguments for command \"dither\". "
-                    + "2 required.");
-        }
-        String imageName = commands[0];
-        String newImageName = commands[1];
-        m.dither(imageName, newImageName);
+  /**
+   * Method to have model m call its dither method.
+   *
+   * @param m A model.
+   * @throws FileNotFoundException If imageName is not found in memory.
+   * @throws IllegalArgumentException If commands passed are not sufficient in length.
+   */
+  @Override
+  public void run(Model m) throws FileNotFoundException, IllegalArgumentException {
+    if (commands.length != 2) {
+      throw new IllegalArgumentException("Invalid number of arguments for command \"dither\". "
+          + "2 required.");
     }
+    String imageName = commands[0];
+    String newImageName = commands[1];
+    m.dither(imageName, newImageName);
+  }
 }

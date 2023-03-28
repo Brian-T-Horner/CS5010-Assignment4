@@ -26,7 +26,7 @@ public class RGBCombine implements Command {
    */
   @Override
   public void run(Model m) throws NoSuchElementException {
-    if(commands.length != 4) {
+    if (commands.length != 4) {
       throw new IllegalArgumentException("Invalid number of arguments for command \"rgb-combine\". "
           + "4 required.");
     }

@@ -32,7 +32,8 @@ public class ImageController extends AbstractController {
       if (args[0].equals("-file") && args.length == 2) {
         runFile(args[1],newModel);
       } else {
-        System.out.println("To run a text file please input \"-file file-path\" as command line arguments.");
+        System.out.println("To run a text file please input " +
+                "\"-file file-path\" as command line arguments.");
       }
       System.out.println("Exiting application...");
       return;

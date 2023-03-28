@@ -143,11 +143,39 @@ public interface Model {
   void greyscale(String greyScaleComponent, String imageName, String newImageName)
       throws NoSuchElementException;
 
+  /**
+   * Method to get the dither image of an image.
+   * @param imageName The image to get the dither image from.
+   * @param newImageName The name to save the resulting image as.
+   */
   void dither(String imageName, String newImageName);
+
+  /**
+   * Method to get the sepia image of an image.
+   * @param imageName The image to get the sepia image from.
+   * @param newImageName The name to save the resulting image as.
+   */
   void sepia(String imageName, String newImageName);
+
+  /**
+   * Method to get the sharpened image of an image.
+   * @param imageName The image to get the sharpened image from.
+   * @param newImageName The name to save the resulting image as.
+   */
   void sharpen(String imageName, String newImageName);
+
+  /**
+   * Method to get the blurred image of an image.
+   * @param imageName The image to get the blurred image from.
+   * @param newImageName The name to save the resulting image as.
+   */
   void blur(String imageName, String newImageName);
 
+  /**
+   * Method to get the greyscale image of an image via matrix multiplication.
+   * @param imageName The image to get the greyscale image from.
+   * @param newImageName The name to save the resulting image as.
+   */
   void matrixGreyscale(String imageName, String newImageName);
 
 }
