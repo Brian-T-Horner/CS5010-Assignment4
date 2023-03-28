@@ -435,18 +435,18 @@ public class PPMModel implements Model {
 
         // Setting pixels besides it by the error
         if(j + 1 < width) {
-          redComp[i][j + 1] = redComp[i][j + 1] + (int) Math.rint((7.0 / 16.0) * error);
+          redComp[i][j + 1] = redComp[i][j + 1] + (int) Math.ceil((7.0 / 16.0) * error);
         }
         if(i + 1 < height && j - 1 >= 0) {
-          redComp[i + 1][j - 1] = redComp[i+1][j-1] + (int) Math.rint((3.0 / 16.0) * error);
+          redComp[i + 1][j - 1] = redComp[i + 1][j - 1] + (int) Math.ceil((3.0 / 16.0) * error);
         }
 
         if(i + 1 < height) {
-          redComp[i + 1][j] = redComp[i+1][j] + (int) Math.rint((5.0 / 16.0) * error);
+          redComp[i + 1][j] = redComp[i+1][j] + (int) Math.ceil((5.0 / 16.0) * error);
         }
 
         if(i + 1 < height && j + 1 < width) {
-          redComp[i + 1][j + 1] = redComp[i + 1][j + 1] + (int) Math.rint((1.0/16.0) * error);
+          redComp[i + 1][j + 1] = redComp[i + 1][j + 1] + (int) Math.ceil((1.0/16.0) * error);
         }
       }
     }
