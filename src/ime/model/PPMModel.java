@@ -417,7 +417,7 @@ public class PPMModel implements Model {
     int oldColor;
     int newColor;
     double error;
-    for (int i = 0; i < height; i++ ) {
+    for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         oldColor = redComp[i][j];
         if (oldColor >= 128) {
@@ -544,42 +544,41 @@ public class PPMModel implements Model {
         double blueSum = 0;
         double greenSum = 0;
 
-        //TODO: Add try catches
 
         // -------- First Row Operations ---------------='
         if (i - 2 >= 0) {
 
           // [0][0] - row 0 column 0 -  (i-2, j-2)
           if (j - 2 >= 0){
-            redSum += Math.ceil((double) r[i-2][j-2] * sharpenFilter[0][0]);
-            blueSum += Math.ceil((double) b[i-2][j-2] * sharpenFilter[0][0]);
-            greenSum += Math.ceil((double) g[i-2][j-2] * sharpenFilter[0][0]);
+            redSum += Math.ceil((double) r[i - 2][j - 2] * sharpenFilter[0][0]);
+            blueSum += Math.ceil((double) b[i - 2][j - 2] * sharpenFilter[0][0]);
+            greenSum += Math.ceil((double) g[i - 2][j - 2] * sharpenFilter[0][0]);
           }
 
           // [0][1] - row 0 column 1    (i-2, j-1)
           if (j - 1 >= 0){
-            redSum += Math.ceil((double) r[i-2][j-1] * sharpenFilter[0][1]);
-            blueSum += Math.ceil((double) b[i-2][j-1] * sharpenFilter[0][1]);
-            greenSum += Math.ceil((double) g[i-2][j-1] * sharpenFilter[0][1]);
+            redSum += Math.ceil((double) r[i - 2][j - 1] * sharpenFilter[0][1]);
+            blueSum += Math.ceil((double) b[i - 2][j - 1] * sharpenFilter[0][1]);
+            greenSum += Math.ceil((double) g[i - 2][j - 1] * sharpenFilter[0][1]);
           }
 
           // [0][2] - row 0 column 2    (i-2, j)
-          redSum += Math.ceil((double) r[i-2][j] * sharpenFilter[0][2]);
-          blueSum += Math.ceil((double) b[i-2][j] * sharpenFilter[0][2]);
-          greenSum += Math.ceil((double) g[i-2][j] * sharpenFilter[0][2]);
+          redSum += Math.ceil((double) r[i - 2][j] * sharpenFilter[0][2]);
+          blueSum += Math.ceil((double) b[i - 2][j] * sharpenFilter[0][2]);
+          greenSum += Math.ceil((double) g[i - 2][j] * sharpenFilter[0][2]);
 
           // [0][3] - row 0 column 3    (i-2, j+1)
           if ((j + 1) < width){
-            redSum += Math.ceil((double) r[i-2][j+1] * sharpenFilter[0][3]);
-            blueSum += Math.ceil((double) b[i-2][j+1] * sharpenFilter[0][3]);
-            greenSum += Math.ceil((double) g[i-2][j+1] * sharpenFilter[0][3]);
+            redSum += Math.ceil((double) r[i - 2][j + 1] * sharpenFilter[0][3]);
+            blueSum += Math.ceil((double) b[i - 2][j + 1] * sharpenFilter[0][3]);
+            greenSum += Math.ceil((double) g[i - 2][j + 1] * sharpenFilter[0][3]);
           }
 
           // [0][4] - row 0 column 4    (i-2, j+2)
           if ((j + 2) < width){
-            redSum += Math.ceil((double) r[i-2][j+2] * sharpenFilter[0][4]);
-            blueSum += Math.ceil((double) b[i-2][j+2] * sharpenFilter[0][4]);
-            greenSum += Math.ceil((double) g[i-2][j+2] * sharpenFilter[0][4]);
+            redSum += Math.ceil((double) r[i - 2][j + 2] * sharpenFilter[0][4]);
+            blueSum += Math.ceil((double) b[i - 2][j + 2] * sharpenFilter[0][4]);
+            greenSum += Math.ceil((double) g[i - 2][j + 2] * sharpenFilter[0][4]);
           }
         }
 
@@ -589,35 +588,35 @@ public class PPMModel implements Model {
 
           // [1][0] - row 1 column 0  (i-1, j-2)
           if (j - 2 >= 0){
-            redSum += Math.ceil((double) r[i-1][j-2] * sharpenFilter[1][0]);
-            blueSum += Math.ceil((double) b[i-1][j-2] * sharpenFilter[1][0]);
-            greenSum += Math.ceil((double) g[i-1][j-2] * sharpenFilter[1][0]);
+            redSum += Math.ceil((double) r[i - 1][j - 2] * sharpenFilter[1][0]);
+            blueSum += Math.ceil((double) b[i - 1][j - 2] * sharpenFilter[1][0]);
+            greenSum += Math.ceil((double) g[i - 1][j - 2] * sharpenFilter[1][0]);
           }
 
           // [1][1] - row 1 column 1  (i-1, j-1)
           if (j - 1 >= 0){
-            redSum += Math.ceil((double) r[i-1][j-1] * sharpenFilter[1][1]);
-            blueSum += Math.ceil((double) b[i-1][j-1] * sharpenFilter[1][1]);
-            greenSum += Math.ceil((double) g[i-1][j-1] * sharpenFilter[1][1]);
+            redSum += Math.ceil((double) r[i - 1][j - 1] * sharpenFilter[1][1]);
+            blueSum += Math.ceil((double) b[i - 1][j - 1] * sharpenFilter[1][1]);
+            greenSum += Math.ceil((double) g[i - 1][j - 1] * sharpenFilter[1][1]);
           }
 
           // [1][2] - row 1 column 2  (i-1, j)
-          redSum += Math.ceil((double) r[i-1][j] * sharpenFilter[1][2]);
-          blueSum += Math.ceil((double) b[i-1][j] * sharpenFilter[1][2]);
-          greenSum += Math.ceil((double) g[i-1][j] * sharpenFilter[1][2]);
+          redSum += Math.ceil((double) r[i - 1][j] * sharpenFilter[1][2]);
+          blueSum += Math.ceil((double) b[i - 1][j] * sharpenFilter[1][2]);
+          greenSum += Math.ceil((double) g[i - 1][j] * sharpenFilter[1][2]);
 
           // [1][3] - row 1 column 3  (i-1, j+1)
           if ((j + 1) < width){
-            redSum += Math.ceil((double) r[i-1][j+1] * sharpenFilter[1][3]);
-            blueSum += Math.ceil((double) b[i-1][j+1] * sharpenFilter[1][3]);
-            greenSum += Math.ceil((double) g[i-1][j+1] * sharpenFilter[1][3]);
+            redSum += Math.ceil((double) r[i - 1][j + 1] * sharpenFilter[1][3]);
+            blueSum += Math.ceil((double) b[i - 1][j + 1] * sharpenFilter[1][3]);
+            greenSum += Math.ceil((double) g[i - 1][j + 1] * sharpenFilter[1][3]);
           }
 
           // [1][4] - row 1 column 4  (i-1, j+2)
           if ((j + 2) < width){
-            redSum += Math.ceil((double) r[i-1][j+2] * sharpenFilter[1][4]);
-            blueSum += Math.ceil((double) b[i-1][j+2] * sharpenFilter[1][4]);
-            greenSum += Math.ceil((double) g[i-1][j+2] * sharpenFilter[1][4]);
+            redSum += Math.ceil((double) r[i - 1][j + 2] * sharpenFilter[1][4]);
+            blueSum += Math.ceil((double) b[i - 1][j + 2] * sharpenFilter[1][4]);
+            greenSum += Math.ceil((double) g[i - 1][j + 2] * sharpenFilter[1][4]);
           }
         }
 
@@ -625,16 +624,16 @@ public class PPMModel implements Model {
         // -------------Pixel Row Operations -------------------
         // [2][0] - row 2 column 0  (i, j-2)
         if (j - 2 >= 0){
-          redSum += Math.ceil((double) r[i][j-2] * sharpenFilter[2][0]);
-          blueSum += Math.ceil((double) b[i][j-2] * sharpenFilter[2][0]);
-          greenSum += Math.ceil((double) g[i][j-2] * sharpenFilter[2][0]);
+          redSum += Math.ceil((double) r[i][j - 2] * sharpenFilter[2][0]);
+          blueSum += Math.ceil((double) b[i][j - 2] * sharpenFilter[2][0]);
+          greenSum += Math.ceil((double) g[i][j - 2] * sharpenFilter[2][0]);
         }
 
         // [2][1] - row 2 column 1  (i, j-1)
         if (j - 1 >= 0){
-          redSum += Math.ceil((double) r[i][j-1] * sharpenFilter[2][1]);
-          blueSum += Math.ceil((double) b[i][j-1] * sharpenFilter[2][1]);
-          greenSum += Math.ceil((double) g[i][j-1] * sharpenFilter[2][1]);
+          redSum += Math.ceil((double) r[i][j - 1] * sharpenFilter[2][1]);
+          blueSum += Math.ceil((double) b[i][j - 1] * sharpenFilter[2][1]);
+          greenSum += Math.ceil((double) g[i][j - 1] * sharpenFilter[2][1]);
         }
 
         // [2][2] - row 2 column 2  (i, j)
@@ -644,16 +643,16 @@ public class PPMModel implements Model {
 
         // [2][3] - row 2 column 3  (i, j+1)
         if ((j + 1) < width){
-          redSum += Math.ceil((double) r[i][j+1] * sharpenFilter[2][3]);
-          blueSum += Math.ceil((double) b[i][j+1] * sharpenFilter[2][3]);
-          greenSum += Math.ceil((double) g[i][j+1] * sharpenFilter[2][3]);
+          redSum += Math.ceil((double) r[i][j + 1] * sharpenFilter[2][3]);
+          blueSum += Math.ceil((double) b[i][j + 1] * sharpenFilter[2][3]);
+          greenSum += Math.ceil((double) g[i][j + 1] * sharpenFilter[2][3]);
         }
 
         // [2][4] - row 2 column 4  (i, j+2)
         if ((j + 2) < width){
-          redSum += Math.ceil((double) r[i][j+2] * sharpenFilter[2][4]);
-          blueSum += Math.ceil((double) b[i][j+2] * sharpenFilter[2][4]);
-          greenSum += Math.ceil((double) g[i][j+2] * sharpenFilter[2][4]);
+          redSum += Math.ceil((double) r[i][j + 2] * sharpenFilter[2][4]);
+          blueSum += Math.ceil((double) b[i][j + 2] * sharpenFilter[2][4]);
+          greenSum += Math.ceil((double) g[i][j + 2] * sharpenFilter[2][4]);
         }
 
         // -----------Fourth Row Operations ---------------
@@ -661,35 +660,35 @@ public class PPMModel implements Model {
 
           // [3][0] - row 4 column 0  (i+1, j-2)
           if (j - 2 >= 0){
-            redSum += Math.ceil((double) r[i+1][j-2] * sharpenFilter[3][0]);
-            blueSum += Math.ceil((double) b[i+1][j-2] * sharpenFilter[3][0]);
-            greenSum += Math.ceil((double) g[i+1][j-2] * sharpenFilter[3][0]);
+            redSum += Math.ceil((double) r[i + 1][j - 2] * sharpenFilter[3][0]);
+            blueSum += Math.ceil((double) b[i + 1][j - 2] * sharpenFilter[3][0]);
+            greenSum += Math.ceil((double) g[i + 1][j - 2] * sharpenFilter[3][0]);
           }
 
           // [3][1] - row 4 column 1  (i+1, j-1)
           if (j - 1 >= 0){
-            redSum += Math.ceil((double) r[i+1][j-1] * sharpenFilter[3][1]);
-            blueSum += Math.ceil((double) b[i+1][j-1] * sharpenFilter[3][1]);
-            greenSum += Math.ceil((double) g[i+1][j-1] * sharpenFilter[3][1]);
+            redSum += Math.ceil((double) r[i + 1][j - 1] * sharpenFilter[3][1]);
+            blueSum += Math.ceil((double) b[i + 1][j - 1] * sharpenFilter[3][1]);
+            greenSum += Math.ceil((double) g[i + 1][j - 1] * sharpenFilter[3][1]);
           }
 
           // [3][2] - row 4 column 2  (i+1, j)
-          redSum += Math.ceil((double) r[i+1][j] * sharpenFilter[3][2]);
-          blueSum += Math.ceil((double) b[i+1][j] * sharpenFilter[3][2]);
-          greenSum += Math.ceil((double) g[i+1][j] * sharpenFilter[3][2]);
+          redSum += Math.ceil((double) r[i + 1][j] * sharpenFilter[3][2]);
+          blueSum += Math.ceil((double) b[i + 1][j] * sharpenFilter[3][2]);
+          greenSum += Math.ceil((double) g[i + 1][j] * sharpenFilter[3][2]);
 
           // [3][3] - row 4 column 3  (i+1, j+1)
           if ((j + 1) < width){
-            redSum += Math.ceil((double) r[i+1][j+1] * sharpenFilter[3][3]);
-            blueSum += Math.ceil((double) b[i+1][j+1] * sharpenFilter[3][3]);
-            greenSum += Math.ceil((double) g[i+1][j+1] * sharpenFilter[3][3]);
+            redSum += Math.ceil((double) r[i + 1][j + 1] * sharpenFilter[3][3]);
+            blueSum += Math.ceil((double) b[i + 1][j + 1] * sharpenFilter[3][3]);
+            greenSum += Math.ceil((double) g[i + 1][j + 1] * sharpenFilter[3][3]);
           }
 
           // [3][4] - row 4 column 4  (i+1, j+2)
           if ((j + 2) < width){
-            redSum += Math.ceil((double) r[i+1][j+2] * sharpenFilter[3][4]);
-            blueSum += Math.ceil((double) b[i+1][j+2] * sharpenFilter[3][4]);
-            greenSum += Math.ceil((double) g[i+1][j+2] * sharpenFilter[3][4]);
+            redSum += Math.ceil((double) r[i + 1][j + 2] * sharpenFilter[3][4]);
+            blueSum += Math.ceil((double) b[i + 1][j + 2] * sharpenFilter[3][4]);
+            greenSum += Math.ceil((double) g[i + 1][j + 2] * sharpenFilter[3][4]);
           }
         }
         // -----------Fifth Row Operations ---------------
@@ -697,46 +696,46 @@ public class PPMModel implements Model {
 
           // [4][0] - row 5 column 0  (i+2, j-2)
           if (j - 2 >= 0){
-            redSum += Math.ceil((double) r[i+2][j-2] * sharpenFilter[4][0]);
-            blueSum += Math.ceil((double) b[i+2][j-2] * sharpenFilter[4][0]);
-            greenSum += Math.ceil((double) g[i+2][j-2] * sharpenFilter[4][0]);
+            redSum += Math.ceil((double) r[i + 2][j - 2] * sharpenFilter[4][0]);
+            blueSum += Math.ceil((double) b[i + 2][j - 2] * sharpenFilter[4][0]);
+            greenSum += Math.ceil((double) g[i + 2][j - 2] * sharpenFilter[4][0]);
           }
 
           // [4][1] - row 5 column 1  (i+2, j-1)
           if (j - 1 >= 0){
-            redSum += Math.ceil((double) r[i+2][j-1] * sharpenFilter[4][1]);
-            blueSum += Math.ceil((double) b[i+2][j-1] * sharpenFilter[4][1]);
-            greenSum += Math.ceil((double) g[i+2][j-1] * sharpenFilter[4][1]);
+            redSum += Math.ceil((double) r[i + 2][j - 1] * sharpenFilter[4][1]);
+            blueSum += Math.ceil((double) b[i + 2][j - 1] * sharpenFilter[4][1]);
+            greenSum += Math.ceil((double) g[i + 2][j - 1] * sharpenFilter[4][1]);
           }
 
           // [4][2] - row 5 column 2  (i+2, j)
-          redSum += Math.ceil((double) r[i+2][j] * sharpenFilter[4][2]);
-          blueSum += Math.ceil((double) b[i+2][j] * sharpenFilter[4][2]);
-          greenSum += Math.ceil((double) g[i+2][j] * sharpenFilter[4][2]);
+          redSum += Math.ceil((double) r[i + 2][j] * sharpenFilter[4][2]);
+          blueSum += Math.ceil((double) b[i + 2][j] * sharpenFilter[4][2]);
+          greenSum += Math.ceil((double) g[i + 2][j] * sharpenFilter[4][2]);
 
           // [4][3] - row 5 column 3  (i+2, j+1)
           if ((j + 1) < width){
-            redSum += Math.ceil((double) r[i+2][j+1] * sharpenFilter[4][3]);
-            blueSum += Math.ceil((double) b[i+2][j+1] * sharpenFilter[4][3]);
-            greenSum += Math.ceil((double) g[i+2][j+1] * sharpenFilter[4][3]);
+            redSum += Math.ceil((double) r[i + 2][j + 1] * sharpenFilter[4][3]);
+            blueSum += Math.ceil((double) b[i + 2][j + 1] * sharpenFilter[4][3]);
+            greenSum += Math.ceil((double) g[i + 2][j + 1] * sharpenFilter[4][3]);
           }
 
           // [4][4] - row 5 column 4  (i+2, j+2)
           if ((j + 2) < width){
-            redSum += Math.ceil((double) r[i+2][j+2] * sharpenFilter[4][4]);
-            blueSum += Math.ceil((double) b[i+2][j+2] * sharpenFilter[4][4]);
-            greenSum += Math.ceil((double) g[i+2][j+2] * sharpenFilter[4][4]);
+            redSum += Math.ceil((double) r[i + 2][j + 2] * sharpenFilter[4][4]);
+            blueSum += Math.ceil((double) b[i + 2][j + 2] * sharpenFilter[4][4]);
+            greenSum += Math.ceil((double) g[i + 2][j + 2] * sharpenFilter[4][4]);
           }
         }
 
         //-------------------Check floor and ceiling------------------
 
         // red
-        if (redSum < 0){
+        if (redSum < 0) {
           redSum = 0;
         }
 
-        if (redSum > 255){
+        if (redSum > 255) {
           redSum = 255;
         }
         // blue
@@ -914,11 +913,11 @@ public class PPMModel implements Model {
         }
         // Check for floor and ceiling
         // red
-        if(redSum < 0){
+        if(redSum < 0) {
           redSum = 0;
         }
 
-        if(redSum > 255){
+        if(redSum > 255) {
           redSum = 255;
         }
         // blue
