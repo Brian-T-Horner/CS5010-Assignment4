@@ -68,7 +68,7 @@ public class ImageUtil {
         int r = sc.nextInt();
         int g = sc.nextInt();
         int b = sc.nextInt();
-        System.out.println("Color of pixel (" + j + "," + i + "): " + r + "," + g + "," + b);
+        System.out.println("Color of pixel (" + i + "," + j + "): " + r + "," + g + "," + b);
       }
     }
   }
@@ -110,20 +110,20 @@ public class ImageUtil {
     int height = sc.nextInt();
     int maxValue = sc.nextInt();
 
-    int[][] red = new int[width][height];
+    int[][] red = new int[height][width];
 
-    int[][] green = new int[width][height];
+    int[][] green = new int[height][width];
 
-    int[][] blue = new int[width][height];
+    int[][] blue = new int[height][width];
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         int r = sc.nextInt();
         int g = sc.nextInt();
         int b = sc.nextInt();
-        red[j][i] = r;
-        green[j][i] = g;
-        blue[j][i] = b;
+        red[i][j] = r;
+        green[i][j] = g;
+        blue[i][j] = b;
       }
     }
     return new PPMImage(width, height, red, blue, green);
@@ -184,9 +184,9 @@ public class ImageUtil {
     ppmWriter.write("255\n");
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
-        ppmWriter.write(String.format("%d\n", image.getRedComponent()[j][i]));
-        ppmWriter.write(String.format("%d\n", image.getGreenComponent()[j][i]));
-        ppmWriter.write(String.format("%d\n", image.getBlueComponent()[j][i]));
+        ppmWriter.write(String.format("%d\n", image.getRedComponent()[i][j]));
+        ppmWriter.write(String.format("%d\n", image.getGreenComponent()[i][j]));
+        ppmWriter.write(String.format("%d\n", image.getBlueComponent()[i][j]));
       }
     }
     ppmWriter.close();
@@ -205,13 +205,13 @@ public class ImageUtil {
     int g;
     int b;
     int pixel;
-    for (int i = 0; i < image.getWidth(); i++) {
-      for (int j = 0; j < image.getHeight(); j++) {
+    for (int i = 0; i < image.getHeight(); i++) {
+      for (int j = 0; j < image.getWidth(); j++) {
         r = image.getRedComponent()[i][j];
         g = image.getGreenComponent()[i][j];
         b = image.getBlueComponent()[i][j];
         pixel = 0xFF000000 + (r << 16) + (g << 8) + b;
-        buffImage.setRGB(i, j, pixel);
+        buffImage.setRGB(j, i, pixel);
       }
     }
     return buffImage;
@@ -221,12 +221,12 @@ public class ImageUtil {
   public static Image readBufferedImage(BufferedImage buf) {
     int height = buf.getHeight();
     int width = buf.getWidth();
-    int[][] r = new int[width][height];
-    int[][] g = new int[width][height];
-    int[][] b = new int[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        int rgb = buf.getRGB(i, j);
+    int[][] r = new int[height][width];
+    int[][] g = new int[height][width];
+    int[][] b = new int[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        int rgb = buf.getRGB(j, i);
         r[i][j] = rgb >> 16 & 0xff;
         g[i][j] = rgb >> 8 & 0xff;
         b[i][j] = rgb & 0xff;

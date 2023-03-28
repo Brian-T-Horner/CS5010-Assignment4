@@ -3,6 +3,9 @@ package ime.control.commands;
 import ime.model.Model;
 import java.util.NoSuchElementException;
 
+//TODO: clarify with professor on what he means with these two -
+// He mentioned that we can do color transformations off this gryscale
+
 /**
  * A commands.Greyscale command object.
  */
