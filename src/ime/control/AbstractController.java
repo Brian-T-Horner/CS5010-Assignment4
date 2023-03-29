@@ -136,7 +136,7 @@ public abstract class AbstractController implements Controller {
           out.append(e.getMessage()).append("\n");
         }
       }
-      //insertCursor();
+      insertCursor();
     }
   }
 

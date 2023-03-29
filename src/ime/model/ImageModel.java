@@ -13,7 +13,7 @@ import ime.ImageUtil;
  */
 public class ImageModel implements Model {
 
-  protected final Map<String, Image> images = new HashMap<>();
+  private final Map<String, Image> images = new HashMap<>();
 
   /**
    * Constructor for ImageModel. No parameters as only one default field.
