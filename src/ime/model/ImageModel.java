@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import ime.ImageUtil;
 
 /**
- * Implementation of Model that provides a set of operations over a set of Images
+ * Implementation of Model that provides a set of operations over a set of Images.
  */
 public class ImageModel implements Model {
 

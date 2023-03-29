@@ -141,7 +141,7 @@ public abstract class AbstractController implements Controller {
   }
 
   /**
-   * Inserts a cursor to prompt the user to type the next command
+   * Inserts a cursor to prompt the user to type the next command.
    *
    * @throws IOException if program encounters an issue writing to the out stream.
    */

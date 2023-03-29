@@ -482,19 +482,19 @@ public class ImageModelTest {
     int [][] rComponent = new int[height][width];
     int [][] gComponent = new int[height][width];
     int [][] bComponent = new int[height][width];
-    for(int i = 0; i < height; i++){
-      for(int j = 0; j < width; j++){
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         rComponent[i][j] = scanner.nextInt();
       }
     }
 
-    for(int i = 0; i < height; i++){
-      for (int j = 0; j < width; j++){
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         gComponent[i][j] = scanner.nextInt();
       }
     }
-    for(int i = 0; i < height; i++){
-      for (int j = 0; j < width; j++){
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         bComponent[i][j] = scanner.nextInt();
       }
     }
