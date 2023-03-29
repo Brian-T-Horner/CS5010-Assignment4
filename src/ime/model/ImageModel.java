@@ -13,7 +13,7 @@ import ime.ImageUtil;
  */
 public class ImageModel implements Model {
 
-  private final Map<String, Image> images = new HashMap<>();
+  protected final Map<String, Image> images = new HashMap<>();
 
   /**
    * Constructor for ImageModel. No parameters as only one default field.
@@ -951,7 +951,6 @@ public class ImageModel implements Model {
     }
     return brightened;
   }
-
 
   /**
    * A class to represent an image in PPM Format.
