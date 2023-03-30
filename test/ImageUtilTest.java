@@ -31,7 +31,7 @@ public class ImageUtilTest {
 
   @Before
   public void setUp() {
-    donutImg = readInTestImage();
+    donutImg = readInTestPPMImage("test/donut.ppm");
 
     assert donutImg != null;
     buf = readInTestBufferedImage(donutImg);
@@ -71,47 +71,63 @@ public class ImageUtilTest {
 
 
   @Test
-  public void testSaveImage() {
+  public void testIllegalSaveImage() {
+    assertThrows(IllegalArgumentException.class,
+        () -> ImageUtil.saveImage(donutImg, "invalid-path"));
+  }
+
+  @Test
+  public void testPPMSavedCorrectly() {
     try {
       ImageUtil.saveImage(donutImg, "test/saved-donut-1.ppm");
     } catch (Exception e) {
       fail("testSaveImage:Saving ppm file failed");
     }
+    File ppm = new File("test/saved-donut-1.ppm");
+    assertTrue(ppm.exists());
+    ppm.deleteOnExit();
+    Image testImage = readInTestPPMImage("test/saved-donut-1.ppm");
+    assertEquals(donutImg.getGreenComponent(), testImage.getGreenComponent());
+    assertEquals(donutImg.getRedComponent(), testImage.getRedComponent());
+    assertEquals(donutImg.getBlueComponent(), donutImg.getBlueComponent());
+    assertEquals(donutImg.getWidth(), testImage.getWidth());
+    assertEquals(donutImg.getHeight(), testImage.getHeight());
+  }
 
+  @Test
+  public void testPNGSavedCorrectly() {
     try {
       ImageUtil.saveImage(donutImg, "test/saved-donut-1.png");
     } catch (Exception e) {
       fail("testSaveImage:Saving png file failed");
     }
-
-    try {
-      ImageUtil.saveImage(donutImg, "test/saved-donut-1.bmp");
-    } catch (Exception e) {
-      fail("testSaveImage:Saving bmp file failed");
-    }
-
+    File png = new File("test/saved-donut-1.png");
+    png.deleteOnExit();
+    assertTrue(png.exists());
+  }
+  @Test
+  public void testJPGSavedCorrectly() {
     try {
       ImageUtil.saveImage(donutImg, "test/saved-donut-1.jpg");
     } catch (Exception e) {
       fail("testSaveImage:Saving jpg file failed");
     }
-
-    File ppm = new File("test/saved-donut-1.ppm");
-    ppm.deleteOnExit();
-    assertTrue(ppm.exists());
-    File png = new File("test/saved-donut-1.png");
-    png.deleteOnExit();
-    assertTrue(png.exists());
-    File bmp = new File("test/saved-donut-1.bmp");
-    bmp.deleteOnExit();
-    assertTrue(bmp.exists());
     File jpg = new File("test/saved-donut-1.jpg");
     jpg.deleteOnExit();
     assertTrue(jpg.exists());
-
-    assertThrows(IllegalArgumentException.class,
-        () -> ImageUtil.saveImage(donutImg, "invalid-path"));
   }
+  @Test
+  public void testBMPSavedCorrectly() {
+    try {
+      ImageUtil.saveImage(donutImg, "test/saved-donut-1.bmp");
+    } catch (Exception e) {
+      fail("testSaveImage:Saving bmp file failed");
+    }
+    File bmp = new File("test/saved-donut-1.bmp");
+    bmp.deleteOnExit();
+    assertTrue(bmp.exists());
+  }
+
 
 
   @Test
@@ -128,11 +144,10 @@ public class ImageUtilTest {
     assertThrows(IOException.class, () -> ImageUtil.writeToPPMFile(donutImg, "test"));
   }
 
-
-  private Image readInTestImage() {
+  private Image readInTestPPMImage(String filepath) {
     Scanner sc;
     try {
-      sc = new Scanner(new FileInputStream("test/donut.ppm"));
+      sc = new Scanner(new FileInputStream(filepath));
     } catch (FileNotFoundException e) {
       return null;
     }
