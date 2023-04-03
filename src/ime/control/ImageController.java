@@ -2,6 +2,8 @@ package ime.control;
 
 import ime.model.ImageModel;
 import ime.model.Model;
+import ime.view.TextView;
+import ime.view.View;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,11 +17,9 @@ public class ImageController extends AbstractController {
   /**
    * Contructor for the creation of a IME.control.Controller object.
    *
-   * @param in  Input stream for the controller.
-   * @param out Output stream for the controller.
    */
-  public ImageController(Readable in, Appendable out) {
-    super(in,out);
+  public ImageController() {
+    super();
   }
 
   /**
@@ -29,25 +29,25 @@ public class ImageController extends AbstractController {
    */
   public static void main(String[] args) throws IOException {
     Model newModel = new ImageModel();
+    View textView = new TextView(System.out, new InputStreamReader(System.in));
+
     if (args.length > 0) {
-      if (args[0].equals("-file") && args.length == 2) {
-        runFile(args[1],newModel);
+      if(args[0].equals("-text") && args.length == 1) {
+        Controller controller = new ImageController();
+        controller.run(newModel,textView);
+      } else if (args[0].equals("-file") && args.length == 2) {
+        runFile(args[1],newModel,System.out);
       } else {
         System.out.println("To run a text file please input "
-                + "\"-file file-path\" as command line arguments.");
+                + "\"-file file-path\" as command line arguments.\nTo run in command line, please input \"-text\"");
       }
-      System.out.println("Exiting application...");
-      return;
+    } else {
+      //TODO run with UI view
     }
-    Controller controller = new ImageController(new InputStreamReader(System.in), System.out);
-    controller.run(newModel);
     System.out.println("Exiting application...");
   }
 
-  @Override
-  protected void insertCursor() throws IOException {
-    out.append("$ ");
-  }
+
 }
 
 

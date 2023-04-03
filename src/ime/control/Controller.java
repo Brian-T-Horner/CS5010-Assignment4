@@ -1,6 +1,8 @@
 package ime.control;
 
 import ime.model.Model;
+import ime.view.View;
+
 import java.io.IOException;
 
 /**
@@ -14,7 +16,7 @@ public interface Controller {
    *
    * @param currentModel Current model that the controller is communicating with.
    */
-  void run(Model currentModel) throws IOException;
+  void run(Model currentModel, View view) throws IOException;
 
   /**
    * Determines whether the program should exit.

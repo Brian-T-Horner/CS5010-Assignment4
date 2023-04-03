@@ -32,15 +32,14 @@ import ime.control.commands.Sharpen;
 import ime.control.commands.Value;
 import ime.control.commands.VerticalFlip;
 import ime.model.Model;
+import ime.view.FileView;
+import ime.view.View;
 
 
 /**
  * Abstract class to extending the Controller interface.
  */
 public abstract class AbstractController implements Controller {
-
-  final Readable in;
-  final Appendable out;
   static Map<String, Function<Scanner, Command>> knownCommands;
 
   protected boolean quit;
@@ -49,12 +48,8 @@ public abstract class AbstractController implements Controller {
   /**
    * Contructor for AbstractController.
    *
-   * @param in  Input stream for the controller.
-   * @param out Output stream for the controller.
    */
-  public AbstractController(Readable in, Appendable out) {
-    this.in = in;
-    this.out = out;
+  public AbstractController() {
     knownCommands = new HashMap<>();
     quit = false;
   }
@@ -65,10 +60,10 @@ public abstract class AbstractController implements Controller {
 
 
   @Override
-  public void run(Model currentModel) throws IOException {
+  public void run(Model currentModel, View currentview) throws IOException {
     Objects.requireNonNull(currentModel);
-    Scanner scan = new Scanner(this.in);
-    insertCursor();
+    Scanner scan = currentview.getUserInput();
+    currentview.textPrompt();
     knownCommands.put("bluescale", s -> new Bluescale(s.nextLine().trim().split(" ")));
     knownCommands.put("redscale", s -> new Redscale(s.nextLine().trim().split(" ")));
     knownCommands.put("greenscale", s -> new Greenscale(s.nextLine().trim().split(" ")));
@@ -109,43 +104,40 @@ public abstract class AbstractController implements Controller {
           throw new IllegalArgumentException(
                   "Invalid number of arguments for command \"run\". 1 required.");
         }
-        quit = runFile(commands[0],currentModel);
+        try{
+          quit = runFile(commands[0],currentModel,currentview.getOutstream());
+        } catch(IOException e) {
+          currentview.printGeneralError("Could not get path: " + e.getMessage());
+        }
 
         if (isQuit()) {
           return;
         }
-        insertCursor();
+        currentview.textPrompt();
         continue;
       }
 
       // If command is empty of pound sign provided
       if (in.isEmpty() || in.charAt(0) == '#') {
-        insertCursor();
+        currentview.textPrompt();
         continue;
       }
       // If looking for command in hashmap
       Function<Scanner, Command> cmd = knownCommands.getOrDefault(in, null);
       // If command is not recognized
       if (cmd == null) {
-        out.append("Unrecognized command\n");
+        currentview.unknownCommandPrompt();
       } else {
         c = cmd.apply(scan);
         try {
           c.run(currentModel);
         } catch (Exception e) {
-          out.append(e.getMessage()).append("\n");
+          currentview.printGeneralError(e.getMessage());
         }
       }
-      //insertCursor();
+      currentview.textPrompt();
     }
   }
-
-  /**
-   * Inserts a cursor to prompt the user to type the next command
-   *
-   * @throws IOException if program encounters an issue writing to the out stream.
-   */
-  protected abstract void insertCursor() throws IOException;
 
   /**
    * Method to read text files into a String.
@@ -169,7 +161,7 @@ public abstract class AbstractController implements Controller {
    * @return quit status of FileController
    * @throws IOException if readFile encounters an IO error
    */
-  protected static boolean runFile(String fileIn,Model currentModel) throws IOException {
+  protected static boolean runFile(String fileIn,Model currentModel,Appendable out) throws IOException {
     String file;
     try {
       file = readFile(fileIn);
@@ -177,10 +169,10 @@ public abstract class AbstractController implements Controller {
       throw new IOException(e.getMessage());
     }
     Reader newIn = new StringReader(file);
-    Controller fileController = new FileController(newIn, System.out);
+    Controller fileController = new FileController();
 
     try {
-      fileController.run(currentModel);
+      fileController.run(currentModel,new FileView(out,newIn));
     } catch (IOException e) {
       throw new IOException(e.getMessage());
     }
