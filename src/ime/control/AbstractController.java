@@ -40,6 +40,10 @@ import ime.view.View;
  * Abstract class to extending the Controller interface.
  */
 public abstract class AbstractController implements Controller {
+
+  protected Model model;
+
+  protected View view;
   static Map<String, Function<Scanner, Command>> knownCommands;
 
   protected boolean quit;
@@ -47,9 +51,10 @@ public abstract class AbstractController implements Controller {
 
   /**
    * Contructor for AbstractController.
-   *
    */
-  public AbstractController() {
+  public AbstractController(Model model, View view) {
+    this.model = model;
+    this.view = view;
     knownCommands = new HashMap<>();
     quit = false;
   }
@@ -60,10 +65,10 @@ public abstract class AbstractController implements Controller {
 
 
   @Override
-  public void run(Model currentModel, View currentview) throws IOException {
-    Objects.requireNonNull(currentModel);
-    Scanner scan = currentview.getUserInput();
-    currentview.textPrompt();
+  public abstract void run() throws IOException;
+
+
+  public void putCommands() {
     knownCommands.put("bluescale", s -> new Bluescale(s.nextLine().trim().split(" ")));
     knownCommands.put("redscale", s -> new Redscale(s.nextLine().trim().split(" ")));
     knownCommands.put("greenscale", s -> new Greenscale(s.nextLine().trim().split(" ")));
@@ -82,102 +87,20 @@ public abstract class AbstractController implements Controller {
     knownCommands.put("sharpen", s -> new Sharpen(s.nextLine().trim().split(" ")));
     knownCommands.put("blur", s -> new Blur(s.nextLine().trim().split(" ")));
     knownCommands.put("dither", s -> new Dither(s.nextLine().trim().split(" ")));
-
-    while (scan.hasNext()) {
-      Command c;
-      String in = scan.next();
-
-
-      // If quit command
-      if (in.equalsIgnoreCase("q") || in.equalsIgnoreCase("quit")) {
-        quit = true;
-      }
-
-      if (isQuit()) {
-        return;
-      }
-
-      // if run command
-      if (in.equalsIgnoreCase("run")) {
-        String[] commands = scan.nextLine().trim().split(" ");
-        if (commands.length != 1) {
-          throw new IllegalArgumentException(
-                  "Invalid number of arguments for command \"run\". 1 required.");
-        }
-        try{
-          quit = runFile(commands[0],currentModel,currentview.getOutstream());
-        } catch(IOException e) {
-          currentview.printGeneralError("Could not get path: " + e.getMessage());
-        }
-
-        if (isQuit()) {
-          return;
-        }
-        currentview.textPrompt();
-        continue;
-      }
-
-      // If command is empty of pound sign provided
-      if (in.isEmpty() || in.charAt(0) == '#') {
-        currentview.textPrompt();
-        continue;
-      }
-      // If looking for command in hashmap
-      Function<Scanner, Command> cmd = knownCommands.getOrDefault(in, null);
-      // If command is not recognized
-      if (cmd == null) {
-        currentview.unknownCommandPrompt();
-      } else {
-        c = cmd.apply(scan);
-        try {
-          c.run(currentModel);
-        } catch (Exception e) {
-          currentview.printGeneralError(e.getMessage());
-        }
-      }
-      currentview.textPrompt();
-    }
   }
 
-  /**
-   * Method to read text files into a String.
-   *
-   * @param path image path
-   * @return String contents of file
-   * @throws IOException thrown if Files.readAllBytes cannot read the file
-   */
-  protected static String readFile(String path)
-          throws IOException {
-    byte[] encoded = Files.readAllBytes(Paths.get(path));
-    return new String(encoded, StandardCharsets.UTF_8);
-  }
-
-
-  /**
-   * Method to run a script text file using a FileController.
-   *
-   * @param fileIn text file to read from
-   * @param currentModel current model used
-   * @return quit status of FileController
-   * @throws IOException if readFile encounters an IO error
-   */
-  protected static boolean runFile(String fileIn,Model currentModel,Appendable out) throws IOException {
-    String file;
-    try {
-      file = readFile(fileIn);
-    } catch (IOException e) {
-      throw new IOException(e.getMessage());
+  public void executeCommand(String in,Scanner scan){
+    Function<Scanner, Command> cmd = knownCommands.getOrDefault(in, null);
+    Command c;
+    if (cmd == null) {
+      view.unknownCommandPrompt();
+    } else {
+      c = cmd.apply(scan);
+      try {
+        c.run(model);
+      } catch (Exception e) {
+        view.printGeneralError(e.getMessage());
+      }
     }
-    Reader newIn = new StringReader(file);
-    Controller fileController = new FileController();
-
-    try {
-      fileController.run(currentModel,new FileView(out,newIn));
-    } catch (IOException e) {
-      throw new IOException(e.getMessage());
-    }
-    return fileController.isQuit();
   }
 }
-
-

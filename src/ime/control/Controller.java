@@ -14,9 +14,8 @@ public interface Controller {
    * Run method for the program. Takes in input, parses input and calls methods to instruct
    *    its model.
    *
-   * @param currentModel Current model that the controller is communicating with.
    */
-  void run(Model currentModel, View view) throws IOException;
+  void run() throws IOException;
 
   /**
    * Determines whether the program should exit.

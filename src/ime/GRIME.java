@@ -1,26 +1,18 @@
-package ime.control;
-
-import ime.model.ImageModel;
-import ime.model.Model;
-import ime.view.TextView;
-import ime.view.View;
+package ime;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Class that is the IME.control.Controller of our MVC model.
- */
-public class ImageController extends AbstractController {
+import ime.control.Controller;
+import ime.control.TextController;
+import ime.control.UIController;
+import ime.model.ImageModel;
+import ime.model.Model;
+import ime.view.JFrameView;
+import ime.view.TextView;
+import ime.view.View;
 
-
-  /**
-   * Contructor for the creation of a IME.control.Controller object.
-   *
-   */
-  public ImageController() {
-    super();
-  }
+public class GRIME {
 
   /**
    * Main method of the program.
@@ -28,32 +20,24 @@ public class ImageController extends AbstractController {
    * @param args command line arguments to be passed to the program.
    */
   public static void main(String[] args) throws IOException {
-    Model newModel = new ImageModel();
+    Model model = new ImageModel();
     View textView = new TextView(System.out, new InputStreamReader(System.in));
-
+    Controller controller;
     if (args.length > 0) {
       if(args[0].equals("-text") && args.length == 1) {
-        Controller controller = new ImageController();
-        controller.run(newModel,textView);
+        controller = new TextController(model,textView);
+        controller.run();
       } else if (args[0].equals("-file") && args.length == 2) {
-        runFile(args[1],newModel,System.out);
+        //todo this is kinda hacky
+        TextController.runFile(args[1],model);
       } else {
         System.out.println("To run a text file please input "
                 + "\"-file file-path\" as command line arguments.\nTo run in command line, please input \"-text\"");
       }
-    } else {
-      //TODO run with UI view
     }
-    System.out.println("Exiting application...");
+    // TODO run UI controller here
+    controller = new UIController(model, new JFrameView("test"));
+    controller.run();
+
   }
-
-
 }
-
-
-
-
-
-
-
-

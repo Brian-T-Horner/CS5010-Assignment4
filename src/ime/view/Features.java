@@ -4,7 +4,7 @@ public interface Features {
 
   void blur();
 
-  void brighten();
+  void brighten(int scale);
 
   void dither();
 
@@ -14,15 +14,17 @@ public interface Features {
 
   void verticalFlip();
 
-  void loadImage();
+  void loadImage(String path);
 
   void rgbCombine();
 
   void rgbSplit();
 
-  void save();
+  void save(String path);
 
   void sepia();
 
   void sharpen();
+
+  void exit();
 }

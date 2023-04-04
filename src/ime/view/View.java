@@ -1,19 +1,20 @@
 package ime.view;
 
+import java.awt.image.BufferedImage;
 import java.util.Scanner;
 
 public interface View {
-
-  Appendable getOutstream();
   void textPrompt();
 
   void unknownCommandPrompt();
 
   void printGeneralError(String errorMessage);
 
-  Scanner getUserInput();
+  Scanner getScanner();
 
-  void setImage();
+  void readUserInput();
+
+  void setImage(BufferedImage img);
 
   void addFeatures(Features features);
 

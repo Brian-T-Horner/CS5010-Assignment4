@@ -1,5 +1,6 @@
 package ime.view;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -12,11 +13,6 @@ public class TextView implements View{
   public TextView(Appendable out, Readable in) {
     this.out = out;
     this.in = in;
-  }
-
-  @Override
-  public Appendable getOutstream() {
-    return out;
   }
 
   @Override
@@ -45,12 +41,16 @@ public class TextView implements View{
   }
 
   @Override
-  public Scanner getUserInput() {
+  public void readUserInput() {
+
+  }
+
+  public Scanner getScanner() {
     return new Scanner(this.in);
   }
 
   @Override
-  public void setImage() {
+  public void setImage(BufferedImage img) {
     // do nothing
   }
 

@@ -1,44 +1,129 @@
 package ime.view;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.EventListener;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
-public class JFrameView extends JFrame implements View{
+import jdk.jfr.Event;
+
+public class JFrameView extends JFrame implements View {
+
+  private JLabel saveLabel;
+  private JButton loadButton, exitButton, saveButton;
+
+  private JLabel currentImage;
+
+  private JTextField pathInput;
+
+  private JFrame parent = this;
+  private String path;
+
+  public JFrameView(String caption) {
+    super(caption);
+
+    setSize(500, 300);
+    setLocation(200, 200);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-  @Override
-  public Appendable getOutstream() {
-    return null;
+    this.setLayout(new FlowLayout());
+
+    currentImage = new JLabel();
+
+    this.add(currentImage);
+
+    //exit button
+    exitButton = new JButton("Exit");
+    exitButton.setActionCommand("Exit Button");
+    this.add(exitButton);
+    //exit button
+    loadButton = new JButton("Load");
+    loadButton.setActionCommand("Load Button");
+    this.add(loadButton);
+
+    //save button
+    saveButton = new JButton("Save");
+    saveButton.setActionCommand("Save Button");
+    this.add(saveButton);
+
+    pathInput = new JFormattedTextField();
+    pathInput.setPreferredSize(new Dimension(100,20));
+    saveLabel = new JLabel("Save to path:",JLabel.LEFT);
+    saveLabel.setLabelFor(pathInput);
+    this.add(pathInput);
+    this.add(saveLabel);
+
+
+//
+//    display = new JLabel("To be displayed");
+//    this.add(display);
+    setVisible(true);
   }
+
 
   @Override
   public void textPrompt() {
-
+    //do nothing
   }
 
   @Override
   public void unknownCommandPrompt() {
-
+    //TODO
   }
 
   @Override
   public void printGeneralError(String errorMessage) {
-
+    //TODO
   }
 
   @Override
-  public Scanner getUserInput() {
+  public Scanner getScanner() {
     return null;
   }
 
   @Override
-  public void setImage() {
-
+  public void readUserInput() {
+    //todo
   }
+
+
+  @Override
+  public void setImage(BufferedImage img) {
+    currentImage.setIcon(new ImageIcon(img));
+  }
+
+
 
   @Override
   public void addFeatures(Features features) {
 
+    ActionListener selectFileAndLoad = e -> {
+      // Create a file chooser dialog
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle("Select a file");
+
+      // Show the file chooser dialog and wait for the user to select a file
+      int userSelection = fileChooser.showOpenDialog(parent);
+
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+        // Get the selected file path as a string and display it in the label
+        path = fileChooser.getSelectedFile().getAbsolutePath();
+        features.loadImage(path);
+      }
+
+    };
+
+
+    loadButton.addActionListener(selectFileAndLoad);
+    exitButton.addActionListener(evt -> features.exit());
+    saveButton.addActionListener(evt-> features.save(pathInput.getText()));
+    //todo
   }
+
 }
