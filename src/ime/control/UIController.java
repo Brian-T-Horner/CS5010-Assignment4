@@ -91,7 +91,7 @@ public class UIController extends AbstractController implements Features {
   @Override
   public void rgbSplit() {
     checkImageInMemory();
-    //TODO
+    model.rgbSplit("currentImage","currentImage","green","blue");
     setImage();
   }
 
@@ -126,7 +126,6 @@ public class UIController extends AbstractController implements Features {
 
   @Override
   public void exit() {
-    checkImageInMemory();
     System.out.println("Exiting application...");
     System.exit(1);
   }
