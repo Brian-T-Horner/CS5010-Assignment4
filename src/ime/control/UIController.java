@@ -4,10 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Scanner;
 
 import ime.ImageUtil;
-import ime.model.Image;
 import ime.model.Model;
 import ime.view.Features;
 import ime.view.View;
@@ -102,11 +100,6 @@ public class UIController extends AbstractController implements Features {
 
     checkImageInMemory();
 
-//    if(model.getImage("currentImage") == null) {
-//      //TODO view throw error
-//      return;
-//    }
-
     if(path.isEmpty()) {
       path = "./img.png";
     }
@@ -119,18 +112,21 @@ public class UIController extends AbstractController implements Features {
 
   @Override
   public void sepia() {
+    checkImageInMemory();
     model.sepia("currentImage","currentImage");
     setImage();
   }
 
   @Override
   public void sharpen() {
+    checkImageInMemory();
     model.sharpen("currentImage","currentImage");
     setImage();
   }
 
   @Override
   public void exit() {
+    checkImageInMemory();
     System.out.println("Exiting application...");
     System.exit(1);
   }
