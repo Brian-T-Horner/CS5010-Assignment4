@@ -1,8 +1,8 @@
 package ime.control;
 
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import ime.ImageUtil;
@@ -15,7 +15,7 @@ public class UIController extends AbstractController implements Features {
    * Contructor for UIController.
    *
    * @param model model for controller
-   * @param view view for controller
+   * @param view  view for controller
    */
   public UIController(Model model, View view) {
     super(model, view);
@@ -30,57 +30,63 @@ public class UIController extends AbstractController implements Features {
 
   @Override
   public void blur() {
-    checkImageInMemory();
-    model.blur("currentImage","currentImage");
-    setImage();
+    if (checkImageInMemory()) {
+      model.blur("currentImage", "currentImage");
+      setImage();
+    }
   }
 
   @Override
   public void brighten(int scale) {
-    checkImageInMemory();
-    model.brighten("currentImage","currentImage",scale);
-    setImage();
+    if (checkImageInMemory()) {
+      model.brighten("currentImage", "currentImage", scale);
+      setImage();
+    }
   }
 
   @Override
   public void dither() {
-    checkImageInMemory();
+    if (checkImageInMemory()) {
+      model.dither("currentImage", "currentImage");
+      setImage();
+    }
     // TODO has bug, won't apply twice
-    model.dither("currentImage","currentImage");
-    System.out.println("p1");
-    setImage();
+
+
   }
 
   @Override
   public void greyscale() {
-    checkImageInMemory();
-    model.greyscale("luma-component","currentImage","currentImage");
-    setImage();
+    if (checkImageInMemory()) {
+      model.greyscale("luma-component", "currentImage", "currentImage");
+      setImage();
+    }
   }
 
   @Override
   public void horizontalFlip() {
-    checkImageInMemory();
-    model.flipHorizontal("currentImage","currentImage");
-    setImage();
+    if (checkImageInMemory()) {
+      model.flipHorizontal("currentImage", "currentImage");
+      setImage();
+    }
   }
 
   @Override
   public void verticalFlip() {
-    checkImageInMemory();
-    model.flipVertical("currentImage","currentImage");
-    setImage();
+    if (checkImageInMemory()) {
+      model.flipVertical("currentImage", "currentImage");
+      setImage();
+    }
   }
 
   @Override
   public void loadImage(String path) {
     try {
-      model.loadImage(path,"currentImage");
-    } catch (FileNotFoundException e) {
-      System.out.println(e.getMessage());
+      model.loadImage(path, "currentImage");
+      setImage();
+    } catch (Exception e) {
+      view.printGeneralError(e.getMessage());
     }
-
-    setImage();
   }
 
   @Override
@@ -93,37 +99,48 @@ public class UIController extends AbstractController implements Features {
   @Override
   public void rgbSplit() {
     checkImageInMemory();
-    model.rgbSplit("currentImage","currentImage","green","blue");
-    setImage();
+    try {
+      model.rgbSplit("currentImage", "currentImage", "green", "blue");
+      setImage();
+    } catch (NoSuchElementException e) {
+      //TODO throw error in UI
+      //ERROR if image not in mem
+    }
+
   }
 
   @Override
   public void save(String path) {
 
-    checkImageInMemory();
-
-    if(path.isEmpty()) {
+    if (path.isEmpty()) {
       path = "./img.png";
     }
-    try {
-      model.saveImage(path,"currentImage");
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
+    if (checkImageInMemory()) {
+      try {
+        model.saveImage(path, "currentImage");
+      } catch (Exception e) {
+        // OR error if path file type is wrong
+        view.printGeneralError(e.getMessage());
+      }
     }
+
   }
 
   @Override
   public void sepia() {
-    checkImageInMemory();
-    model.sepia("currentImage","currentImage");
-    setImage();
+    if (checkImageInMemory()) {
+      model.sepia("currentImage", "currentImage");
+      setImage();
+    }
+
   }
 
   @Override
   public void sharpen() {
-    checkImageInMemory();
-    model.sharpen("currentImage","currentImage");
-    setImage();
+    if (checkImageInMemory()) {
+      model.sharpen("currentImage", "currentImage");
+      setImage();
+    }
   }
 
   @Override
@@ -133,11 +150,17 @@ public class UIController extends AbstractController implements Features {
   }
 
   private void setImage() {
-    BufferedImage i =ImageUtil.writeBufferedImage(model.getImage("currentImage"));
+    BufferedImage i = ImageUtil.writeBufferedImage(model.getImage("currentImage"));
     view.setImage(i);
   }
 
-  private void checkImageInMemory() {
-    model.getImage("currentImage");
+  private boolean checkImageInMemory() {
+    try {
+      model.getImage("currentImage");
+      return true;
+    } catch (Exception e) {
+      view.printGeneralError("Please load an image.");
+      return false;
+    }
   }
 }

@@ -48,7 +48,7 @@ public class JFrameView extends JFrame implements View {
 
   private JTextField rgbCombine3;
 
-  private JFrame parent = this;
+  private final JFrame parent = this;
   private String path;
 
   public JFrameView(String caption) {
@@ -121,8 +121,6 @@ public class JFrameView extends JFrame implements View {
     this.add(rgbSplitButton);
 
 
-
-
     //save path input
     pathInput = new JFormattedTextField();
     pathInput.setPreferredSize(new Dimension(100, 20));
@@ -138,28 +136,28 @@ public class JFrameView extends JFrame implements View {
 
   @Override
   public void textPrompt() {
-    //do nothing
+    throw new UnsupportedOperationException("Text prompt unused.");
   }
 
   @Override
   public void unknownCommandPrompt() {
-    //TODO use for error popup
+    throw new UnsupportedOperationException("Unknown prompt unused.");
   }
 
   @Override
   public void printGeneralError(String errorMessage) {
-    //TODO use for error popup
+    JOptionPane.showMessageDialog(this, errorMessage,
+            "User error", JOptionPane.ERROR_MESSAGE);
   }
 
   @Override
   public Scanner getScanner() {
-    //TODO method is unused
-    return null;
+    throw new UnsupportedOperationException("Scanner unused.");
   }
 
   @Override
   public void readUserInput() {
-    //todo unused i think, stays blank
+    throw new UnsupportedOperationException("Read user input unused.");
   }
 
 
@@ -201,6 +199,6 @@ public class JFrameView extends JFrame implements View {
     rgbSplitButton.addActionListener(e -> features.rgbSplit());
 
 
-    //todo add actionlisteners with correct functions for each UI element.
+    //TODO add actionlisteners with correct functions for each UI element.
   }
 }
