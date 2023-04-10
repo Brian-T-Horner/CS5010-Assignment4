@@ -34,10 +34,11 @@ public class GRIME {
         System.out.println("To run a text file please input "
                 + "\"-file file-path\" as command line arguments.\nTo run in command line, please input \"-text\"");
       }
+    } else {
+      // TODO run UI controller here
+      controller = new UIController(model, new JFrameView("test"));
+      controller.run();
     }
-    // TODO run UI controller here
-    controller = new UIController(model, new JFrameView("test"));
-    controller.run();
 
   }
 }

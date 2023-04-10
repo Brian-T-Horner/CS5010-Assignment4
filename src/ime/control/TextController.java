@@ -1,12 +1,9 @@
 package ime.control;
-import ime.model.ImageModel;
 import ime.model.Model;
 import ime.view.FileView;
-import ime.view.TextView;
 import ime.view.View;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;

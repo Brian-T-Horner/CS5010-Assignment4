@@ -12,10 +12,10 @@ import ime.view.View;
 
 public class UIController extends AbstractController implements Features {
   /**
-   * Contructor for AbstractController.
+   * Contructor for UIController.
    *
-   * @param model
-   * @param view
+   * @param model model for controller
+   * @param view view for controller
    */
   public UIController(Model model, View view) {
     super(model, view);
@@ -45,7 +45,9 @@ public class UIController extends AbstractController implements Features {
   @Override
   public void dither() {
     checkImageInMemory();
+    // TODO has bug, won't apply twice
     model.dither("currentImage","currentImage");
+    System.out.println("p1");
     setImage();
   }
 
