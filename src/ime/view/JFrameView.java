@@ -5,12 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
 import java.util.EventListener;
 import java.util.Scanner;
 
 import javax.swing.*;
 
 import jdk.jfr.Event;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.style.Styler;
 
 public class JFrameView extends JFrame implements View {
 
@@ -54,8 +60,44 @@ public class JFrameView extends JFrame implements View {
   private JFrame parent = this;
   private String path;
 
+  private JPanel chartPanel = null;
+
+  private XYChart chart = null;
+
   public JFrameView(String caption) {
+
     super(caption);
+
+
+    //TODO: Make histogram check if image is colored or not
+    //TODO: Greyscale - intensity
+    //TODO: Color - value of each rgb and intensity
+
+    //---------------------------------------------Messing with charts------------------------------------
+    this.chart = new XYChartBuilder().width(600).height(400).title("Area Chart").
+        xAxisTitle("X").yAxisTitle("Y").build();
+
+    // Customize Chart
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+
+    int[] xAxis = new int[256];
+    int[] defaultYAxis = new int[256];
+    Arrays.fill(defaultYAxis, 0);
+
+    for(int i = 0; i< 256; i++){
+      xAxis[i] = i+1;
+    }
+
+
+
+    // Series
+    chart.addSeries("r", xAxis, defaultYAxis);
+    chart.addSeries("g", xAxis, defaultYAxis);
+    chart.addSeries("b", xAxis, defaultYAxis);
+    chart.addSeries("intensity", xAxis, defaultYAxis);
+
+    //---------------------------------------End of messing with chart ---------------------------
 
     setSize(500, 300);
     setLocation(200, 200);
@@ -67,6 +109,11 @@ public class JFrameView extends JFrame implements View {
     //image display
     currentImage = new JLabel();
     this.add(currentImage);
+
+    // Adding random chart
+    this.chartPanel = new XChartPanel<XYChart>(chart);
+    this.add(chartPanel);
+    chartPanel.setVisible(false);
 
     //exit button
     exitButton = new JButton("Exit");
@@ -127,6 +174,52 @@ public class JFrameView extends JFrame implements View {
   @Override
   public void setImage(BufferedImage img) {
     currentImage.setIcon(new ImageIcon(img));
+  }
+
+  public void setChartPanelVisible(){
+    this.chartPanel.setVisible(true);
+  }
+
+  public void updateColoredChartPanel(int[][] red2D, int[][] green2D, int[][] blue2D, int[][] intensity2D){
+    int[] red = new int[256];
+    int[] blue = new int[256];
+    int[] green = new int[256];
+    int[] intensity = new int[256];
+    Arrays.fill(red, 0);
+    Arrays.fill(blue, 0);
+    Arrays.fill(green, 0);
+    Arrays.fill(intensity, 0);
+
+    for(int i = 0; i < red2D.length; i++) {
+      for(int j = 0; j< red2D[i].length; j++){
+        red[red2D[i][j]]++;
+        blue[blue2D[i][j]]++;
+        green[green2D[i][j]]++;
+        intensity[intensity2D[i][j]]++;
+
+      }
+    }
+
+    int[] xAxis = new int[256];
+    for(int i = 0; i< 256; i++){
+      xAxis[i] = i+1;
+    }
+
+    chart.updateXYSeries("r", xAxis, red);
+    chart.addSeries("g", xAxis, green);
+    chart.addSeries("b", xAxis, blue);
+    chart.addSeries("intensity", xAxis, intensity);
+    chartPanel.revalidate();
+    chartPanel.repa
+    //    To make it real-time, simply call updateXYSeries on the XYChart instance
+  //    to update the series data, followed by revalidate() and repaint() on
+  //    the XChartPanel instance to repaint.
+
+  }
+
+  public void updateGreyColoredPanel(int[][] intensity2D){
+    int[] intensity = new int [256];
+
   }
 
 

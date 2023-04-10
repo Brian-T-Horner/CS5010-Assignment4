@@ -59,4 +59,9 @@ public class TextView implements View{
     // do nothing
   }
 
+  @Override
+  public void setChartPanelVisible(){
+    // do nothing
+  }
+
 }
