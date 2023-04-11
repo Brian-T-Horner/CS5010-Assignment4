@@ -1,14 +1,8 @@
 package ime.control;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Function;
 
@@ -32,7 +26,6 @@ import ime.control.commands.Sharpen;
 import ime.control.commands.Value;
 import ime.control.commands.VerticalFlip;
 import ime.model.Model;
-import ime.view.FileView;
 import ime.view.View;
 
 

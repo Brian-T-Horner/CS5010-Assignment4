@@ -1,16 +1,15 @@
 package ime.view;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import jdk.jfr.Event;
+import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -72,8 +71,8 @@ public class JFrameView extends JFrame implements View {
     //TODO: Color - value of each rgb and intensity
 
     //---------------------------------------------Messing with charts------------------------------------
-    this.chart = new XYChartBuilder().width(600).height(400).title("Area Chart").
-        xAxisTitle("X").yAxisTitle("Y").build();
+    this.chart = new XYChartBuilder().width(600).height(400).title("Histogram of Pixel Values").
+        xAxisTitle("Pixel Values 1-255").yAxisTitle("Number of Occurrences of Value in Image").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
@@ -203,7 +202,7 @@ public class JFrameView extends JFrame implements View {
     throw new UnsupportedOperationException("Scanner unused.");
   }
 
-  @Override
+
   public void readUserInput() {
     throw new UnsupportedOperationException("Read user input unused.");
   }

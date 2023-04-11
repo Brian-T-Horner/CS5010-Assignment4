@@ -40,6 +40,11 @@ public class TextView implements View{
     }
   }
 
+
+  public void readUserInput() {
+    //do nothing
+  }
+
   public Scanner getScanner() {
     return new Scanner(this.in);
   }
@@ -61,7 +66,7 @@ public class TextView implements View{
 
   @Override
   public void updateColoredChartPanel(int[][] red, int[][] green, int[][] blue, int[][] intensity) {
-    // do nothing
+    //do nothing
   }
 
   @Override

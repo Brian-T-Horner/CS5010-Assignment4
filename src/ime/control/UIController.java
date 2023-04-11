@@ -109,13 +109,15 @@ public class UIController extends AbstractController implements Features {
 
   @Override
   public void rgbSplit() {
-    if(checkImageInMemory()){
-      model.rgbSplit("currentImage", "currentImage", "green", "blue");
-      setImage();
-      setChart();
-    } catch (NoSuchElementException e) {
-      //TODO throw error in UI
-      //ERROR if image not in mem
+    if(checkImageInMemory()) {
+      try {
+        model.rgbSplit("currentImage", "currentImage", "green", "blue");
+        setImage();
+        setChart();
+      } catch (NoSuchElementException e) {
+        //TODO throw error in UI
+        //ERROR if image not in mem
+      }
     }
   }
 

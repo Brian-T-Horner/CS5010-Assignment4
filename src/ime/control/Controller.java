@@ -1,8 +1,5 @@
 package ime.control;
 
-import ime.model.Model;
-import ime.view.View;
-
 import java.io.IOException;
 
 /**
