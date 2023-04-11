@@ -1,12 +1,9 @@
 package ime.view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Arrays;
-import java.util.EventListener;
+
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -55,9 +52,9 @@ public class JFrameView extends JFrame implements View {
 
   private JTextField rgbCombine2;
 
-  private JTextField RgbCombine3;
+  private JTextField rgbCombine3;
 
-  private JFrame parent = this;
+  private final JFrame parent = this;
   private String path;
 
   private JPanel chartPanel = null;
@@ -130,6 +127,46 @@ public class JFrameView extends JFrame implements View {
     saveButton.setActionCommand("Save Button");
     this.add(saveButton);
 
+    //dither button
+    ditherButton = new JButton("Dither");
+    ditherButton.setActionCommand("Dither Button");
+    this.add(ditherButton);
+
+    //vertical flip button
+    vflipButton = new JButton("Vertical Flip");
+    vflipButton.setActionCommand("Vertical Flip Button");
+    this.add(vflipButton);
+
+    //blur button
+    blurButton = new JButton("Blur");
+    blurButton.setActionCommand("Blur Button");
+    this.add(blurButton);
+
+    //greyscale button
+    greyscaleButton = new JButton("Greyscale");
+    greyscaleButton.setActionCommand("Greyscale Button");
+    this.add(greyscaleButton);
+
+    //horizontal flip button
+    hflipButton = new JButton("Horizontal Flip");
+    hflipButton.setActionCommand("Horizontal Button");
+    this.add(hflipButton);
+
+    //sharpen button
+    sharpenButton = new JButton("Sharpen");
+    sharpenButton.setActionCommand("Sharpen Button");
+    this.add(sharpenButton);
+
+    //sepia button
+    sepiaButton = new JButton("Sepiascale");
+    sepiaButton.setActionCommand("Sepia Button");
+    this.add(sepiaButton);
+
+    //sepia button
+    rgbSplitButton = new JButton("Split Image into RGB");
+    rgbSplitButton.setActionCommand("Split Button");
+    this.add(rgbSplitButton);
+
 
     //save path input
     pathInput = new JFormattedTextField();
@@ -146,28 +183,28 @@ public class JFrameView extends JFrame implements View {
 
   @Override
   public void textPrompt() {
-    //do nothing
+    throw new UnsupportedOperationException("Text prompt unused.");
   }
 
   @Override
   public void unknownCommandPrompt() {
-    //TODO use for error popup
+    throw new UnsupportedOperationException("Unknown prompt unused.");
   }
 
   @Override
   public void printGeneralError(String errorMessage) {
-    //TODO use for error popup
+    JOptionPane.showMessageDialog(this, errorMessage,
+            "User error", JOptionPane.ERROR_MESSAGE);
   }
 
   @Override
   public Scanner getScanner() {
-    //TODO method is unused
-    return null;
+    throw new UnsupportedOperationException("Scanner unused.");
   }
 
   @Override
   public void readUserInput() {
-    //todo unused i think, stays blank
+    throw new UnsupportedOperationException("Read user input unused.");
   }
 
 
@@ -242,10 +279,19 @@ public class JFrameView extends JFrame implements View {
 
     };
 
-
     loadButton.addActionListener(selectFileAndLoad);
     exitButton.addActionListener(evt -> features.exit());
     saveButton.addActionListener(evt -> features.save(pathInput.getText()));
-    //todo add actionlisteners with correct functions for each UI element.
+    ditherButton.addActionListener(evt-> features.dither());
+    vflipButton.addActionListener(evt -> features.verticalFlip());
+    blurButton.addActionListener(evt -> features.blur());
+    greyscaleButton.addActionListener(e -> features.greyscale());
+    hflipButton.addActionListener(e -> features.horizontalFlip());
+    sharpenButton.addActionListener(e -> features.sharpen());
+    sepiaButton.addActionListener(e -> features.sepia());
+    rgbSplitButton.addActionListener(e -> features.rgbSplit());
+
+
+    //TODO add actionlisteners with correct functions for each UI element.
   }
 }

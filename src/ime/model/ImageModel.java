@@ -329,6 +329,7 @@ public class ImageModel implements Model {
   @Override
   public void dither(String imageName, String newImageName) {
     Image img = images.get(imageName);
+    System.out.println("p2");
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
               + "\" not in memory.");
