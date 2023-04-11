@@ -2,7 +2,6 @@ package ime.control;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import ime.ImageUtil;
@@ -51,8 +50,6 @@ public class UIController extends AbstractController implements Features {
       setImage();
     }
     // TODO has bug, won't apply twice
-
-
   }
 
   @Override
@@ -92,21 +89,16 @@ public class UIController extends AbstractController implements Features {
   @Override
   public void rgbCombine() {
     checkImageInMemory();
-    //TODO this one needs lots of work in the view as well
+    //TODO implement in view and here
     setImage();
   }
 
   @Override
   public void rgbSplit() {
-    checkImageInMemory();
-    try {
+    if(checkImageInMemory()){
       model.rgbSplit("currentImage", "currentImage", "green", "blue");
       setImage();
-    } catch (NoSuchElementException e) {
-      //TODO throw error in UI
-      //ERROR if image not in mem
     }
-
   }
 
   @Override
@@ -119,7 +111,6 @@ public class UIController extends AbstractController implements Features {
       try {
         model.saveImage(path, "currentImage");
       } catch (Exception e) {
-        // OR error if path file type is wrong
         view.printGeneralError(e.getMessage());
       }
     }

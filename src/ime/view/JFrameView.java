@@ -4,41 +4,42 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class JFrameView extends JFrame implements View {
 
-  private JLabel saveLabel;
   private final JButton loadButton;
   private final JButton exitButton;
-  private JButton saveButton;
+  private final JButton saveButton;
 
-  private JButton blurButton;
+  private final JButton blurButton;
 
-  private JButton ditherButton;
+  private final JButton ditherButton;
 
-  private JButton greyscaleButton;
+  private final JButton greyscaleButton;
 
-  private JButton hflipButton;
+  private final JButton hflipButton;
 
-  private JButton vflipButton;
+  private final JButton vflipButton;
 
-  private JButton rgbSplitButton;
+  private final JButton rgbSplitButton;
 
   private JButton rgbCombineButton;
 
   private JButton brightenButton;
 
-  private JButton sharpenButton;
+  private final JButton sharpenButton;
 
-  private JButton sepiaButton;
+  private final JButton sepiaButton;
 
-  private JLabel currentImage;
+  private final JLabel currentImage;
 
-  private JTextField pathInput;
+  private final JTextField pathInput;
 
   private JTextField brightenValue;
 
@@ -122,9 +123,9 @@ public class JFrameView extends JFrame implements View {
 
 
     //save path input
-    pathInput = new JFormattedTextField();
+    pathInput = new JFormattedTextField(System.getProperty("user.dir") + "/img.png");
     pathInput.setPreferredSize(new Dimension(100, 20));
-    saveLabel = new JLabel("Save to path:", JLabel.LEFT);
+    JLabel saveLabel = new JLabel("Save to path:", JLabel.RIGHT);
     saveLabel.setLabelFor(pathInput);
     this.add(pathInput);
     this.add(saveLabel);
@@ -147,17 +148,12 @@ public class JFrameView extends JFrame implements View {
   @Override
   public void printGeneralError(String errorMessage) {
     JOptionPane.showMessageDialog(this, errorMessage,
-            "User error", JOptionPane.ERROR_MESSAGE);
+            "Error", JOptionPane.ERROR_MESSAGE);
   }
 
   @Override
   public Scanner getScanner() {
     throw new UnsupportedOperationException("Scanner unused.");
-  }
-
-  @Override
-  public void readUserInput() {
-    throw new UnsupportedOperationException("Read user input unused.");
   }
 
 
@@ -169,10 +165,14 @@ public class JFrameView extends JFrame implements View {
 
   @Override
   public void addFeatures(Features features) {
-
-    ActionListener selectFileAndLoad = e -> {
-      // Create a file chooser dialog
-      JFileChooser fileChooser = new JFileChooser();
+    loadButton.addActionListener(evt -> {
+      //TODO config to make more user friendly
+      JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
+      Action details = fileChooser.getActionMap().get("viewTypeDetails");
+      details.actionPerformed(null);
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
+              + " .png, .ppm)", "ppm", "png","bmp","jpg");
+      fileChooser.setFileFilter(filter);
       fileChooser.setDialogTitle("Select a file");
 
       // Show the file chooser dialog and wait for the user to select a file
@@ -183,22 +183,19 @@ public class JFrameView extends JFrame implements View {
         path = fileChooser.getSelectedFile().getAbsolutePath();
         features.loadImage(path);
       }
-
-    };
-
-    loadButton.addActionListener(selectFileAndLoad);
+    });
     exitButton.addActionListener(evt -> features.exit());
     saveButton.addActionListener(evt -> features.save(pathInput.getText()));
-    ditherButton.addActionListener(evt-> features.dither());
+    ditherButton.addActionListener(evt -> features.dither());
     vflipButton.addActionListener(evt -> features.verticalFlip());
     blurButton.addActionListener(evt -> features.blur());
-    greyscaleButton.addActionListener(e -> features.greyscale());
-    hflipButton.addActionListener(e -> features.horizontalFlip());
-    sharpenButton.addActionListener(e -> features.sharpen());
-    sepiaButton.addActionListener(e -> features.sepia());
-    rgbSplitButton.addActionListener(e -> features.rgbSplit());
+    greyscaleButton.addActionListener(evt -> features.greyscale());
+    hflipButton.addActionListener(evt -> features.horizontalFlip());
+    sharpenButton.addActionListener(evt -> features.sharpen());
+    sepiaButton.addActionListener(evt -> features.sepia());
+    rgbSplitButton.addActionListener(evt -> features.rgbSplit());
 
 
-    //TODO add actionlisteners with correct functions for each UI element.
+    //TODO rgb combine and brighten
   }
 }

@@ -36,7 +36,7 @@ public class GRIME {
       }
     } else {
       // TODO run UI controller here
-      controller = new UIController(model, new JFrameView("test"));
+      controller = new UIController(model, new JFrameView("Image Manipulation"));
       controller.run();
     }
 

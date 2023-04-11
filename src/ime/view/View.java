@@ -12,8 +12,6 @@ public interface View {
 
   Scanner getScanner();
 
-  void readUserInput();
-
   void setImage(BufferedImage img);
 
   void addFeatures(Features features);

@@ -40,11 +40,6 @@ public class TextView implements View{
     }
   }
 
-  @Override
-  public void readUserInput() {
-
-  }
-
   public Scanner getScanner() {
     return new Scanner(this.in);
   }
