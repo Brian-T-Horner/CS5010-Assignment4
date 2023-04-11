@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -251,6 +252,11 @@ public class JFrameView extends JFrame implements View {
     //    To make it real-time, simply call updateXYSeries on the XYChart instance
   //    to update the series data, followed by revalidate() and repaint() on
   //    the XChartPanel instance to repaint.
+
+  }
+
+  @Override
+  public void updateGreyChartPanel(int[][] intensity) {
 
   }
 

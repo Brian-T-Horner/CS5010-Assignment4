@@ -34,6 +34,7 @@ public class UIController extends AbstractController implements Features {
     if (checkImageInMemory()) {
       model.blur("currentImage", "currentImage");
       setImage();
+      setChart();
     }
   }
 
@@ -42,6 +43,7 @@ public class UIController extends AbstractController implements Features {
     if (checkImageInMemory()) {
       model.brighten("currentImage", "currentImage", scale);
       setImage();
+      setChart();
     }
   }
 
@@ -50,6 +52,7 @@ public class UIController extends AbstractController implements Features {
     if (checkImageInMemory()) {
       model.dither("currentImage", "currentImage");
       setImage();
+      setChart();
     }
     // TODO has bug, won't apply twice
 
@@ -61,6 +64,8 @@ public class UIController extends AbstractController implements Features {
     if (checkImageInMemory()) {
       model.greyscale("luma-component", "currentImage", "currentImage");
       setImage();
+      setChart();
+
     }
   }
 
@@ -69,6 +74,7 @@ public class UIController extends AbstractController implements Features {
     if (checkImageInMemory()) {
       model.flipHorizontal("currentImage", "currentImage");
       setImage();
+      setChart();
     }
   }
 
@@ -77,6 +83,7 @@ public class UIController extends AbstractController implements Features {
     if (checkImageInMemory()) {
       model.flipVertical("currentImage", "currentImage");
       setImage();
+      setChart();
     }
   }
 
@@ -85,6 +92,7 @@ public class UIController extends AbstractController implements Features {
     try {
       model.loadImage(path, "currentImage");
       setImage();
+      setChart();
     } catch (Exception e) {
       view.printGeneralError(e.getMessage());
     }
@@ -104,6 +112,7 @@ public class UIController extends AbstractController implements Features {
     try {
       model.rgbSplit("currentImage", "currentImage", "green", "blue");
       setImage();
+      setChart();
     } catch (NoSuchElementException e) {
       //TODO throw error in UI
       //ERROR if image not in mem
@@ -133,6 +142,7 @@ public class UIController extends AbstractController implements Features {
     if (checkImageInMemory()) {
       model.sepia("currentImage", "currentImage");
       setImage();
+      setChart();
     }
 
   }
@@ -142,6 +152,7 @@ public class UIController extends AbstractController implements Features {
     if (checkImageInMemory()) {
       model.sharpen("currentImage", "currentImage");
       setImage();
+      setChart();
     }
   }
 
