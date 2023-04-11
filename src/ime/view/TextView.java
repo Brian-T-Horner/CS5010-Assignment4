@@ -54,4 +54,19 @@ public class TextView implements View{
     // do nothing
   }
 
+  @Override
+  public void setChartPanelVisible(){
+    // do nothing
+  }
+
+  @Override
+  public void updateColoredChartPanel(int[][] red, int[][] green, int[][] blue, int[][] intensity) {
+    // do nothing
+  }
+
+  @Override
+  public void updateGreyChartPanel(int[][] intensity) {
+    //do nothing
+  }
+
 }
