@@ -79,8 +79,8 @@ public class JFrameView extends JFrame implements View {
     chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 
-    int[] xAxis = new int[256];
-    int[] defaultYAxis = new int[256];
+    double[] xAxis = new double[256];
+    double[] defaultYAxis = new double[256];
     Arrays.fill(defaultYAxis, 0);
 
     for(int i = 0; i< 256; i++){
@@ -219,10 +219,10 @@ public class JFrameView extends JFrame implements View {
   }
 
   public void updateColoredChartPanel(int[][] red2D, int[][] green2D, int[][] blue2D, int[][] intensity2D){
-    int[] red = new int[256];
-    int[] blue = new int[256];
-    int[] green = new int[256];
-    int[] intensity = new int[256];
+    double[] red = new double[256];
+    double[] blue = new double[256];
+    double[] green = new double[256];
+    double[] intensity = new double[256];
     Arrays.fill(red, 0);
     Arrays.fill(blue, 0);
     Arrays.fill(green, 0);
@@ -238,17 +238,18 @@ public class JFrameView extends JFrame implements View {
       }
     }
 
-    int[] xAxis = new int[256];
+    double[] xAxis = new double[256];
     for(int i = 0; i< 256; i++){
       xAxis[i] = i+1;
     }
 
-    chart.updateXYSeries("r", xAxis, red);
-    chart.addSeries("g", xAxis, green);
-    chart.addSeries("b", xAxis, blue);
-    chart.addSeries("intensity", xAxis, intensity);
+
+    chart.updateXYSeries("r", xAxis, red, null);
+    chart.updateXYSeries("g", xAxis, green, null);
+    chart.updateXYSeries("b", xAxis, blue, null);
+    chart.updateXYSeries("intensity", xAxis, intensity, null);
     chartPanel.revalidate();
-    chartPanel.repa
+    chartPanel.repaint();
     //    To make it real-time, simply call updateXYSeries on the XYChart instance
   //    to update the series data, followed by revalidate() and repaint() on
   //    the XChartPanel instance to repaint.
@@ -256,12 +257,24 @@ public class JFrameView extends JFrame implements View {
   }
 
   @Override
-  public void updateGreyChartPanel(int[][] intensity) {
+  public void updateGreyChartPanel(int[][] intensity2D) {
+    double[] intensity = new double[256];
+    Arrays.fill(intensity, 0);
 
-  }
+    for (int i=0; i< intensity2D.length; i++){
+      for(int j=0; j<intensity2D[i].length; j++){
+        intensity[intensity2D[i][j]]++;
+      }
+    }
 
-  public void updateGreyColoredPanel(int[][] intensity2D){
-    int[] intensity = new int [256];
+    double[] xAxis = new double[256];
+    for(int i = 0; i< 256; i++){
+      xAxis[i] = i+1;
+    }
+
+    chart.updateXYSeries("intensity", xAxis, intensity, null);
+    chartPanel.revalidate();
+    chartPanel.repaint();
 
   }
 

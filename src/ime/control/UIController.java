@@ -93,6 +93,7 @@ public class UIController extends AbstractController implements Features {
       model.loadImage(path, "currentImage");
       setImage();
       setChart();
+      view.setChartPanelVisible();
     } catch (Exception e) {
       view.printGeneralError(e.getMessage());
     }
