@@ -1,5 +1,7 @@
 package ime.view;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -88,8 +90,9 @@ public class JFrameView extends JFrame implements View {
     //TODO: Color - value of each rgb and intensity
 
     //---------------------------------------------Messing with charts------------------------------------
-    this.chart = new XYChartBuilder().width(450).height(300).title("Area Chart").
-            xAxisTitle("X").yAxisTitle("Y").build();
+    this.chart = new XYChartBuilder().width(600).height(400).title("Histogram of Pixel Values").
+        xAxisTitle("Pixel Values 1-255").yAxisTitle("Number of Occurrences of Value in Image")
+        .build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
@@ -113,6 +116,14 @@ public class JFrameView extends JFrame implements View {
     //---------------------------------------End of messing with chart ---------------------------
 
     setSize(1000, 1000);
+    //--------------------------------------- Flatlaf -------------------------------
+    try {
+      UIManager.setLookAndFeel(new FlatDarculaLaf());
+    } catch (Exception ex) {
+      System.err.println("Failed to initialize Laf");
+    }
+    //-------------------------------------------
+    setSize(500, 300);
     setLocation(200, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
