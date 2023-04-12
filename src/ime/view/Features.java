@@ -16,7 +16,7 @@ public interface Features {
 
   void loadImage(String path);
 
-  void rgbCombine();
+  void rgbCombine(String redPath,String greenPath,String bluePath);
 
   void rgbSplit();
 

@@ -297,6 +297,17 @@ public class ImageModel implements Model {
     }
   }
 
+  @Override
+  public void rgbCombine(String newImageName, Image redImage, Image greenImage, Image blueImage) {
+
+    if (compareDimensions(redImage, greenImage) && compareDimensions(greenImage, blueImage)
+            && compareDimensions(blueImage, redImage)) {
+      images.put(newImageName, new IMEImage(redImage.getWidth(), redImage.getHeight(),
+              redImage.getRedComponent(), blueImage.getBlueComponent(),
+              greenImage.getGreenComponent()));
+    }
+  }
+
 
   @Override
   public void greyscale(String greyScaleComponent, String imageName, String newImageName)

@@ -1,7 +1,5 @@
 package ime.view;
 
-import org.knowm.xchart.XYChart;
-
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
 

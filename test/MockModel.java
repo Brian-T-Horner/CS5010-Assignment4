@@ -271,6 +271,14 @@ public class MockModel implements Model {
     log.append("\n");
   }
 
+  @Override
+  public void rgbCombine(String newImageName, Image redImage, Image greenImage, Image blueImage) {
+    log.append("rgbCombine: newImageName = ");
+    log.append(newImageName);
+    log.append(this.uniqueCode);
+    log.append("\n");
+  }
+
   /**
   * Method to test the controller to greyscale command.
   * @param greyScaleComponent Method of greyscale transformation.

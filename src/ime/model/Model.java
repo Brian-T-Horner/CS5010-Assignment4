@@ -139,6 +139,8 @@ public interface Model {
   void rgbCombine(String newImageName, String rImageName, String gImageName, String bImageName)
       throws NoSuchElementException;
 
+  void rgbCombine(String newImageName, Image redImage, Image greenImage, Image blueImage);
+
   /**
    * Method to get the greyscale image of an image - calls the image object method.
    *

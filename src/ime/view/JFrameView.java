@@ -3,18 +3,22 @@ package ime.view;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import java.io.File;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.NumberFormatter;
 
-import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
+
+import ime.control.commands.Brighten;
 
 public class JFrameView extends JFrame implements View {
 
@@ -44,26 +48,33 @@ public class JFrameView extends JFrame implements View {
 
   private final JLabel currentImage;
 
-  private final JTextField pathInput;
+  private final JButton rgbCombine1;
 
-  private JTextField brightenValue;
+  private JButton rgbCombine2;
 
-  private JTextField rgbCombine1;
+  private JButton rgbCombine3;
 
-  private JTextField rgbCombine2;
+  private String redPath;
 
-  private JTextField rgbCombine3;
+  private String greenPath;
 
+  private String bluePath;
   private final JFrame parent = this;
   private String path;
 
-  private JPanel chartPanel = null;
+  private final JPanel chartPanel;
 
-  private XYChart chart = null;
+  private final XYChart chart;
 
   public JFrameView(String caption) {
 
     super(caption);
+
+    redPath ="";
+
+    bluePath = "";
+
+    greenPath = "";
 
 
     //TODO: Make histogram check if image is colored or not
@@ -71,8 +82,8 @@ public class JFrameView extends JFrame implements View {
     //TODO: Color - value of each rgb and intensity
 
     //---------------------------------------------Messing with charts------------------------------------
-    this.chart = new XYChartBuilder().width(600).height(400).title("Histogram of Pixel Values").
-        xAxisTitle("Pixel Values 1-255").yAxisTitle("Number of Occurrences of Value in Image").build();
+    this.chart = new XYChartBuilder().width(600).height(400).title("Area Chart").
+            xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
@@ -82,10 +93,9 @@ public class JFrameView extends JFrame implements View {
     double[] defaultYAxis = new double[256];
     Arrays.fill(defaultYAxis, 0);
 
-    for(int i = 0; i< 256; i++){
-      xAxis[i] = i+1;
+    for (int i = 0; i < 256; i++) {
+      xAxis[i] = i + 1;
     }
-
 
 
     // Series
@@ -162,19 +172,35 @@ public class JFrameView extends JFrame implements View {
     sepiaButton.setActionCommand("Sepia Button");
     this.add(sepiaButton);
 
-    //sepia button
+    //rgbSplit button
     rgbSplitButton = new JButton("Split Image into RGB");
     rgbSplitButton.setActionCommand("Split Button");
     this.add(rgbSplitButton);
 
+    //brighten button
+    brightenButton = new JButton("Brighten");
+    brightenButton.setActionCommand("Brighten Button");
+    this.add(brightenButton);
 
-    //save path input
-    pathInput = new JFormattedTextField(System.getProperty("user.dir") + "/img.png");
-    pathInput.setPreferredSize(new Dimension(100, 20));
-    JLabel saveLabel = new JLabel("Save to path:", JLabel.RIGHT);
-    saveLabel.setLabelFor(pathInput);
-    this.add(pathInput);
-    this.add(saveLabel);
+
+    //rgbCombine button
+    rgbCombineButton = new JButton("Combine red, green, and blue channels");
+    rgbCombineButton.setActionCommand("RGBCombine Button");
+    this.add(rgbCombineButton);
+
+    //rgbCombine buttons
+
+    rgbCombine1 = new JButton("Choose red image");
+    rgbCombine1.setActionCommand("rgbCombine1");
+    this.add(rgbCombine1);
+
+    rgbCombine2 = new JButton("Choose green image");
+    rgbCombine2.setActionCommand("rgbCombine2");
+    this.add(rgbCombine2);
+
+    rgbCombine3 = new JButton("Choose blue image");
+    rgbCombine3.setActionCommand("rgbCombine3");
+    this.add(rgbCombine3);
 
     //TODO initialize all other ui elements
     setVisible(true);
@@ -203,21 +229,16 @@ public class JFrameView extends JFrame implements View {
   }
 
 
-  public void readUserInput() {
-    throw new UnsupportedOperationException("Read user input unused.");
-  }
-
-
   @Override
   public void setImage(BufferedImage img) {
     currentImage.setIcon(new ImageIcon(img));
   }
 
-  public void setChartPanelVisible(){
+  public void setChartPanelVisible() {
     this.chartPanel.setVisible(true);
   }
 
-  public void updateColoredChartPanel(int[][] red2D, int[][] green2D, int[][] blue2D, int[][] intensity2D){
+  public void updateColoredChartPanel(int[][] red2D, int[][] green2D, int[][] blue2D, int[][] intensity2D) {
     double[] red = new double[256];
     double[] blue = new double[256];
     double[] green = new double[256];
@@ -227,8 +248,8 @@ public class JFrameView extends JFrame implements View {
     Arrays.fill(green, 0);
     Arrays.fill(intensity, 0);
 
-    for(int i = 0; i < red2D.length; i++) {
-      for(int j = 0; j< red2D[i].length; j++){
+    for (int i = 0; i < red2D.length; i++) {
+      for (int j = 0; j < red2D[i].length; j++) {
         red[red2D[i][j]]++;
         blue[blue2D[i][j]]++;
         green[green2D[i][j]]++;
@@ -238,8 +259,8 @@ public class JFrameView extends JFrame implements View {
     }
 
     double[] xAxis = new double[256];
-    for(int i = 0; i< 256; i++){
-      xAxis[i] = i+1;
+    for (int i = 0; i < 256; i++) {
+      xAxis[i] = i + 1;
     }
 
 
@@ -250,8 +271,8 @@ public class JFrameView extends JFrame implements View {
     chartPanel.revalidate();
     chartPanel.repaint();
     //    To make it real-time, simply call updateXYSeries on the XYChart instance
-  //    to update the series data, followed by revalidate() and repaint() on
-  //    the XChartPanel instance to repaint.
+    //    to update the series data, followed by revalidate() and repaint() on
+    //    the XChartPanel instance to repaint.
 
   }
 
@@ -260,15 +281,15 @@ public class JFrameView extends JFrame implements View {
     double[] intensity = new double[256];
     Arrays.fill(intensity, 0);
 
-    for (int i=0; i< intensity2D.length; i++){
-      for(int j=0; j<intensity2D[i].length; j++){
+    for (int i = 0; i < intensity2D.length; i++) {
+      for (int j = 0; j < intensity2D[i].length; j++) {
         intensity[intensity2D[i][j]]++;
       }
     }
 
     double[] xAxis = new double[256];
-    for(int i = 0; i< 256; i++){
-      xAxis[i] = i+1;
+    for (int i = 0; i < 256; i++) {
+      xAxis[i] = i + 1;
     }
 
     chart.updateXYSeries("intensity", xAxis, intensity, null);
@@ -286,7 +307,7 @@ public class JFrameView extends JFrame implements View {
       Action details = fileChooser.getActionMap().get("viewTypeDetails");
       details.actionPerformed(null);
       FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
-              + " .png, .ppm)", "ppm", "png","bmp","jpg");
+              + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
       fileChooser.setFileFilter(filter);
       fileChooser.setDialogTitle("Select a file");
 
@@ -300,7 +321,7 @@ public class JFrameView extends JFrame implements View {
       }
     });
     exitButton.addActionListener(evt -> features.exit());
-    saveButton.addActionListener(evt -> features.save(pathInput.getText()));
+
     ditherButton.addActionListener(evt -> features.dither());
     vflipButton.addActionListener(evt -> features.verticalFlip());
     blurButton.addActionListener(evt -> features.blur());
@@ -310,7 +331,101 @@ public class JFrameView extends JFrame implements View {
     sepiaButton.addActionListener(evt -> features.sepia());
     rgbSplitButton.addActionListener(evt -> features.rgbSplit());
 
+    saveButton.addActionListener(evt -> {
+      JDialog dialog = new JDialog(this, "Save Dialog", true);
+      dialog.setSize(300, 150);
+      JFormattedTextField txtFilePath = new JFormattedTextField();
+      JButton btnChooseFile = new JButton("Choose File");
+      dialog.add(txtFilePath);
+      dialog.add(btnChooseFile);
 
-    //TODO rgb combine and brighten
+      btnChooseFile.addActionListener(e -> {
+        JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir") + "/img.png");
+        Action details = fileChooser.getActionMap().get("viewTypeDetails");
+        details.actionPerformed(null);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
+                + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Select a file");
+        int returnValue = fileChooser.showOpenDialog(dialog);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+          File selectedFile = fileChooser.getSelectedFile();
+          String filePath = selectedFile.getAbsolutePath();
+          features.save(filePath);
+          dialog.setVisible(false);
+        }
+      });
+      dialog.setVisible(true);
+    });
+
+    brightenButton.addActionListener(evt -> {
+      String input = JOptionPane.showInputDialog(parent, "Enter an integer:");
+      try {
+        int scale = Integer.parseInt(input);
+        features.brighten(scale);
+      } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(parent, "Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
+      }
+    });
+
+    rgbCombine1.addActionListener(evt -> {
+      JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir") + "/img.png");
+      Action details = fileChooser.getActionMap().get("viewTypeDetails");
+      details.actionPerformed(null);
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
+              + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
+      fileChooser.setFileFilter(filter);
+      fileChooser.setDialogTitle("Select a file");
+      int returnValue = fileChooser.showOpenDialog(this);
+      if (returnValue == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        redPath = selectedFile.getAbsolutePath();
+      }
+
+    });
+
+    rgbCombine2.addActionListener(evt -> {
+      JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir") + "/img.png");
+      Action details = fileChooser.getActionMap().get("viewTypeDetails");
+      details.actionPerformed(null);
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
+              + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
+      fileChooser.setFileFilter(filter);
+      fileChooser.setDialogTitle("Select a file");
+      int returnValue = fileChooser.showOpenDialog(this);
+      if (returnValue == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        greenPath = selectedFile.getAbsolutePath();
+      }
+
+    });
+
+    rgbCombine3.addActionListener(evt -> {
+      JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir") + "/img.png");
+      Action details = fileChooser.getActionMap().get("viewTypeDetails");
+      details.actionPerformed(null);
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
+              + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
+      fileChooser.setFileFilter(filter);
+      fileChooser.setDialogTitle("Select a file");
+      int returnValue = fileChooser.showOpenDialog(this);
+      if (returnValue == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        bluePath = selectedFile.getAbsolutePath();
+      }
+
+    });
+
+    rgbCombineButton.addActionListener(evt -> {
+      if(greenPath.isEmpty() || redPath.isEmpty() || bluePath.isEmpty()) {
+        JOptionPane.showMessageDialog(parent, "Please enter a valid red, green, and blue paths."
+                , "Error", JOptionPane.ERROR_MESSAGE);
+      } else {
+        features.rgbCombine(redPath,greenPath,bluePath);
+        redPath = "";
+        bluePath = "";
+        greenPath = "";
+      }
+    });
   }
 }

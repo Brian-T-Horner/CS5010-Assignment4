@@ -2,7 +2,7 @@ package ime.control;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.NoSuchElementException;
+import java.util.Arrays;
 import java.util.Objects;
 
 import ime.ImageUtil;
@@ -100,24 +100,22 @@ public class UIController extends AbstractController implements Features {
   }
 
   @Override
-  public void rgbCombine() {
-    checkImageInMemory();
-    //TODO implement in view and here
+  public void rgbCombine(String redPath, String greenPath, String bluePath) {
+    Image cred = ImageUtil.loadImage(redPath);
+    Image cgreen = ImageUtil.loadImage(greenPath);
+    Image cblue = ImageUtil.loadImage(bluePath);
+    model.rgbCombine("currentImage", cred, cgreen, cblue);
     setImage();
     setChart();
+
   }
 
   @Override
   public void rgbSplit() {
-    if(checkImageInMemory()) {
-      try {
-        model.rgbSplit("currentImage", "currentImage", "green", "blue");
-        setImage();
-        setChart();
-      } catch (NoSuchElementException e) {
-        //TODO throw error in UI
-        //ERROR if image not in mem
-      }
+    if (checkImageInMemory()) {
+      model.rgbSplit("currentImage", "currentImage", "green", "blue");
+      setImage();
+      setChart();
     }
   }
 
@@ -176,13 +174,13 @@ public class UIController extends AbstractController implements Features {
     Image intensity = model.getImage("intensity-image-chart");
     Image current = model.getImage("currentImage");
 
-    if(current.getRedComponent().equals(current.getGreenComponent())
-        && current.getGreenComponent().equals(current.getBlueComponent())
-        && current.getBlueComponent().equals(current.getRedComponent())) {
+    if (Arrays.deepEquals(current.getRedComponent(), current.getGreenComponent())
+            && Arrays.deepEquals(current.getGreenComponent(), current.getBlueComponent())
+            && Arrays.deepEquals(current.getBlueComponent(), current.getRedComponent())) {
       view.updateGreyChartPanel(intensity.getRedComponent());
     } else {
       view.updateColoredChartPanel(current.getRedComponent(), current.getGreenComponent(),
-          current.getBlueComponent(), intensity.getRedComponent());
+              current.getBlueComponent(), intensity.getRedComponent());
     }
     // check if rgb is equal
 
