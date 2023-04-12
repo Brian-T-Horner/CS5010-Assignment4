@@ -83,10 +83,6 @@ public class JFrameView extends JFrame implements View {
     greenPath = "";
 
 
-    //TODO: Make histogram check if image is colored or not
-    //TODO: Greyscale - intensity
-    //TODO: Color - value of each rgb and intensity
-
     //---------------------------------------------Messing with charts------------------------------------
     this.chart = new XYChartBuilder().width(450).height(300).title("Area Chart").
             xAxisTitle("X").yAxisTitle("Y").build();
@@ -329,27 +325,8 @@ public class JFrameView extends JFrame implements View {
 
   @Override
   public void addFeatures(Features features) {
-    loadButton.addActionListener(evt -> {
-      //TODO config to make more user friendly
-      JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
-      Action details = fileChooser.getActionMap().get("viewTypeDetails");
-      details.actionPerformed(null);
-      FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
-              + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
-      fileChooser.setFileFilter(filter);
-      fileChooser.setDialogTitle("Select a file");
 
-      // Show the file chooser dialog and wait for the user to select a file
-      int userSelection = fileChooser.showOpenDialog(parent);
-
-      if (userSelection == JFileChooser.APPROVE_OPTION) {
-        // Get the selected file path as a string and display it in the label
-        path = fileChooser.getSelectedFile().getAbsolutePath();
-        features.loadImage(path);
-      }
-    });
     exitButton.addActionListener(evt -> features.exit());
-
     ditherButton.addActionListener(evt -> features.dither());
     vflipButton.addActionListener(evt -> features.verticalFlip());
     blurButton.addActionListener(evt -> features.blur());
@@ -361,6 +338,23 @@ public class JFrameView extends JFrame implements View {
     lumaButton.addActionListener(evt -> features.luma());
     intensityButton.addActionListener(evt -> features.intensity());
     valueButton.addActionListener(evt -> features.value());
+
+    loadButton.addActionListener(evt -> {
+      JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
+      Action details = fileChooser.getActionMap().get("viewTypeDetails");
+      details.actionPerformed(null);
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
+              + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
+      fileChooser.setFileFilter(filter);
+      fileChooser.setDialogTitle("Select a file");
+
+      int userSelection = fileChooser.showOpenDialog(this);
+
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+        path = fileChooser.getSelectedFile().getAbsolutePath();
+        features.loadImage(path);
+      }
+    });
 
 
     saveButton.addActionListener(evt -> {
@@ -379,6 +373,7 @@ public class JFrameView extends JFrame implements View {
                 + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
         fileChooser.setFileFilter(filter);
         fileChooser.setDialogTitle("Select a file");
+        fileChooser.setSelectedFile(new File("img.png"));
         int returnValue = fileChooser.showOpenDialog(dialog);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
           File selectedFile = fileChooser.getSelectedFile();
@@ -391,12 +386,12 @@ public class JFrameView extends JFrame implements View {
     });
 
     brightenButton.addActionListener(evt -> {
-      String input = JOptionPane.showInputDialog(parent, "Enter an integer:");
+      String input = JOptionPane.showInputDialog(this, "Enter an integer:");
       try {
         int scale = Integer.parseInt(input);
         features.brighten(scale);
       } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(parent, "Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
       }
     });
 
