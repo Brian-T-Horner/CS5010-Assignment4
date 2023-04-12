@@ -16,7 +16,7 @@ public interface Features {
 
   void loadImage(String path);
 
-  void rgbCombine(String redPath,String greenPath,String bluePath);
+  void rgbCombine(String redPath, String greenPath, String bluePath);
 
   void rgbSplit();
 
@@ -25,6 +25,12 @@ public interface Features {
   void sepia();
 
   void sharpen();
+
+  void luma();
+
+  void value();
+
+  void intensity();
 
   void exit();
 }

@@ -4,13 +4,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
-import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.NumberFormatter;
 
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -18,12 +16,13 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 
-import ime.control.commands.Brighten;
 
 public class JFrameView extends JFrame implements View {
 
   private final JButton loadButton;
+
   private final JButton exitButton;
+
   private final JButton saveButton;
 
   private final JButton blurButton;
@@ -38,27 +37,34 @@ public class JFrameView extends JFrame implements View {
 
   private final JButton rgbSplitButton;
 
-  private JButton rgbCombineButton;
+  private final JButton rgbCombineButton;
 
-  private JButton brightenButton;
+  private final JButton brightenButton;
 
   private final JButton sharpenButton;
 
   private final JButton sepiaButton;
 
-  private final JLabel currentImage;
-
   private final JButton rgbCombine1;
 
-  private JButton rgbCombine2;
+  private final JButton rgbCombine2;
 
-  private JButton rgbCombine3;
+  private final JButton rgbCombine3;
+
+  private final JButton lumaButton;
+
+  private final JButton intensityButton;
+
+  private final JButton valueButton;
 
   private String redPath;
 
   private String greenPath;
 
   private String bluePath;
+
+  private final JLabel currentImage;
+
   private final JFrame parent = this;
   private String path;
 
@@ -82,7 +88,7 @@ public class JFrameView extends JFrame implements View {
     //TODO: Color - value of each rgb and intensity
 
     //---------------------------------------------Messing with charts------------------------------------
-    this.chart = new XYChartBuilder().width(600).height(400).title("Area Chart").
+    this.chart = new XYChartBuilder().width(450).height(300).title("Area Chart").
             xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
@@ -106,7 +112,7 @@ public class JFrameView extends JFrame implements View {
 
     //---------------------------------------End of messing with chart ---------------------------
 
-    setSize(500, 300);
+    setSize(1000, 1000);
     setLocation(200, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -116,6 +122,11 @@ public class JFrameView extends JFrame implements View {
     //image display
     currentImage = new JLabel();
     this.add(currentImage);
+    // TODO fix image scrolling
+    JScrollPane scroller = new JScrollPane(currentImage,
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+    this.add(scroller);
 
     // Adding random chart
     this.chartPanel = new XChartPanel<XYChart>(chart);
@@ -201,6 +212,23 @@ public class JFrameView extends JFrame implements View {
     rgbCombine3 = new JButton("Choose blue image");
     rgbCombine3.setActionCommand("rgbCombine3");
     this.add(rgbCombine3);
+
+    lumaButton = new JButton("Display luma component");
+    lumaButton.setActionCommand("luma");
+    this.add(lumaButton);
+
+    intensityButton = new JButton("Display intensity component");
+    intensityButton.setActionCommand("intensity");
+    this.add(intensityButton);
+
+    valueButton = new JButton("Display value component");
+    valueButton.setActionCommand("value");
+    this.add(valueButton);
+
+
+
+
+    //luma button
 
     //TODO initialize all other ui elements
     setVisible(true);
@@ -330,6 +358,10 @@ public class JFrameView extends JFrame implements View {
     sharpenButton.addActionListener(evt -> features.sharpen());
     sepiaButton.addActionListener(evt -> features.sepia());
     rgbSplitButton.addActionListener(evt -> features.rgbSplit());
+    lumaButton.addActionListener(evt -> features.luma());
+    intensityButton.addActionListener(evt -> features.intensity());
+    valueButton.addActionListener(evt -> features.value());
+
 
     saveButton.addActionListener(evt -> {
       JDialog dialog = new JDialog(this, "Save Dialog", true);

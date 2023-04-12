@@ -54,9 +54,6 @@ public class UIController extends AbstractController implements Features {
       setImage();
       setChart();
     }
-    // TODO has bug, won't apply twice
-
-
   }
 
   @Override
@@ -105,6 +102,7 @@ public class UIController extends AbstractController implements Features {
     Image cgreen = ImageUtil.loadImage(greenPath);
     Image cblue = ImageUtil.loadImage(bluePath);
     model.rgbCombine("currentImage", cred, cgreen, cblue);
+    view.setChartPanelVisible();
     setImage();
     setChart();
 
@@ -121,7 +119,6 @@ public class UIController extends AbstractController implements Features {
 
   @Override
   public void save(String path) {
-
     if (path.isEmpty()) {
       path = "./img.png";
     }
@@ -142,13 +139,39 @@ public class UIController extends AbstractController implements Features {
       setImage();
       setChart();
     }
-
   }
 
   @Override
   public void sharpen() {
     if (checkImageInMemory()) {
       model.sharpen("currentImage", "currentImage");
+      setImage();
+      setChart();
+    }
+  }
+
+  @Override
+  public void luma() {
+    if (checkImageInMemory()) {
+      model.getLumaImage("currentImage", "currentImage");
+      setImage();
+      setChart();
+    }
+  }
+
+  @Override
+  public void value() {
+    if (checkImageInMemory()) {
+      model.getValueImage("currentImage", "currentImage");
+      setImage();
+      setChart();
+    }
+  }
+
+  @Override
+  public void intensity() {
+    if (checkImageInMemory()) {
+      model.getIntensityImage("currentImage", "currentImage");
       setImage();
       setChart();
     }
