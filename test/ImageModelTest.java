@@ -427,7 +427,7 @@ public class ImageModelTest {
 
   }
 
-private int[][] sharpenArray(Image img) {
+  private int[][] sharpenArray(Image img) {
     int[][] r = img.getRedComponent();
     int[][] g = img.getGreenComponent();
     int[][] b = img.getBlueComponent();
@@ -713,7 +713,7 @@ private int[][] sharpenArray(Image img) {
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        gComponent[i][j] = scanner.nextInt();;
+        gComponent[i][j] = scanner.nextInt();
       }
     }
     for (int i = 0; i < height; i++) {
