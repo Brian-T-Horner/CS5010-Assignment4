@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Scanner;
 import javax.swing.JFrame;
 
-public class MockView extends JFrame implements View {
+public class MockView  implements View {
 
 
   private StringBuilder log;

@@ -79,7 +79,9 @@ public class JFrameView extends JFrame implements View {
   private final JMenuBar menuBar;
   private final JMenu fileMenu;
 
-  private final JMenu helpMenu;
+  private final JScrollPane scrollImage;
+
+  private final JScrollPane scrollOperations;
 
   private final JMenuItem loadImageItem;
   private final JMenuItem saveImageItem;
@@ -126,7 +128,6 @@ public class JFrameView extends JFrame implements View {
     // Adding menu bar items
     menuBar = new JMenuBar();
     fileMenu = new JMenu("File");
-    helpMenu = new JMenu("Help");
 
     loadImageItem = new JMenuItem("Load Image");
     loadImageItem.setActionCommand("Load Button");
@@ -141,10 +142,7 @@ public class JFrameView extends JFrame implements View {
     fileMenu.add(exitItem);
 
 
-    helpMenu.setActionCommand("Help");
-
     menuBar.add(fileMenu);
-    menuBar.add(helpMenu);
     this.add(menuBar, BorderLayout.NORTH);
 
 
@@ -152,14 +150,14 @@ public class JFrameView extends JFrame implements View {
     imagePanel = new JPanel();
     currentImage = new JLabel();
     imagePanel.add(currentImage);
-    JScrollPane scrollImage = new JScrollPane(imagePanel);
+    scrollImage = new JScrollPane(imagePanel);
     scrollImage.setLayout(new ScrollPaneLayout());
     this.add(scrollImage, BorderLayout.CENTER);
 
 
     // Adding operations panel
     operationsPanel = new JPanel();
-    JScrollPane scrollOperations = new JScrollPane(operationsPanel);
+    scrollOperations = new JScrollPane(operationsPanel);
     scrollOperations.setLayout(new ScrollPaneLayout());
     this.add(scrollOperations, BorderLayout.WEST);
 
@@ -441,26 +439,6 @@ public class JFrameView extends JFrame implements View {
     lumaButton.addActionListener(evt -> features.luma());
     intensityButton.addActionListener(evt -> features.intensity());
     valueButton.addActionListener(evt -> features.value());
-
-    helpMenu.addActionListener(evt -> {
-      System.out.println("In action listener");
-      BufferedReader helpReader;
-      try {
-        helpReader = new BufferedReader(new FileReader("README.MD"));
-      } catch (FileNotFoundException e) {
-        throw new RuntimeException(e);
-      }
-      String helpLine = null;
-      while(true){
-        try {
-          if ((helpLine = helpReader.readLine()) == null)
-            break;
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
-        JOptionPane.showMessageDialog(null, helpLine);
-      }
-    });
 
     saveImageItem.addActionListener(evt -> {
       JDialog dialog = new JDialog(this, "Save Dialog", true);
