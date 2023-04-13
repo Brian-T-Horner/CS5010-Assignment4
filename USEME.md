@@ -1,4 +1,20 @@
-## Supported Commands
+## Navigating the UI
+
+**File Menu**
+
+There are two operations in the view: loading an image and saving an image.
+
+Users can open .ppm, .png, .jpg, .bmp images using load, and save them using load.
+A save path can be specified, but the default filename will be "img.png", saving in the working directory.
+
+**Side Menu** 
+
+Users can manipulate the image loaded using a variety of operations.
+Combining an image from red, green, and blue images can be done by selecting a red, green, 
+and blue file near the bottom of the menu and clicking the combine button.
+
+A histogram of the color distribution can be seen at the bottom of the UI.
+## Supported Commands in command line application
 
 **load image-path image-name**: Load a .bmp, .ppm, .png, .jpg file from the specified path and refer it to henceforth in the program by the given image name.
 
