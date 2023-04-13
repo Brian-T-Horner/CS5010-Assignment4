@@ -91,9 +91,7 @@ public class JFrameView extends JFrame implements View {
   private final XYChart chart;
   private final JPanel operationsPanel;
 
-  private final JTextArea helpText;
 
-  private final JScrollPane helpScrollPane;
 
 
 
@@ -142,9 +140,7 @@ public class JFrameView extends JFrame implements View {
     exitItem.setActionCommand("Exit Button");
     fileMenu.add(exitItem);
 
-//    helpItem = new JMenuItem("Help");
-//    helpItem.setActionCommand("Help Button");
-//    helpMenu.add(helpItem);
+
     helpMenu.setActionCommand("Help");
 
     menuBar.add(fileMenu);
@@ -302,22 +298,6 @@ public class JFrameView extends JFrame implements View {
     this.chartPanel = new XChartPanel<XYChart>(chart);
     graphPanel.add(chartPanel);
     chartPanel.setVisible(false);
-
-    this.helpText = new JTextArea(200, 200);
-    helpText.setVisible(false);
-    FileReader reader;
-    try {
-      reader = new FileReader("README.md");
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
-    }
-    try {
-      helpText.read(reader, "README");
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    this.helpScrollPane = new JScrollPane(helpText);
-    helpScrollPane.setVisible(false);
 
 
   }
@@ -480,9 +460,6 @@ public class JFrameView extends JFrame implements View {
         }
         JOptionPane.showMessageDialog(null, helpLine);
       }
-//      helpScrollPane.add(JOptionPane);
-//      this.helpText.setVisible(true);
-//      this.helpScrollPane.setVisible(true);
     });
 
     saveImageItem.addActionListener(evt -> {
