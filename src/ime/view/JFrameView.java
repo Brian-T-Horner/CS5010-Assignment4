@@ -123,10 +123,6 @@ public class JFrameView extends JFrame implements View {
     greenPath = "";
 
 
-    //TODO: Make histogram check if image is colored or not
-    //TODO: Greyscale - intensity
-    //TODO: Color - value of each rgb and intensity
-
     //---------------------------------------------Messing with charts------------------------------------
 
     //---------------------------------------End of messing with chart ---------------------------
@@ -500,6 +496,7 @@ public class JFrameView extends JFrame implements View {
                 + " .png, .ppm)", "ppm", "png", "bmp", "jpg");
         fileChooser.setFileFilter(filter);
         fileChooser.setDialogTitle("Select a file");
+        fileChooser.setSelectedFile(new File("img.png"));
         int returnValue = fileChooser.showOpenDialog(dialog);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
           File selectedFile = fileChooser.getSelectedFile();
@@ -512,12 +509,12 @@ public class JFrameView extends JFrame implements View {
     });
 
     brightenButton.addActionListener(evt -> {
-      String input = JOptionPane.showInputDialog(parent, "Enter an integer:");
+      String input = JOptionPane.showInputDialog(this, "Enter an integer:");
       try {
         int scale = Integer.parseInt(input);
         features.brighten(scale);
       } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(parent, "Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
       }
     });
 
