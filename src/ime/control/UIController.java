@@ -185,6 +185,8 @@ public class UIController extends AbstractController implements Features {
     System.exit(1);
   }
 
+
+
   private void setImage() {
     BufferedImage i = ImageUtil.writeBufferedImage(model.getImage("currentImage"));
     view.setImage(i);
