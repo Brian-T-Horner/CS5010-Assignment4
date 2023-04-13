@@ -3,6 +3,8 @@ package ime.view;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
@@ -21,11 +23,11 @@ import org.knowm.xchart.style.Styler;
 
 public class JFrameView extends JFrame implements View {
 
-  private final JButton loadButton;
-
-  private final JButton exitButton;
-
-  private final JButton saveButton;
+//  private final JButton loadButton;
+//
+//  private final JButton exitButton;
+//
+//  private final JButton saveButton;
 
   private final JButton blurButton;
 
@@ -70,9 +72,45 @@ public class JFrameView extends JFrame implements View {
   private final JFrame parent = this;
   private String path;
 
+
+  //------------------Panels for Organization of Border Layout-------------------
+//  private final JPanel menuPanel;
+//  private final JPanel operationsPanel;
+  private final JPanel imagePanel;
+
+  private final JPanel graphPanel;
+
+  //------------------------------------------------------------------
+  //--------------Operation Items------------
+
+  //----------------------------------------
+
+  //--------------Image Items----------------
+
+  //----------------------------------------
+
+  //-----------Menu Items --------
+
+  private final JMenuBar menuBar;
+  private final JMenu fileMenu;
+
+  private final JMenu helpMenu;
+
+  private final JMenuItem loadImageItem;
+  private final JMenuItem saveImageItem;
+  private final JMenuItem exitItem;
+  private final JMenuItem helpItem;
+
+  //------------------------------
+
+
+  //------------Chart Items -----------
   private final JPanel chartPanel;
 
   private final XYChart chart;
+  private final JPanel operationsPanel;
+
+  //-----------------------------------
 
   public JFrameView(String caption) {
 
@@ -90,7 +128,191 @@ public class JFrameView extends JFrame implements View {
     //TODO: Color - value of each rgb and intensity
 
     //---------------------------------------------Messing with charts------------------------------------
-    this.chart = new XYChartBuilder().width(600).height(400).title("Histogram of Pixel Values").
+
+    //---------------------------------------End of messing with chart ---------------------------
+
+    setSize(1000, 1000);
+
+    //--------------------------------------- Flatlaf -------------------------------
+    try {
+      UIManager.setLookAndFeel(new FlatDarculaLaf());
+    } catch (Exception ex) {
+      System.err.println("Failed to initialize Laf");
+    }
+    //-------------------------------------------
+//    setSize(500, 300);
+    setLocation(200, 200);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+    this.setLayout(new BorderLayout());
+
+
+
+
+    // Adding menu bar items
+    menuBar = new JMenuBar();
+    fileMenu = new JMenu("File");
+    helpMenu = new JMenu("Help");
+
+    loadImageItem = new JMenuItem("Load Image");
+    loadImageItem.setActionCommand("Load Button");
+    fileMenu.add(loadImageItem);
+
+    saveImageItem = new JMenuItem("Save Image");
+    saveImageItem.setActionCommand("Save Button");
+    fileMenu.add(saveImageItem);
+
+    exitItem = new JMenuItem("Exit");
+    exitItem.setActionCommand("Exit Button");
+    fileMenu.add(exitItem);
+
+    helpItem = new JMenuItem("Help");
+    helpItem.setActionCommand("Help Button");
+    helpMenu.add(helpItem);
+
+    menuBar.add(fileMenu);
+    menuBar.add(helpMenu);
+//    menuPanel.add(menuBar);
+    this.add(menuBar, BorderLayout.NORTH);
+
+
+
+
+
+    //image display
+    imagePanel = new JPanel();
+    currentImage = new JLabel();
+    imagePanel.add(currentImage);
+    JScrollPane scrollImage = new JScrollPane(imagePanel);
+    scrollImage.setLayout(new ScrollPaneLayout());
+    this.add(scrollImage, BorderLayout.CENTER);
+
+
+
+
+    // Adding chart
+
+
+
+
+    // Adding operations panel
+    operationsPanel = new JPanel();
+    JScrollPane scrollOperations = new JScrollPane(operationsPanel);
+    scrollOperations.setLayout(new ScrollPaneLayout());
+    this.add(scrollOperations, BorderLayout.WEST);
+
+    //dither button
+    ditherButton = new JButton("Dither");
+    ditherButton.setActionCommand("Dither Button");
+    operationsPanel.add(ditherButton);
+
+    //vertical flip button
+    vflipButton = new JButton("Vertical Flip");
+    vflipButton.setActionCommand("Vertical Flip Button");
+    operationsPanel.add(vflipButton);
+
+
+    //blur button
+    blurButton = new JButton("Blur");
+    blurButton.setActionCommand("Blur Button");
+    operationsPanel.add(blurButton);
+
+
+    //greyscale button
+    greyscaleButton = new JButton("Greyscale");
+    greyscaleButton.setActionCommand("Greyscale Button");
+    operationsPanel.add(greyscaleButton);
+
+
+    //horizontal flip button
+    hflipButton = new JButton("Horizontal Flip");
+    hflipButton.setActionCommand("Horizontal Button");
+    operationsPanel.add(hflipButton);
+
+
+    //sharpen button
+    sharpenButton = new JButton("Sharpen");
+    sharpenButton.setActionCommand("Sharpen Button");
+    operationsPanel.add(sharpenButton);
+
+
+    //sepia button
+    sepiaButton = new JButton("Sepiascale");
+    sepiaButton.setActionCommand("Sepia Button");
+    operationsPanel.add(sepiaButton);
+
+    //rgbSplit button
+    rgbSplitButton = new JButton("Split Image into RGB");
+    rgbSplitButton.setActionCommand("Split Button");
+    operationsPanel.add(rgbSplitButton);
+
+
+    //brighten button
+    brightenButton = new JButton("Brighten");
+    brightenButton.setActionCommand("Brighten Button");
+    operationsPanel.add(brightenButton);
+
+
+
+    //rgbCombine button
+    rgbCombineButton = new JButton("Combine red, green, and blue channels");
+    rgbCombineButton.setActionCommand("RGBCombine Button");
+    operationsPanel.add(rgbCombineButton);
+
+
+    //rgbCombine buttons
+
+    rgbCombine1 = new JButton("Choose red image");
+    rgbCombine1.setActionCommand("rgbCombine1");
+    operationsPanel.add(rgbCombine1);
+
+    rgbCombine2 = new JButton("Choose green image");
+    rgbCombine2.setActionCommand("rgbCombine2");
+    operationsPanel.add(rgbCombine2);
+
+
+    rgbCombine3 = new JButton("Choose blue image");
+    rgbCombine3.setActionCommand("rgbCombine3");
+    operationsPanel.add(rgbCombine3);
+
+
+    lumaButton = new JButton("Display luma component");
+    lumaButton.setActionCommand("luma");
+    operationsPanel.add(lumaButton);
+
+
+    intensityButton = new JButton("Display intensity component");
+    intensityButton.setActionCommand("intensity");
+    operationsPanel.add(intensityButton);
+
+
+    valueButton = new JButton("Display value component");
+    valueButton.setActionCommand("value");
+    operationsPanel.add(valueButton);
+
+
+    graphPanel = new JPanel();
+    this.add(graphPanel, BorderLayout.SOUTH);
+
+    operationsPanel.setLayout(new GridLayout(operationsPanel.getComponentCount(), 1));
+
+
+
+    //luma button
+
+    //TODO initialize all other ui elements
+    setVisible(true);
+    scrollOperations.setPreferredSize(new Dimension((this.getWidth()/3), this.getHeight()/3));
+    scrollOperations.setMaximumSize(new Dimension((this.getWidth()/3), this.getHeight()/3));
+    scrollImage.setPreferredSize(new Dimension(this.getWidth()/3 * 2, this.getHeight()/3 * 2));
+    scrollImage.setMaximumSize(new Dimension(this.getWidth()/3 * 2, this.getHeight()/3 * 2));
+    graphPanel.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()/3));
+    graphPanel.setMaximumSize(new Dimension(this.getWidth(), this.getHeight()/3));
+
+
+    this.chart = new XYChartBuilder().width(this.getWidth()).height(this.getHeight()/3)
+        .title("Histogram of Pixel Values").
         xAxisTitle("Pixel Values 1-255").yAxisTitle("Number of Occurrences of Value in Image")
         .build();
 
@@ -113,136 +335,11 @@ public class JFrameView extends JFrame implements View {
     chart.addSeries("b", xAxis, defaultYAxis);
     chart.addSeries("intensity", xAxis, defaultYAxis);
 
-    //---------------------------------------End of messing with chart ---------------------------
-
-    setSize(1000, 1000);
-    //--------------------------------------- Flatlaf -------------------------------
-    try {
-      UIManager.setLookAndFeel(new FlatDarculaLaf());
-    } catch (Exception ex) {
-      System.err.println("Failed to initialize Laf");
-    }
-    //-------------------------------------------
-    setSize(500, 300);
-    setLocation(200, 200);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-    this.setLayout(new FlowLayout());
-
-    //image display
-    currentImage = new JLabel();
-    this.add(currentImage);
-    // TODO fix image scrolling
-    JScrollPane scroller = new JScrollPane(currentImage,
-            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-    this.add(scroller);
-
-    // Adding random chart
     this.chartPanel = new XChartPanel<XYChart>(chart);
-    this.add(chartPanel);
+    graphPanel.add(chartPanel);
     chartPanel.setVisible(false);
 
-    //exit button
-    exitButton = new JButton("Exit");
-    exitButton.setActionCommand("Exit Button");
-    this.add(exitButton);
 
-    //load button
-    loadButton = new JButton("Load");
-    loadButton.setActionCommand("Load Button");
-    this.add(loadButton);
-
-    //save button
-    saveButton = new JButton("Save");
-    saveButton.setActionCommand("Save Button");
-    this.add(saveButton);
-
-    //dither button
-    ditherButton = new JButton("Dither");
-    ditherButton.setActionCommand("Dither Button");
-    this.add(ditherButton);
-
-    //vertical flip button
-    vflipButton = new JButton("Vertical Flip");
-    vflipButton.setActionCommand("Vertical Flip Button");
-    this.add(vflipButton);
-
-    //blur button
-    blurButton = new JButton("Blur");
-    blurButton.setActionCommand("Blur Button");
-    this.add(blurButton);
-
-    //greyscale button
-    greyscaleButton = new JButton("Greyscale");
-    greyscaleButton.setActionCommand("Greyscale Button");
-    this.add(greyscaleButton);
-
-    //horizontal flip button
-    hflipButton = new JButton("Horizontal Flip");
-    hflipButton.setActionCommand("Horizontal Button");
-    this.add(hflipButton);
-
-    //sharpen button
-    sharpenButton = new JButton("Sharpen");
-    sharpenButton.setActionCommand("Sharpen Button");
-    this.add(sharpenButton);
-
-    //sepia button
-    sepiaButton = new JButton("Sepiascale");
-    sepiaButton.setActionCommand("Sepia Button");
-    this.add(sepiaButton);
-
-    //rgbSplit button
-    rgbSplitButton = new JButton("Split Image into RGB");
-    rgbSplitButton.setActionCommand("Split Button");
-    this.add(rgbSplitButton);
-
-    //brighten button
-    brightenButton = new JButton("Brighten");
-    brightenButton.setActionCommand("Brighten Button");
-    this.add(brightenButton);
-
-
-    //rgbCombine button
-    rgbCombineButton = new JButton("Combine red, green, and blue channels");
-    rgbCombineButton.setActionCommand("RGBCombine Button");
-    this.add(rgbCombineButton);
-
-    //rgbCombine buttons
-
-    rgbCombine1 = new JButton("Choose red image");
-    rgbCombine1.setActionCommand("rgbCombine1");
-    this.add(rgbCombine1);
-
-    rgbCombine2 = new JButton("Choose green image");
-    rgbCombine2.setActionCommand("rgbCombine2");
-    this.add(rgbCombine2);
-
-    rgbCombine3 = new JButton("Choose blue image");
-    rgbCombine3.setActionCommand("rgbCombine3");
-    this.add(rgbCombine3);
-
-    lumaButton = new JButton("Display luma component");
-    lumaButton.setActionCommand("luma");
-    this.add(lumaButton);
-
-    intensityButton = new JButton("Display intensity component");
-    intensityButton.setActionCommand("intensity");
-    this.add(intensityButton);
-
-    valueButton = new JButton("Display value component");
-    valueButton.setActionCommand("value");
-    this.add(valueButton);
-
-
-
-
-    //luma button
-
-    //TODO initialize all other ui elements
-    setVisible(true);
   }
 
 
@@ -270,7 +367,20 @@ public class JFrameView extends JFrame implements View {
 
   @Override
   public void setImage(BufferedImage img) {
-    currentImage.setIcon(new ImageIcon(img));
+
+    int oldHeight = img.getHeight();
+    int oldWidth = img.getWidth();
+    int newHeight = this.getHeight() / 3 * 2;
+    int newWidth = this.getWidth() / 3 * 2;
+    BufferedImage scaled = new BufferedImage(newWidth,
+        newHeight, BufferedImage.TYPE_INT_RGB);
+
+    AffineTransform at = new AffineTransform();
+    at.scale((double) newWidth /oldWidth, (double) newHeight/oldHeight);
+    AffineTransformOp scaleOp =
+        new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+    scaled = scaleOp.filter(img, scaled);
+    currentImage.setIcon(new ImageIcon(scaled));
   }
 
   public void setChartPanelVisible() {
@@ -340,7 +450,7 @@ public class JFrameView extends JFrame implements View {
 
   @Override
   public void addFeatures(Features features) {
-    loadButton.addActionListener(evt -> {
+    loadImageItem.addActionListener(evt -> {
       //TODO config to make more user friendly
       JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
       Action details = fileChooser.getActionMap().get("viewTypeDetails");
@@ -359,7 +469,7 @@ public class JFrameView extends JFrame implements View {
         features.loadImage(path);
       }
     });
-    exitButton.addActionListener(evt -> features.exit());
+    exitItem.addActionListener(evt -> features.exit());
 
     ditherButton.addActionListener(evt -> features.dither());
     vflipButton.addActionListener(evt -> features.verticalFlip());
@@ -374,7 +484,7 @@ public class JFrameView extends JFrame implements View {
     valueButton.addActionListener(evt -> features.value());
 
 
-    saveButton.addActionListener(evt -> {
+    saveImageItem.addActionListener(evt -> {
       JDialog dialog = new JDialog(this, "Save Dialog", true);
       dialog.setSize(300, 150);
       JFormattedTextField txtFilePath = new JFormattedTextField();
