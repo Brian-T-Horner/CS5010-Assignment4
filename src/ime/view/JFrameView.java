@@ -3,11 +3,17 @@ package ime.view;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -22,12 +28,6 @@ import org.knowm.xchart.style.Styler;
 
 
 public class JFrameView extends JFrame implements View {
-
-//  private final JButton loadButton;
-//
-//  private final JButton exitButton;
-//
-//  private final JButton saveButton;
 
   private final JButton blurButton;
 
@@ -72,24 +72,9 @@ public class JFrameView extends JFrame implements View {
   private final JFrame parent = this;
   private String path;
 
-
-  //------------------Panels for Organization of Border Layout-------------------
-//  private final JPanel menuPanel;
-//  private final JPanel operationsPanel;
   private final JPanel imagePanel;
 
   private final JPanel graphPanel;
-
-  //------------------------------------------------------------------
-  //--------------Operation Items------------
-
-  //----------------------------------------
-
-  //--------------Image Items----------------
-
-  //----------------------------------------
-
-  //-----------Menu Items --------
 
   private final JMenuBar menuBar;
   private final JMenu fileMenu;
@@ -99,18 +84,18 @@ public class JFrameView extends JFrame implements View {
   private final JMenuItem loadImageItem;
   private final JMenuItem saveImageItem;
   private final JMenuItem exitItem;
-  private final JMenuItem helpItem;
-
-  //------------------------------
 
 
-  //------------Chart Items -----------
   private final JPanel chartPanel;
 
   private final XYChart chart;
   private final JPanel operationsPanel;
 
-  //-----------------------------------
+  private final JTextArea helpText;
+
+  private final JScrollPane helpScrollPane;
+
+
 
   public JFrameView(String caption) {
 
@@ -123,27 +108,21 @@ public class JFrameView extends JFrame implements View {
     greenPath = "";
 
 
-    //---------------------------------------------Messing with charts------------------------------------
-
-    //---------------------------------------End of messing with chart ---------------------------
 
     setSize(1000, 1000);
 
-    //--------------------------------------- Flatlaf -------------------------------
+    // Flatlaf
     try {
       UIManager.setLookAndFeel(new FlatDarculaLaf());
     } catch (Exception ex) {
       System.err.println("Failed to initialize Laf");
     }
-    //-------------------------------------------
-//    setSize(500, 300);
+
     setLocation(200, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
     this.setLayout(new BorderLayout());
-
-
 
 
     // Adding menu bar items
@@ -163,17 +142,14 @@ public class JFrameView extends JFrame implements View {
     exitItem.setActionCommand("Exit Button");
     fileMenu.add(exitItem);
 
-    helpItem = new JMenuItem("Help");
-    helpItem.setActionCommand("Help Button");
-    helpMenu.add(helpItem);
+//    helpItem = new JMenuItem("Help");
+//    helpItem.setActionCommand("Help Button");
+//    helpMenu.add(helpItem);
+    helpMenu.setActionCommand("Help");
 
     menuBar.add(fileMenu);
     menuBar.add(helpMenu);
-//    menuPanel.add(menuBar);
     this.add(menuBar, BorderLayout.NORTH);
-
-
-
 
 
     //image display
@@ -183,13 +159,6 @@ public class JFrameView extends JFrame implements View {
     JScrollPane scrollImage = new JScrollPane(imagePanel);
     scrollImage.setLayout(new ScrollPaneLayout());
     this.add(scrollImage, BorderLayout.CENTER);
-
-
-
-
-    // Adding chart
-
-
 
 
     // Adding operations panel
@@ -295,10 +264,9 @@ public class JFrameView extends JFrame implements View {
 
 
 
-    //luma button
-
-    //TODO initialize all other ui elements
     setVisible(true);
+
+
     scrollOperations.setPreferredSize(new Dimension((this.getWidth()/3), this.getHeight()/3));
     scrollOperations.setMaximumSize(new Dimension((this.getWidth()/3), this.getHeight()/3));
     scrollImage.setPreferredSize(new Dimension(this.getWidth()/3 * 2, this.getHeight()/3 * 2));
@@ -334,6 +302,22 @@ public class JFrameView extends JFrame implements View {
     this.chartPanel = new XChartPanel<XYChart>(chart);
     graphPanel.add(chartPanel);
     chartPanel.setVisible(false);
+
+    this.helpText = new JTextArea(200, 200);
+    helpText.setVisible(false);
+    FileReader reader;
+    try {
+      reader = new FileReader("README.md");
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+    try {
+      helpText.read(reader, "README");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    this.helpScrollPane = new JScrollPane(helpText);
+    helpScrollPane.setVisible(false);
 
 
   }
@@ -466,7 +450,6 @@ public class JFrameView extends JFrame implements View {
       }
     });
     exitItem.addActionListener(evt -> features.exit());
-
     ditherButton.addActionListener(evt -> features.dither());
     vflipButton.addActionListener(evt -> features.verticalFlip());
     blurButton.addActionListener(evt -> features.blur());
@@ -479,6 +462,28 @@ public class JFrameView extends JFrame implements View {
     intensityButton.addActionListener(evt -> features.intensity());
     valueButton.addActionListener(evt -> features.value());
 
+    helpMenu.addActionListener(evt -> {
+      System.out.println("In action listener");
+      BufferedReader helpReader;
+      try {
+        helpReader = new BufferedReader(new FileReader("README.MD"));
+      } catch (FileNotFoundException e) {
+        throw new RuntimeException(e);
+      }
+      String helpLine = null;
+      while(true){
+        try {
+          if ((helpLine = helpReader.readLine()) == null)
+            break;
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
+        JOptionPane.showMessageDialog(null, helpLine);
+      }
+//      helpScrollPane.add(JOptionPane);
+//      this.helpText.setVisible(true);
+//      this.helpScrollPane.setVisible(true);
+    });
 
     saveImageItem.addActionListener(evt -> {
       JDialog dialog = new JDialog(this, "Save Dialog", true);
