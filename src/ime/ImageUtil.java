@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 
 
 /**
- * Utility class with all the IO operations used in the model
+ * Utility class with all the IO operations used in the model.
  */
 public class ImageUtil {
 

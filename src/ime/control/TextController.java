@@ -1,4 +1,5 @@
 package ime.control;
+
 import ime.model.Model;
 import ime.view.FileView;
 import ime.view.View;
@@ -25,6 +26,7 @@ public class TextController extends AbstractController {
   public TextController(Model model, View view) {
     super(model, view);
   }
+
   @Override
   public void run() throws IOException {
     Objects.requireNonNull(model);

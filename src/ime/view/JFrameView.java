@@ -1,32 +1,42 @@
 package ime.view;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
-
-import javax.swing.*;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneLayout;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 
-
+/**
+ * Class for UI View called JFrameView.
+ */
 public class JFrameView extends JFrame implements View {
 
   private final JButton blurButton;
@@ -72,16 +82,7 @@ public class JFrameView extends JFrame implements View {
   private final JFrame parent = this;
   private String path;
 
-  private final JPanel imagePanel;
 
-  private final JPanel graphPanel;
-
-  private final JMenuBar menuBar;
-  private final JMenu fileMenu;
-
-  private final JScrollPane scrollImage;
-
-  private final JScrollPane scrollOperations;
 
   private final JMenuItem loadImageItem;
   private final JMenuItem saveImageItem;
@@ -91,23 +92,33 @@ public class JFrameView extends JFrame implements View {
   private final JPanel chartPanel;
 
   private final XYChart chart;
-  private final JPanel operationsPanel;
 
 
-
-
-
+  /**
+   * Constructor for JFrameView object.
+   * @param caption String to be used as the UI name at top.
+   */
   public JFrameView(String caption) {
 
     super(caption);
 
-    redPath ="";
+    redPath = "";
 
     bluePath = "";
 
     greenPath = "";
 
+    JPanel imagePanel;
 
+    JPanel graphPanel;
+
+    JMenuBar menuBar;
+    JMenu fileMenu;
+
+    JScrollPane scrollImage;
+
+    JScrollPane scrollOperations;
+    JPanel operationsPanel;
 
     setSize(1000, 1000);
 
@@ -261,17 +272,23 @@ public class JFrameView extends JFrame implements View {
     setVisible(true);
 
 
-    scrollOperations.setPreferredSize(new Dimension((this.getWidth()/3), this.getHeight()/3));
-    scrollOperations.setMaximumSize(new Dimension((this.getWidth()/3), this.getHeight()/3));
-    scrollImage.setPreferredSize(new Dimension(this.getWidth()/3 * 2, this.getHeight()/3 * 2));
-    scrollImage.setMaximumSize(new Dimension(this.getWidth()/3 * 2, this.getHeight()/3 * 2));
-    graphPanel.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()/3));
-    graphPanel.setMaximumSize(new Dimension(this.getWidth(), this.getHeight()/3));
+    scrollOperations.setPreferredSize(new Dimension((this.getWidth() / 3),
+        this.getHeight() / 3));
+    scrollOperations.setMaximumSize(new Dimension((this.getWidth() / 3),
+        this.getHeight() / 3));
+    scrollImage.setPreferredSize(new Dimension(this.getWidth() / 3 * 2,
+        this.getHeight() / 3 * 2));
+    scrollImage.setMaximumSize(new Dimension(this.getWidth() / 3 * 2,
+        this.getHeight() / 3 * 2));
+    graphPanel.setPreferredSize(new Dimension(this.getWidth(),
+        this.getHeight() / 3));
+    graphPanel.setMaximumSize(new Dimension(this.getWidth(),
+        this.getHeight() / 3));
 
 
-    this.chart = new XYChartBuilder().width(this.getWidth()).height(this.getHeight()/3)
-        .title("Histogram of Pixel Values").
-        xAxisTitle("Pixel Values 1-255").yAxisTitle("Number of Occurrences of Value in Image")
+    this.chart = new XYChartBuilder().width(this.getWidth()).height(this.getHeight() / 3)
+        .title("Histogram of Pixel Values")
+        .xAxisTitle("Pixel Values 1-255").yAxisTitle("Number of Occurrences of Value in Image")
         .build();
 
     // Customize Chart
@@ -334,18 +351,22 @@ public class JFrameView extends JFrame implements View {
         newHeight, BufferedImage.TYPE_INT_RGB);
 
     AffineTransform at = new AffineTransform();
-    at.scale((double) newWidth /oldWidth, (double) newHeight/oldHeight);
+    at.scale((double) newWidth / oldWidth, (double) newHeight / oldHeight);
     AffineTransformOp scaleOp =
         new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
     scaled = scaleOp.filter(img, scaled);
     currentImage.setIcon(new ImageIcon(scaled));
   }
 
+  @Override
   public void setChartPanelVisible() {
     this.chartPanel.setVisible(true);
   }
 
-  public void updateColoredChartPanel(int[][] red2D, int[][] green2D, int[][] blue2D, int[][] intensity2D) {
+  @Override
+  public void updateColoredChartPanel(int[][] red2D, int[][] green2D,
+      int[][] blue2D, int[][] intensity2D) {
+
     double[] red = new double[256];
     double[] blue = new double[256];
     double[] green = new double[256];
@@ -449,7 +470,8 @@ public class JFrameView extends JFrame implements View {
       dialog.add(btnChooseFile);
 
       btnChooseFile.addActionListener(e -> {
-        JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir") + "/img.png");
+        JFileChooser fileChooser =
+            new JFileChooser(System.getProperty("user.dir") + "/img.png");
         Action details = fileChooser.getActionMap().get("viewTypeDetails");
         details.actionPerformed(null);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
@@ -474,12 +496,14 @@ public class JFrameView extends JFrame implements View {
         int scale = Integer.parseInt(input);
         features.brighten(scale);
       } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,
+            "Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
       }
     });
 
     rgbCombine1.addActionListener(evt -> {
-      JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir") + "/img.png");
+      JFileChooser fileChooser = new JFileChooser(
+          System.getProperty("user.dir") + "/img.png");
       Action details = fileChooser.getActionMap().get("viewTypeDetails");
       details.actionPerformed(null);
       FileNameExtensionFilter filter = new FileNameExtensionFilter("Images(.bmp, .jpg,"
@@ -527,9 +551,10 @@ public class JFrameView extends JFrame implements View {
     });
 
     rgbCombineButton.addActionListener(evt -> {
-      if(greenPath.isEmpty() || redPath.isEmpty() || bluePath.isEmpty()) {
-        JOptionPane.showMessageDialog(parent, "Please enter a valid red, green, and blue paths."
-                , "Error", JOptionPane.ERROR_MESSAGE);
+      if (greenPath.isEmpty() || redPath.isEmpty() || bluePath.isEmpty()) {
+        JOptionPane.showMessageDialog(parent,
+            "Please enter a valid red, green, and blue paths.", "Error",
+            JOptionPane.ERROR_MESSAGE);
       } else {
         features.rgbCombine(redPath,greenPath,bluePath);
         redPath = "";

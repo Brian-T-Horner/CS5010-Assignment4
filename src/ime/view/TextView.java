@@ -4,7 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class TextView implements View{
+/**
+ * Class for a TextView when running commands from script.
+ */
+public class TextView implements View {
 
   final Appendable out;
 
@@ -17,25 +20,27 @@ public class TextView implements View{
 
   @Override
   public void textPrompt() {
-    try{
+    try {
       out.append("$ ");
-    } catch(IOException e) {
+    } catch (IOException e) {
       System.out.println("View:User prompt failed to append");
     }
   }
 
+  @Override
   public void unknownCommandPrompt() {
-    try{
+    try {
       out.append("Unrecognized command\n");
-    } catch(IOException e) {
+    } catch (IOException e) {
       System.out.println("View:Unknown command prompt failed to append");
     }
   }
 
+  @Override
   public void printGeneralError(String errorMessage) {
-    try{
+    try {
       out.append(errorMessage).append("\n");
-    } catch(IOException e) {
+    } catch (IOException e) {
       System.out.println("View:Error message failed to append");
     }
   }

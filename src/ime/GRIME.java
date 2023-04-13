@@ -12,6 +12,9 @@ import ime.view.JFrameView;
 import ime.view.TextView;
 import ime.view.View;
 
+/**
+ * Main class of program in which main method is located.
+ */
 public class GRIME {
 
   /**
@@ -24,7 +27,7 @@ public class GRIME {
     View textView = new TextView(System.out, new InputStreamReader(System.in));
     Controller controller;
     if (args.length > 0) {
-      if(args[0].equals("-text") && args.length == 1) {
+      if (args[0].equals("-text") && args.length == 1) {
         controller = new TextController(model,textView);
         controller.run();
       } else if (args[0].equals("-file") && args.length == 2) {
@@ -32,7 +35,8 @@ public class GRIME {
         TextController.runFile(args[1],model);
       } else {
         System.out.println("To run a text file please input "
-                + "\"-file file-path\" as command line arguments.\nTo run in command line, please input \"-text\"");
+                + "\"-file file-path\" as command line arguments.\n"
+            + "To run in command line, please input \"-text\"");
       }
     } else {
       // TODO run UI controller here

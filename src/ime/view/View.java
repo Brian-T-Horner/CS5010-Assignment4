@@ -3,6 +3,9 @@ package ime.view;
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
 
+/**
+ * Interface for View objects.
+ */
 public interface View {
 
   void textPrompt();

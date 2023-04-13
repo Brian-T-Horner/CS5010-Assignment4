@@ -1,9 +1,11 @@
 import ime.view.Features;
 import ime.view.View;
 import java.awt.image.BufferedImage;
-import java.io.Reader;
 import java.util.Scanner;
 
+/**
+ * Class to test Controller to View interaction.
+ */
 public class MockView implements View {
 
 
@@ -11,7 +13,12 @@ public class MockView implements View {
   private final int uniqueCode;
   private Readable in;
 
-
+  /**
+   * Constructor for a MockView object.
+   * @param newLog Log for output for tests.
+   * @param newUniqueCode UniqueCode for tests
+   * @param in Command readable for tests.
+   */
   public MockView(StringBuilder newLog, int newUniqueCode, Readable in) {
     this.log = newLog;
     this.uniqueCode = newUniqueCode;

@@ -9,6 +9,9 @@ import java.io.Reader;
 import java.io.StringReader;
 import org.junit.Test;
 
+/**
+ * Class to test Controller to View interaction.
+ */
 public class ViewControllerTest {
 
   @Test

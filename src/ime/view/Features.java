@@ -1,5 +1,8 @@
 package ime.view;
 
+/**
+ * Interface of features for the view.
+ */
 public interface Features {
 
   void blur();

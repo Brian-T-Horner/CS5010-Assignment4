@@ -61,6 +61,9 @@ public abstract class AbstractController implements Controller {
   public abstract void run() throws IOException;
 
 
+  /**
+   * Method to put the commands into knownCommands.
+   */
   public void putCommands() {
     knownCommands.put("bluescale", s -> new Bluescale(s.nextLine().trim().split(" ")));
     knownCommands.put("redscale", s -> new Redscale(s.nextLine().trim().split(" ")));
@@ -82,7 +85,12 @@ public abstract class AbstractController implements Controller {
     knownCommands.put("dither", s -> new Dither(s.nextLine().trim().split(" ")));
   }
 
-  public void executeCommand(String in,Scanner scan){
+  /**
+   * Method to execute commands.
+   * @param in String of command.
+   * @param scan Scanner for getting command.
+   */
+  public void executeCommand(String in,Scanner scan) {
     Function<Scanner, Command> cmd = knownCommands.getOrDefault(in, null);
     Command c;
     if (cmd == null) {

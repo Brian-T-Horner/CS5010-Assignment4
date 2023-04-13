@@ -1,9 +1,8 @@
 package ime.control;
 
-import java.awt.Graphics2D;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -13,9 +12,13 @@ import ime.model.Model;
 import ime.view.Features;
 import ime.view.View;
 
+/**
+ * Class to for the controller used with UI display.
+ */
 public class UIController extends AbstractController implements Features {
+
   /**
-   * Contructor for UIController.
+   * Constructor for UIController.
    *
    * @param model model for controller
    * @param view  view for controller
