@@ -27,12 +27,13 @@ public class GRIME {
     View textView = new TextView(System.out, new InputStreamReader(System.in));
     Controller controller;
     if (args.length > 0) {
+      controller = new TextController(model,textView);
       if (args[0].equals("-text") && args.length == 1) {
-        controller = new TextController(model,textView);
         controller.run();
       } else if (args[0].equals("-file") && args.length == 2) {
         //todo this is kinda hacky
-        TextController.runFile(args[1],model);
+
+        controller.runFile(args[1],model);
       } else {
         System.out.println("To run a text file please input "
                 + "\"-file file-path\" as command line arguments.\n"

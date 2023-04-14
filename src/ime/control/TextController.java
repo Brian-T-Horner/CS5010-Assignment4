@@ -78,47 +78,6 @@ public class TextController extends AbstractController {
       view.textPrompt();
     }
   }
-
-
-  /**
-   * Method to read text files into a String.
-   *
-   * @param path image path
-   * @return String contents of file
-   * @throws IOException thrown if Files.readAllBytes cannot read the file
-   */
-  private static String readFile(String path)
-          throws IOException {
-    byte[] encoded = Files.readAllBytes(Paths.get(path));
-    return new String(encoded, StandardCharsets.UTF_8);
-  }
-
-
-  /**
-   * Method to run a script text file using a FileController.
-   *
-   * @param fileIn       text file to read from
-   * @param currentModel current model used
-   * @return quit status of FileController
-   * @throws IOException if readFile encounters an IO error
-   */
-  public static boolean runFile(String fileIn, Model currentModel) throws IOException {
-    String file;
-    try {
-      file = readFile(fileIn);
-    } catch (IOException e) {
-      throw new IOException(e.getMessage());
-    }
-    Reader newIn = new StringReader(file);
-    Controller fileController = new TextController(currentModel,new FileView(null, newIn));
-
-    try {
-      fileController.run();
-    } catch (IOException e) {
-      throw new IOException(e.getMessage());
-    }
-    return fileController.isQuit();
-  }
 }
 
 

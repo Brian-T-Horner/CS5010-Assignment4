@@ -2,6 +2,8 @@ package ime.control;
 
 import java.io.IOException;
 
+import ime.model.Model;
+
 /**
  * Interface for controller objects for the MVC model of this program.
  */
@@ -20,5 +22,7 @@ public interface Controller {
    * @return true if quit prompted false if not prompted
    */
   boolean isQuit();
+
+  boolean runFile(String fileIn, Model currentModel) throws IOException;
 
 }
