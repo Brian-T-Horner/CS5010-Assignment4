@@ -1,15 +1,8 @@
 package ime.control;
 
 import ime.model.Model;
-import ime.view.FileView;
 import ime.view.View;
-
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
 
