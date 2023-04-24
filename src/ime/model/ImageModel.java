@@ -2,9 +2,12 @@ package ime.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Random;
+
 
 import ime.ImageUtil;
 
@@ -27,16 +30,16 @@ public class ImageModel implements Model {
     Image i = images.get(imageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
-          + "\" not in memory.");
+              + "\" not in memory.");
     }
     return i;
   }
 
   @Override
   public void loadImage(String imagePath, String newImageName)
-      throws FileNotFoundException, IllegalArgumentException {
+          throws FileNotFoundException, IllegalArgumentException {
     if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp")
-        || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+            || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IllegalArgumentException("File must be a .bmp, .jpg, .png, or .ppm file.");
     }
     Image i = ImageUtil.loadImage(imagePath);
@@ -53,10 +56,10 @@ public class ImageModel implements Model {
     Image i = images.get(imageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name \"" + imageName
-          + "\" not in memory.");
+              + "\" not in memory.");
     }
     if (!(imagePath.endsWith(".ppm") || imagePath.endsWith(".bmp")
-        || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
+            || imagePath.endsWith(".png") || imagePath.endsWith(".jpg"))) {
       throw new IOException("File must be a .bmp, .jpg, .png, or .ppm file.");
     }
     ImageUtil.saveImage(i, imagePath);
@@ -72,7 +75,7 @@ public class ImageModel implements Model {
       images.put(newImageName, new IMEImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
   }
 
@@ -86,7 +89,7 @@ public class ImageModel implements Model {
       images.put(newImageName, new IMEImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
   }
 
@@ -100,7 +103,7 @@ public class ImageModel implements Model {
       images.put(newImageName, new IMEImage(i.getWidth(), i.getHeight(), r, r, r));
     } else {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
   }
 
@@ -111,7 +114,7 @@ public class ImageModel implements Model {
     Image i = images.get(currentImageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int[][] red = flipArrayHorizontal(i, i.getRedComponent());
     int[][] green = flipArrayHorizontal(i, i.getGreenComponent());
@@ -127,7 +130,7 @@ public class ImageModel implements Model {
     Image i = images.get(currentImageName);
     if (i == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int[][] red = flipArrayVertical(i, i.getRedComponent());
     int[][] green = flipArrayVertical(i, i.getGreenComponent());
@@ -144,7 +147,7 @@ public class ImageModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -171,7 +174,7 @@ public class ImageModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -202,7 +205,7 @@ public class ImageModel implements Model {
     Image img = images.get(currentImageName);
     if (img == null) {
       throw new NoSuchElementException("IME.model.Image with name " + currentImageName
-          + " not in memory.");
+              + " not in memory.");
     }
     int width = img.getWidth();
     int height = img.getHeight();
@@ -348,7 +351,7 @@ public class ImageModel implements Model {
 
     int height = img.getHeight();
     int width = img.getWidth();
-    int[][] redComp = new int [height][width];
+    int[][] redComp = new int[height][width];
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         redComp[i][j] = img.getRedComponent()[i][j];
@@ -470,7 +473,7 @@ public class ImageModel implements Model {
     int[][] b = img.getBlueComponent();
     int[][] newR = new int[r.length][r[0].length];
     int[][] newB = new int[b.length][b[0].length];
-    int[][] newG = new int [g.length][g[0].length];
+    int[][] newG = new int[g.length][g[0].length];
     int height = img.getHeight();
     int width = img.getWidth();
     double[][] sharpenFilter = new double[5][];
@@ -708,7 +711,7 @@ public class ImageModel implements Model {
         newG[i][j] = (int) Math.rint(greenSum);
       }
     }
-    Image sharpenedImage = new IMEImage(width, height,newR, newB, newG);
+    Image sharpenedImage = new IMEImage(width, height, newR, newB, newG);
     images.put(newImageName, sharpenedImage);
 
   }
@@ -793,7 +796,6 @@ public class ImageModel implements Model {
         // Get and operate on center [i][j]
 
 
-
         // red
         redSum += (r[i][j] * blurFilter[1][1]);
         // blue
@@ -813,7 +815,7 @@ public class ImageModel implements Model {
             greenSum += (g[i][j + 1] * blurFilter[1][2]);
           } catch (Exception e) {
             throw new IndexOutOfBoundsException("Index out of bounds at right i = "
-                + i + " j = " + j + "width " + width + "height " + height);
+                    + i + " j = " + j + "width " + width + "height " + height);
           }
         }
         // Get and operate on bottom left [i+1][j-1]  [2][0]
@@ -907,6 +909,115 @@ public class ImageModel implements Model {
               + "\" not in memory.");
     }
     getLumaImage(imageName, newImageName);
+  }
+
+  @Override
+  public void mosaic(String imageName, String newImageName, int seed) {
+    Image img = images.get(imageName);
+
+    if (img == null) {
+      throw new NoSuchElementException("IME.model.Image with name \"" + imageName
+              + "\" not in memory.");
+    }
+    int height = img.getHeight();
+    int width = img.getWidth();
+    if (seed > height * width) {
+      throw new IllegalArgumentException("Seed too large for image.");
+    }
+
+
+
+    int counter = 0;
+
+    int[][] r = img.getRedComponent();
+    int[][] g = img.getGreenComponent();
+    int[][] b = img.getBlueComponent();
+    int[][] newR = new int[img.getRedComponent().length][img.getRedComponent()[0].length];
+    int[][] newB = new int[img.getBlueComponent().length][img.getBlueComponent()[0].length];
+    int[][] newG = new int[img.getGreenComponent().length][img.getGreenComponent()[0].length];
+
+    int[][] seeds = getSeeds(seed, height, width);
+    //foreach seed, find all closest to it and set values.
+    for (int i = 0; i < seeds.length; i++) {
+        int sX = seeds[i][0];
+        int sY = seeds[i][1];
+        Map<Integer,Integer> points = new HashMap<>();
+        int avgG = 0;
+        int avgR = 0;
+        int avgB = 0;
+        for (int k = 0; k < 1; k++) {
+          for (int l = 0; l < 200; l++) {
+            int[] point = {k,l};
+            int[] se = findClosestPoint(point,seeds);
+            if(se[0] == sX && se[1] == sY) {
+              System.out.println(Arrays.toString(point));
+              System.out.println(Arrays.toString(se));
+              points.put(k,l);
+              avgG += g[k][l];
+              avgR += r[k][l];
+              avgB += b[k][l];
+            }
+        }
+      }
+      // find average and set all these values in the array
+      System.out.println("size: " + points.size());
+      avgB = (int) Math.ceil((double) avgB / (double) points.size());
+      avgR= (int) Math.ceil((double) avgR / (double) points.size());
+      avgG = (int) Math.ceil((double) avgG / (double) points.size());
+      for (Map.Entry<Integer, Integer> entry : points.entrySet()) {
+        int x = entry.getKey();
+        int y = entry.getValue();
+        newR[x][y] = avgR;
+        newG[x][y] = avgG;
+        newB[x][y] = avgB;
+      }
+    }
+    images.put(newImageName, new IMEImage(width, height, newR, newB, newG));
+  }
+
+  private static int[] findClosestPoint(int[] point,int[][] list) {
+    double dist=Double.MAX_VALUE;
+    int [] shortest = new int[2];
+    int x = point[0];
+    int y = point[1];
+    for(int i=0;i < list.length; i++) {
+      int testX = list[i][0];
+      int testY = list[i][1];
+      double testDist = Math.sqrt(Math.pow(x-testX,2) + Math.pow(y-testY,2));
+
+      if(testDist < dist) {
+        dist = testDist;
+        shortest[0] = testX;
+        shortest[1] = testY;
+      }
+    }
+    return shortest;
+  }
+
+  private static int[][] getSeeds(int seed, int height, int width) {
+    int[][] seeds = new int[seed][2];
+    boolean[][] bArray = new boolean[height][width];
+    int counter = 0;
+    Random rand = new Random();
+    while (counter < seed) {
+      int rRow = rand.nextInt(width);
+      int rCol = rand.nextInt(height);
+      if (!bArray[rCol][rRow]) {
+        bArray[rCol][rRow] = true;
+        counter++;
+      }
+    }
+    counter = 0;
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        if (bArray[i][j]) {
+          seeds[counter][0] = i;
+          seeds[counter][1] = j;
+          counter = counter + 1;
+        }
+      }
+    }
+    return seeds;
   }
 
   private boolean compareDimensions(Image firstImage, Image secondImage) {

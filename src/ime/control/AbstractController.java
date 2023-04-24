@@ -6,6 +6,7 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -22,6 +23,7 @@ import ime.control.commands.HorizontalFlip;
 import ime.control.commands.Intensity;
 import ime.control.commands.Load;
 import ime.control.commands.Luma;
+import ime.control.commands.Mosaic;
 import ime.control.commands.RGBCombine;
 import ime.control.commands.RGBSplit;
 import ime.control.commands.Redscale;
@@ -89,6 +91,7 @@ public abstract class AbstractController implements Controller {
     knownCommands.put("sharpen", s -> new Sharpen(s.nextLine().trim().split(" ")));
     knownCommands.put("blur", s -> new Blur(s.nextLine().trim().split(" ")));
     knownCommands.put("dither", s -> new Dither(s.nextLine().trim().split(" ")));
+    knownCommands.put("mosaic", s -> new Mosaic(s.nextLine().trim().split(" ")));
   }
 
   /**
@@ -107,6 +110,7 @@ public abstract class AbstractController implements Controller {
         c.run(model);
       } catch (Exception e) {
         view.printGeneralError(e.getMessage());
+        view.printGeneralError(Arrays.toString(e.getStackTrace()));
       }
     }
   }

@@ -186,4 +186,13 @@ public interface Model {
    */
   void matrixGreyscale(String imageName, String newImageName);
 
+  /**
+   * Method that creates a mosaic-ed image.
+   *
+   * @param imageName image to use
+   * @param newImageName mosaic-ed image
+   * @param seed seed
+   */
+  void mosaic(String imageName, String newImageName, int seed);
+
 }

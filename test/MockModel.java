@@ -384,4 +384,9 @@ public class MockModel implements Model {
     log.append(this.uniqueCode);
     log.append("\n");
   }
+
+  @Override
+  public void mosaic(String imageName, String newImageName, int seed) {
+
+  }
 }
