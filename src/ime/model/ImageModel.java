@@ -2,8 +2,10 @@ package ime.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -928,7 +930,7 @@ public class ImageModel implements Model {
 
 
     int counter = 0;
-
+    boolean[][] bArray = new boolean[height][width];
     int[][] r = img.getRedComponent();
     int[][] g = img.getGreenComponent();
     int[][] b = img.getBlueComponent();
@@ -941,32 +943,35 @@ public class ImageModel implements Model {
     for (int i = 0; i < seeds.length; i++) {
         int sX = seeds[i][0];
         int sY = seeds[i][1];
-        Map<Integer,Integer> points = new HashMap<>();
+        List<String> points = new ArrayList<>();
         int avgG = 0;
         int avgR = 0;
         int avgB = 0;
-        for (int k = 0; k < 1; k++) {
-          for (int l = 0; l < 200; l++) {
+        for (int k = 0; k < height; k++) {
+          for (int l = 0; l < width; l++) {
+            if(bArray[k][l]) {
+              continue;
+            }
             int[] point = {k,l};
             int[] se = findClosestPoint(point,seeds);
             if(se[0] == sX && se[1] == sY) {
-              System.out.println(Arrays.toString(point));
-              System.out.println(Arrays.toString(se));
-              points.put(k,l);
+              String val = k + "," + l;
+              points.add(val);
               avgG += g[k][l];
               avgR += r[k][l];
               avgB += b[k][l];
+              bArray[k][l] = true;
             }
         }
       }
       // find average and set all these values in the array
-      System.out.println("size: " + points.size());
+//      System.out.println("size: " + points.size());
       avgB = (int) Math.ceil((double) avgB / (double) points.size());
       avgR= (int) Math.ceil((double) avgR / (double) points.size());
       avgG = (int) Math.ceil((double) avgG / (double) points.size());
-      for (Map.Entry<Integer, Integer> entry : points.entrySet()) {
-        int x = entry.getKey();
-        int y = entry.getValue();
+      for (String s : points) {
+        int x = Integer.parseInt(s.split(",")[0]);
+        int y = Integer.parseInt(s.split(",")[1]);
         newR[x][y] = avgR;
         newG[x][y] = avgG;
         newB[x][y] = avgB;
